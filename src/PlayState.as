@@ -87,7 +87,6 @@ package
             _platforms_map.drawIndex = 1;
             _platforms_map.collideIndex = 1;
 			
-			parsePlatforms();
 			
             lyrStage.add(_block_map);
 			lyrStage.add(_spike_map);
@@ -161,54 +160,7 @@ package
 									break;
 							}
 							
-							// special block arrays
-							switch (tiles) {
-								case "7":
-									_savepoints.push( lyrStage.add(new SavePoint(16 * col, 16 * row)));
-									break;
-								case "10":
-									_traps.push( lyrStage.add(new Trap(16 * col, 16 * row, FlxSprite.UP)));
-									break;
-								case "11":
-									_traps.push( lyrStage.add(new Trap(16 * col, 16 * row, FlxSprite.DOWN)));
-									break;
-								case "12":
-									_traps.push( lyrStage.add(new Trap(16 * col, 16 * row, FlxSprite.RIGHT)));
-									break;
-								case "13":
-									_traps.push( lyrStage.add(new Trap(16 * col, 16 * row, FlxSprite.LEFT)));
-									break;
-								case "15":
-									_bouncers.push( lyrStage.add(new Bouncer(16 * col, 16 * row, FlxSprite.UP)));
-									break;
-								case "16":
-									_bouncers.push( lyrStage.add(new Bouncer(16 * col, 16 * row, FlxSprite.DOWN)));
-									break;
-								case "17":
-									_bouncers.push( lyrStage.add(new Bouncer(16 * col, 16 * row, FlxSprite.RIGHT)));
-									break;
-								case "18":
-									_bouncers.push( lyrStage.add(new Bouncer(16 * col, 16 * row, FlxSprite.LEFT)));
-									break;
-								case "19":
-									_rubberbands.push( lyrStage.add(new RubberBand(16 * col, 16 * row, 0)));
-									break;
-								case "20":
-									_rubberbands.push( lyrStage.add(new RubberBand(16 * col, 16 * row, 90)));
-									break;
-								case "21":
-									_rubberbands.push( lyrStage.add(new RubberBand(16 * col, 16 * row, 45)));
-									break;
-								case "22":
-									_rubberbands.push( lyrStage.add(new RubberBand(16 * col, 16 * row, 135)));
-									break;
-								case "23":
-									_fallingspikes.push( lyrStage.add(new FallingSpikes(16 * col, 16 * row, 1)));
-									break;
-								case "24":
-									_fallingspikes.push( lyrStage.add(new FallingSpikes(16 * col, 16 * row, 2)));
-									break;
-							}
+							
 							
 							// moving platforms
 							switch (tiles)
@@ -242,14 +194,6 @@ package
 			}			
 		}
         
-		public function parsePlatforms():void
-		{
-			_platforms = new Array;
-			for (var y:Number = 0; y < _platforms_map.heightInTiles; y++)
-				for (var x:Number = 0; x < _platforms_map.widthInTiles; x++) 
-						if (_platforms_map.getTile(x, y) >= 32 && _platforms_map.getTile(x, y) <= 36)
-							_platforms.push( lyrStage.add( new MovingPlatform(x, y, _platforms_map) ) );
-		}
 		
         override public function update():void
         {
@@ -263,13 +207,6 @@ package
 			}
 			
 			FlxG.overlapArray( _savepoints, _player, SavePointHit);
-			FlxG.overlapArray( _traps, _player, TrapHit);
-			FlxG.overlapArray( _bouncers, _player, Bounce);
-			FlxG.overlapArray( _rubberbands, _player, BounceBand);
-			
-			for each( var fallingspike:FallingSpikes in _fallingspikes) {
-				fallingspike.checkActivate(_player);
-			}
 			
 			// don't fall away
 			if (_player.y > 288-16) { _player.y = 288-16 }
@@ -277,7 +214,7 @@ package
 			//if (_player.dead) FlxG.score = 0;
 			
 			if (FlxG.keys.justPressed("ESC")) {
-				FlxG.switchState(MenuState);
+				//FlxG.switchState(MenuState);
 			}
             
         }
@@ -292,9 +229,7 @@ package
 					_player.save(savepoint.x, savepoint.y);
 					_lastsavepoint =  savepoint;
 					_lastsavepoint.activate();
-					for each (var fallingspike:FallingSpikes in _fallingspikes) {
-						fallingspike.save();
-					}
+
 				}
 				
 			}
@@ -303,31 +238,9 @@ package
 		public function reload():void
 		{
 			_player.reload();
-			for each (var fallingspike:FallingSpikes in _fallingspikes)
-			{
-				fallingspike.reload();
-			}
+
 		}
-		
-		public function TrapHit(trap:Trap, P:Player):void
-		{
-			if (_player.health > 0) {
-				_player.velocity.x = 0;
-				_player.hurt(1);				
-				trap.activate();
-			}
-		}
-		
-		public function Bounce(bouncer:Bouncer, P:Player):void
-		{
-			bouncer.resolveBounce(P);
-			
-		}
-		
-		public function BounceBand(bouncer:RubberBand, P:Player):void
-		{
-			bouncer.resolveBounce(P);			
-		}
+
         
     }    
 } 

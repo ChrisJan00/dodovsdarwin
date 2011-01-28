@@ -1,0 +1,20 @@
+﻿
+package 
+{
+    import org.flixel.*;
+
+    public class Bounce_PlayState extends PlayState
+    {
+        
+        [Embed(source = 'maps/map_bounce.txt', mimeType = "application/octet-stream")] protected var _LevelMap:Class;
+		
+        
+        override public function Bounce_PlayState():void
+        {
+            super();
+			LevelMap = _LevelMap;			
+			super.Init();
+		}
+        
+    }    
+} 

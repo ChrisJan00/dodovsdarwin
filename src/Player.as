@@ -63,7 +63,7 @@
 			}
 			if (FlxG.keys.UP)
 			{
-				// TODO Commented out for now because of animation?
+				// Commented out for now because of animation?
 				//facing = UP;
 				facing = RIGHT;
 				acceleration.y = -1 * PLAYER_MOVEMENT_SPEED;

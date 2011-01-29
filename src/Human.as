@@ -3,7 +3,7 @@
 	import flash.geom.Vector3D;
     import org.flixel.*;
 
-    public class Rat extends FlxSprite
+    public class Human extends FlxSprite
     {
         [Embed(source = "img/Player.png")] private var ImgPlayer:Class;
         public var _max_health:int = 1;
@@ -12,9 +12,9 @@
 		private var _MaxVelocity_walking:int = 200;
 		private var _playstate:PlayState;
 		
-		private const RAT_MOVEMENT_SPEED:Number = 50;
+		private const HUMAN_MOVEMENT_SPEED:Number = 25;
 		
-        public function  Rat(X:Number,Y:Number, p:PlayState):void
+        public function  Human(X:Number,Y:Number, p:PlayState):void
         {
             super(X, Y);
 			
@@ -48,19 +48,20 @@
                 _hurt_counter -= FlxG.elapsed;
             }
 			else {
-			// Rat movement
-			
-			var _loc_toPlayerVector:Vector3D = new Vector3D( _playstate._player.x - this.x, _playstate._player.y - this.y );
-			_loc_toPlayerVector.normalize();
-			
-			// Follow
-			velocity.x = _loc_toPlayerVector.x * RAT_MOVEMENT_SPEED;
-			velocity.y = _loc_toPlayerVector.y * RAT_MOVEMENT_SPEED;
-			
-			// Flee
-			//velocity.x = -1 * _loc_toPlayerVector.x * RAT_MOVEMENT_SPEED;
-			//velocity.y = -1 * _loc_toPlayerVector.y * RAT_MOVEMENT_SPEED;
-			
+				
+				var _loc_closestRat:FlxSprite = _playstate.getClosestRat( this );
+				
+				var _loc_toRatVector:Vector3D = new Vector3D( _loc_closestRat.x - this.x, _loc_closestRat.y - this.y );
+				_loc_toRatVector.normalize();
+				
+				// Follow
+				velocity.x = _loc_toRatVector.x * HUMAN_MOVEMENT_SPEED;
+				velocity.y = _loc_toRatVector.y * HUMAN_MOVEMENT_SPEED;
+				
+				// Flee
+				//velocity.x = -1 * _loc_toRatVector.x * HUMAN_MOVEMENT_SPEED;
+				//velocity.y = -1 * _loc_toRatVector.y * HUMAN_MOVEMENT_SPEED;
+				
 			}
             if (_hurt_counter > 0)
             {

@@ -21,7 +21,9 @@ package
         public static var lyrHUD:FlxLayer;
 		
 		protected var _transp_tile:String
-		protected var _rats:Vector.<Rat>;
+		protected var _rats:Vector.<FlxSprite>;
+		protected var _dodos:Vector.<FlxSprite>;
+		protected var _humans:Vector.<FlxSprite>;
         
         override public function PlayState():void
         {
@@ -34,13 +36,16 @@ package
             lyrSprites = new FlxLayer;
             lyrHUD = new FlxLayer;
            
+			_rats = new Vector.<FlxSprite>();
+			_dodos = new Vector.<FlxSprite>();
+			_humans = new Vector.<FlxSprite>();
 			
             _player = new Player(648, 240, this);
+			_dodos.push( _player );
             lyrSprites.add(_player);
 			
 			_background = new Background(BackgroundImg);
 			lyrStage.add(_background);
-			_rats = new Vector.<Rat>();
 			
             FlxG.follow(_player,2.5);
             FlxG.followAdjust(0.5, 0.5);
@@ -112,9 +117,40 @@ package
 		public function reload():void
 		{
 			_player.reload();
-
 		}
-
-        
+		
+		public function getClosestRat( a_target:FlxSprite ):FlxSprite {
+			return (getClosestFrom( a_target, _rats ));
+		}
+		public function getClosestDodo( a_target:FlxSprite ):FlxSprite {
+			return (getClosestFrom( a_target, _dodos ));
+		}
+		public function getClosestHuman( a_target:FlxSprite ):FlxSprite {
+			return (getClosestFrom( a_target, _humans ));
+		}
+		
+		private var _currentTarget:FlxSprite;
+		
+		private function getClosestFrom( a_target:FlxSprite, a_flxSprites:Vector.<FlxSprite> ):FlxSprite {
+			_currentTarget = a_target;
+			// Copy vector here so it isnt passed by reference
+			var _loc_flxSprites:Vector.<FlxSprite> = a_flxSprites.slice();
+			_loc_flxSprites.sort( compareDistancefromMe );
+			
+			if ( _loc_flxSprites.length > 0 ) {
+				return _loc_flxSprites[0]
+			} else {
+				return null;
+			}
+		}
+		private function compareDistancefromMe( a_flxSprite1:FlxSprite, a_flxSprite2:FlxSprite):Number {
+			//if ( _owner.getDistanceSquared(a_combatObject_1.getMapPosition()) > _owner.getDistanceSquared(a_combatObject_2.getMapPosition()) )  {
+			var _loc_distanceTo1:Number = Math.pow( _currentTarget.x - a_flxSprite1.x, 2) + Math.pow( _currentTarget.y - a_flxSprite1.y, 2);
+			var _loc_distanceTo2:Number = Math.pow( _currentTarget.x - a_flxSprite2.x, 2) + Math.pow( _currentTarget.y - a_flxSprite2.y, 2);
+			if ( _loc_distanceTo1 > _loc_distanceTo2 ) {
+				return 1;
+			}
+			return ( -1);
+		}
     }    
 } 

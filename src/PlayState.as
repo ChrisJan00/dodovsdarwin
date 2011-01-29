@@ -33,6 +33,7 @@ package
 		public var _fruits:Array;
 		public var _seeds:Array;
 		public var _pigs:Array;
+		public var _eggs:Array;
 		
 		private var _poopDisplay:PoopDisplay;
         
@@ -67,6 +68,7 @@ package
 			_trees = new Array();
 			_fruits = new Array();
 			_seeds = new Array();
+			_eggs = new Array();
 	
             FlxG.follow(_player,2.5);
             FlxG.followAdjust(0.5, 0.5);
@@ -269,6 +271,12 @@ package
 		public function growTree(treeX:Number, treeY:Number) : void
 		{
 			addSprite( new Tree(treeX, treeY, this, false), _trees );
+		}
+		
+		public function spawnDodo(dodoX:Number, dodoY:Number) : void
+		{
+			// until the new dodos are ready, spawn rats instead
+			addSprite( new Rat(dodoX, dodoY, this), _rats );
 		}
     }    
 } 

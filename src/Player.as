@@ -18,6 +18,8 @@
 		public var eatenFruitCount:Number = 0;
 		public const SHIT_THRESHOLD:Number = 5;
 		
+		private var hatchReady:Boolean = true;
+		
         public function  Player(X:Number,Y:Number, p:PlayState):void
         {
             super(X, Y);
@@ -74,6 +76,10 @@
 					acceleration.y = PLAYER_MOVEMENT_SPEED;
 				}
 				if (FlxG.keys.X || FlxG.keys.CONTROL || FlxG.keys.SPACE) {
+					if (hatchReady) {
+						hatchReady = false;
+						launchEgg();
+					}
 					// Pooing time!
 					if (!shitBlocked) {
 						shitBlocked = true;
@@ -170,11 +176,34 @@
 			var feetX : Number = x + width / 2;
 			var feetY : Number = y + height;
 			
-			
+			//var egg:Egg = new Egg(oX, oY, _playstate);
+			//egg.launch( oX, oY, feetX, feetY, dirX, dirY );
+			//
+			//_playstate.addSprite(egg, _playstate._seeds);
 			var seed:Seed = new Seed(oX, oY, _playstate);
 			seed.launch( oX, oY, feetX, feetY, dirX, dirY );
 			
 			_playstate.addSprite(seed, _playstate._seeds);
+		}
+		
+		public function launchEgg() : void
+		{
+			// direction
+			var dirX : Number = Math.cos( _looking_angle + Math.PI );
+			var dirY : Number = Math.sin( _looking_angle + Math.PI );
+			
+			// originalPos
+			var oX : Number = (x + width / 2) + dirX * Math.max(width,height)/2;
+			var oY : Number = (y + height / 2) + dirY * Math.max(width,height)/2;
+			
+			// feetPos
+			var feetX : Number = x + width / 2;
+			var feetY : Number = y + height;
+			
+			var egg:Egg = new Egg(oX, oY, _playstate);
+			egg.launch( oX, oY, feetX, feetY, dirX, dirY );
+			
+			_playstate.addSprite(egg, _playstate._eggs);
 		}
     }
     

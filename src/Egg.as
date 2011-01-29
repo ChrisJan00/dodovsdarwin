@@ -19,7 +19,7 @@ package
 		private var launchState: Number = 0;
 		private var gravity: Number;
 		
-		private var germinationTimer:Number = 5;
+		private var hatchTimer:Number = 15;
 		
 		private var _playstate:PlayState;
 		
@@ -94,11 +94,12 @@ package
 			
 			// germination
 			if (launchState == 3) {
-				if (germinationTimer > 0)
-					germinationTimer -= FlxG.elapsed;
-				if (germinationTimer <= 0) {
+				if (hatchTimer > 0)
+					hatchTimer -= FlxG.elapsed;
+				if (hatchTimer <= 0) {
 					// grow tree
-					_playstate.growTree( x, y );
+					_playstate.spawnDodo( x, y );
+					launchState = 4;
 					_playstate.removeEntity( this, _playstate._eggs );
 				}
 			}

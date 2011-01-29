@@ -93,7 +93,8 @@ package
 					germinationTimer -= FlxG.elapsed;
 				if (germinationTimer <= 0) {
 					// grow tree
-					_playstate.growTree( x - width/2, y + height/2 );
+					_playstate.growTree( x - width / 2, y + height / 2 );
+					launchState = 4;
 					_playstate.removeEntity( this, _playstate._seeds );
 				}
 			}

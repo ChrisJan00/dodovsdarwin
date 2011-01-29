@@ -97,6 +97,8 @@
 				if (health <= 0) { _playstate.reload(); }
             }
 			
+			//adjustScaleToHeight();
+			
             super.update();
             
         }
@@ -139,6 +141,15 @@
 			if (X == -1) { X = x; }
 			if (Y == -1) { Y = y; }
 		}
+		
+		//public function adjustScaleToHeight():void
+		//{
+			// in the middle of the map, scale = 1.0
+			// on the top 5/6, on the bottom 7/6
+			//var newScale:Number = (y + 2400)/2880;
+			//scale.x = newScale;
+			//scale.y = newScale;
+		//}
             
     }
     

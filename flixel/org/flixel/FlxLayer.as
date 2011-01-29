@@ -109,7 +109,7 @@ package org.flixel
 		
 		private function compareY( a_obj1:FlxCore, a_obj2:FlxCore ):Number {
 			
-			if ( (a_obj1 as FlxSprite).cY > (a_obj2 as FlxSprite).cY ) {
+			if ( a_obj1.cY > a_obj2.cY ) {
 				return 1;
 			}
 			return -1;

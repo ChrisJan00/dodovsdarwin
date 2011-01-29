@@ -573,5 +573,12 @@ package org.flixel
 			last.x = x = X;
 			last.y = y = Y;
 		}
+		
+		public function get cX():Number {
+			return ( x + (width / 2) );
+		}
+		public function get cY():Number {
+			return ( y + (height / 2) );
+		}
 	}
 }

@@ -32,10 +32,10 @@
             drag.x = 400;
             drag.y = 400;
 			
-            width = 128;
-            height = 127;
-            offset.x = 0;
-            offset.y = 0;
+            width = 49;
+            height = 40;
+            offset.x = 54;
+            offset.y = 87;
 			
             //addAnimation("normal", [0, 1, 2, 3], 10);
             //addAnimation("jump", [4, 5, 6], 25);

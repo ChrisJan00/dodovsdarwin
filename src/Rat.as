@@ -105,24 +105,7 @@
 		override public function kill():void
 		{
 			//reload();
-		}
-		
-		public function reload():void
-		{
-			x = 48;
-			y = 240;
-			velocity.x = 0;
-			velocity.y = 0;
-			health = 1;
-		}
-		
-		public function save(X:int=-1,Y:int=-1):void
-		{
-			if (X == -1) { X = x; }
-			if (Y == -1) { Y = y; }
-		}
-            
+		} 
     }
-    
 } 
 

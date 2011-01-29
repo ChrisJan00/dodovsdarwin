@@ -20,9 +20,16 @@ package
 			_transp_tile = "17";
 			super.Init();
 			
-			var _loc_rat:Rat = new Rat(360, 200, this);
-			_rats.push(_loc_rat);
-            lyrSprites.add(_loc_rat);
+			var _loc_flxSprite:FlxSprite
+			_loc_flxSprite = new Rat(360, 200, this);
+			_rats.push(_loc_flxSprite);
+            lyrSprites.add(_loc_flxSprite);
+			_loc_flxSprite = new Rat(460, 600, this);
+			_rats.push(_loc_flxSprite);
+            lyrSprites.add(_loc_flxSprite);
+			_loc_flxSprite = new Human(600, 320, this);
+			_humans.push(_loc_flxSprite);
+            lyrSprites.add(_loc_flxSprite);
 		}
         
     }    

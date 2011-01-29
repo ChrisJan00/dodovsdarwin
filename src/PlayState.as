@@ -22,9 +22,9 @@ package
         public static var lyrHUD:FlxLayer;
 		
 		protected var _transp_tile:String
-		protected var _rats:Vector.<FlxSprite>;
-		protected var _dodos:Vector.<FlxSprite>;
-		protected var _humans:Vector.<FlxSprite>;
+		protected var _rats:Array;
+		protected var _dodos:Array;
+		protected var _humans:Array;
 		protected var _stones:Array;
         
         override public function PlayState():void
@@ -38,9 +38,9 @@ package
             lyrSprites = new FlxLayer;
             lyrHUD = new FlxLayer;
            
-			_rats = new Vector.<FlxSprite>();
-			_dodos = new Vector.<FlxSprite>();
-			_humans = new Vector.<FlxSprite>();
+			_rats = new Array();
+			_dodos = new Array();
+			_humans = new Array();
 
 			_background = new Background(BackgroundImg);
 			lyrStage.add(_background);
@@ -136,10 +136,10 @@ package
 		
 		private var _currentTarget:FlxSprite;
 		
-		private function getClosestFrom( a_target:FlxSprite, a_flxSprites:Vector.<FlxSprite> ):FlxSprite {
+		private function getClosestFrom( a_target:FlxSprite, a_flxSprites:Array ):FlxSprite {
 			_currentTarget = a_target;
 			// Copy vector here so it isnt passed by reference
-			var _loc_flxSprites:Vector.<FlxSprite> = a_flxSprites.slice();
+			var _loc_flxSprites:Array = a_flxSprites.slice();
 			_loc_flxSprites.sort( compareDistancefromMe );
 			
 			if ( _loc_flxSprites.length > 0 ) {

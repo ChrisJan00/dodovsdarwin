@@ -19,12 +19,12 @@
 		private var _aiState:String;
 		private var _aiUpdateTimer:Number = 0;
 		
-		private const RAT_STATE_WANDER:String = "HumanStateWander";
-		private const RAT_STATE_CHASE:String = "HumanStateChase";
-		private const RAT_STATE_FLEE:String = "HumanStateFlee";
+		private const RAT_STATE_WANDER:String = "RatStateWander";
+		private const RAT_STATE_CHASE:String = "RatStateChase";
+		private const RAT_STATE_FLEE:String = "RatStateFlee";
 		
-		private const RAT_WANDER_AIUPDATE_DELAY_MAX:Number = 3;
 		private const RAT_WANDER_AIUPDATE_DELAY_MIN:Number = 0.5;
+		private const RAT_WANDER_AIUPDATE_DELAY_RANGE:Number = 2.5;
 		
         public function  Rat(X:Number,Y:Number, p:PlayState):void
         {
@@ -62,16 +62,18 @@
 			else {
 				
 				_aiUpdateTimer -= FlxG.elapsed;
-				if ( _aiUpdateTimer <= 0 ) {
-					var _loc_toVector:Vector3D = getSteering();
+				
+				var _loc_toVector:Vector3D = getSteering();
+				if ( _loc_toVector ) {
 					_loc_toVector.normalize();
-					if ( _aiState == RAT_STATE_WANDER ) {
-						_loc_toVector.scaleBy(1);
-					}
+					velocity.x = _loc_toVector.x * RAT_MOVEMENT_SPEED;
+					velocity.y = _loc_toVector.y * RAT_MOVEMENT_SPEED;
+				} else if ( _aiUpdateTimer <= 0 ) {
+					_loc_toVector = getWander();
+					_loc_toVector.normalize();
 					velocity.x = _loc_toVector.x * RAT_MOVEMENT_SPEED;
 					velocity.y = _loc_toVector.y * RAT_MOVEMENT_SPEED;
 				}
-				
 			}
             if (_hurt_counter > 0)
             {
@@ -107,22 +109,22 @@
 					return ( _loc_toVector );
 				}
 			}
-			
-			if (_aiState == RAT_STATE_WANDER) {
-				_aiUpdateTimer = ( RAT_WANDER_AIUPDATE_DELAY_MAX - Math.random() * ( RAT_WANDER_AIUPDATE_DELAY_MAX - RAT_WANDER_AIUPDATE_DELAY_MIN ) );
+			return ( null );
+		}
+		
+		private function getWander():Vector3D {
+			var _loc_toVector:Vector3D;
+			if (_aiState == RAT_STATE_WANDER ) {
+				_aiUpdateTimer = ( RAT_WANDER_AIUPDATE_DELAY_MIN + Math.random() * RAT_WANDER_AIUPDATE_DELAY_RANGE );
 				_loc_toVector = new Vector3D( velocity.x, velocity.y );
 				_loc_toVector.normalize();
 				_loc_toVector = new Vector3D( _loc_toVector.x + 1 - (Math.random() * 2), _loc_toVector.y + 1 - (Math.random() * 2) );
 				return _loc_toVector;
 			}
 			
-			if ( velocity.x == 0 && velocity.y == 0) {
-				_aiState = RAT_STATE_WANDER;
-				_loc_toVector = new Vector3D( 1 - (Math.random() * 2), 1 - (Math.random() * 2) );
-				return _loc_toVector;
-			}
-			
-			return ( new Vector3D() );
+			_aiState = RAT_STATE_WANDER;
+			_loc_toVector = new Vector3D( 1 - (Math.random() * 2), 1 - (Math.random() * 2) );
+			return _loc_toVector;
 		}
         
         override public function hitFloor(Contact:FlxCore=null):Boolean

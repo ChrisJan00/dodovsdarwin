@@ -58,16 +58,19 @@
 			else {
 				
 				_aiUpdateTimer -= FlxG.elapsed;
-				if ( _aiUpdateTimer <= 0 ) {
-					var _loc_toVector:Vector3D = getSteering();
+				
+				var _loc_toVector:Vector3D = getSteering();
+				if ( _loc_toVector ) {
 					_loc_toVector.normalize();
-					if ( _aiState == HUMAN_STATE_WANDER ) {
-						_loc_toVector.scaleBy(0.35);
-					}
+					velocity.x = _loc_toVector.x * HUMAN_MOVEMENT_SPEED;
+					velocity.y = _loc_toVector.y * HUMAN_MOVEMENT_SPEED;
+				} else if ( _aiUpdateTimer <= 0 ) {
+					_loc_toVector = getWander();
+					_loc_toVector.normalize();
+					_loc_toVector.scaleBy(0.35);
 					velocity.x = _loc_toVector.x * HUMAN_MOVEMENT_SPEED;
 					velocity.y = _loc_toVector.y * HUMAN_MOVEMENT_SPEED;
 				}
-				
 			}
             if (_hurt_counter > 0)
             {
@@ -102,8 +105,12 @@
 					return ( _loc_toVector );
 				}
 			}
-			
-			if (_aiState == HUMAN_STATE_WANDER) {
+			return ( null );
+		}
+		
+		private function getWander():Vector3D {
+			var _loc_toVector:Vector3D;
+			if (_aiState == HUMAN_STATE_WANDER ) {
 				_aiUpdateTimer = 0.7;
 				_loc_toVector = new Vector3D( velocity.x, velocity.y );
 				_loc_toVector.normalize();
@@ -111,13 +118,9 @@
 				return _loc_toVector;
 			}
 			
-			if ( velocity.x == 0 && velocity.y == 0) {
-				_aiState = HUMAN_STATE_WANDER;
-				_loc_toVector = new Vector3D( 1 - (Math.random() * 2), 1 - (Math.random() * 2) );
-				return _loc_toVector;
-			}
-			
-			return ( new Vector3D() );
+			_aiState = HUMAN_STATE_WANDER;
+			_loc_toVector = new Vector3D( 1 - (Math.random() * 2), 1 - (Math.random() * 2) );
+			return _loc_toVector;
 		}
         
         override public function hitFloor(Contact:FlxCore=null):Boolean

@@ -97,12 +97,12 @@
 		
 		private function getSteering():Vector3D {
 			var _loc_toVector:Vector3D = _playstate.getClosestRatVector( this );
-			if ( _loc_toVector.length < HUMAN_CHASE_RAT_DISTANCE ) {
+			if ( _loc_toVector && _loc_toVector.length < HUMAN_CHASE_RAT_DISTANCE ) {
 				_aiState = HUMAN_STATE_CHASE;
 				return( _loc_toVector );
 			} else {
 				_loc_toVector = _playstate.getClosestDodoVector( this );
-				if ( _loc_toVector.length < HUMAN_CHASE_DODO_DISTANCE ) {
+				if ( _loc_toVector && _loc_toVector.length < HUMAN_CHASE_DODO_DISTANCE ) {
 					_aiState = HUMAN_STATE_CHASE;
 					return ( _loc_toVector );
 				}

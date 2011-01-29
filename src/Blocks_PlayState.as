@@ -1,6 +1,7 @@
 ﻿
 package 
 {
+	import flash.geom.Point;
     import org.flixel.*;
 
     public class Blocks_PlayState extends PlayState
@@ -18,9 +19,12 @@ package
 			LevelMap = _LevelMap;	
 			BackgroundImg = _Background;
 			_transparent_tile = "17";
+			
+			_playerStartPos = new Point( 500, 440 );
 			super.Init();
 			
 			var _loc_flxSprite:FlxSprite
+			addSprite( new Pig(670, 250, this), _pigs );
 			addSprite( new Rat(360, 200, this), _rats );
 			addSprite( new Rat(400, 600, this), _rats );
 			addSprite( new Rat(890, 500, this), _rats );

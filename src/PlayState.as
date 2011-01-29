@@ -1,6 +1,7 @@
 ﻿
 package 
 {
+	import flash.geom.Point;
 	import flash.geom.Vector3D;
     import org.flixel.*;
 
@@ -16,7 +17,8 @@ package
         public var _player:Player;
         public var _block_map:FlxTilemap;
 		private var _background:Background;
-
+		
+		protected var _playerStartPos:Point;
 		
 	    public static var lyrStage:FlxLayer;
         public static var lyrSprites:FlxLayer;
@@ -30,6 +32,7 @@ package
 		public var _trees:Array;
 		public var _fruits:Array;
 		public var _seeds:Array;
+		public var _pigs:Array;
         
         override public function PlayState():void
         {
@@ -45,11 +48,16 @@ package
 			_rats = new Array();
 			_dodos = new Array();
 			_humans = new Array();
+			_pigs = new Array();
 
 			_background = new Background(BackgroundImg);
 			lyrStage.add(_background);
 			
-            _player = new Player(648, 240, this);
+			if ( _playerStartPos ) {
+				_player = new Player(_playerStartPos.x, _playerStartPos.y, this);
+			} else {
+				_player = new Player(648, 240, this);
+			}
 			_dodos.push( _player );
             lyrSprites.add(_player);
 			
@@ -120,11 +128,15 @@ package
 				rat.collideArray(_stones);
 				rat.collideArray(_trees);
 			}
-				
 			for each(var human:FlxSprite in _humans) {
 				_block_map.collide(human);
 				human.collideArray(_stones);
 				human.collideArray(_trees);
+			}
+			for each(var pig:FlxSprite in _pigs) {
+				_block_map.collide(pig);
+				pig.collideArray(_stones);
+				pig.collideArray(_trees);
 			}
 			
 			for each(var tree:Tree in _trees) {
@@ -159,15 +171,15 @@ package
 			_player.reload();
 		}
 		
-		public function getClosestRat( a_target:FlxSprite ):FlxSprite {
-			return (getClosestFrom( a_target, _rats ));
-		}
-		public function getClosestDodo( a_target:FlxSprite ):FlxSprite {
-			return (getClosestFrom( a_target, _dodos ));
-		}
-		public function getClosestHuman( a_target:FlxSprite ):FlxSprite {
-			return (getClosestFrom( a_target, _humans ));
-		}
+		//public function getClosestRat( a_target:FlxSprite ):FlxSprite {
+			//return (getClosestFrom( a_target, _rats ));
+		//}
+		//public function getClosestDodo( a_target:FlxSprite ):FlxSprite {
+			//return (getClosestFrom( a_target, _dodos ));
+		//}
+		//public function getClosestHuman( a_target:FlxSprite ):FlxSprite {
+			//return (getClosestFrom( a_target, _humans ));
+		//}
 		public function getClosestRatVector( a_target:FlxSprite ):Vector3D {
 			var _loc_closest:FlxSprite = getClosestFrom( a_target, _rats );
 			return ( new Vector3D( _loc_closest.x - a_target.x, _loc_closest.y - a_target.y ) );
@@ -178,6 +190,10 @@ package
 		}
 		public function getClosestHumanVector( a_target:FlxSprite ):Vector3D {
 			var _loc_closest:FlxSprite = getClosestFrom( a_target, _humans );
+			return ( new Vector3D( _loc_closest.x - a_target.x, _loc_closest.y - a_target.y ) );
+		}
+		public function getClosestPigVector( a_target:FlxSprite ):Vector3D {
+			var _loc_closest:FlxSprite = getClosestFrom( a_target, _pigs );
 			return ( new Vector3D( _loc_closest.x - a_target.x, _loc_closest.y - a_target.y ) );
 		}
 		

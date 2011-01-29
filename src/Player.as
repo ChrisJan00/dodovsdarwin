@@ -11,7 +11,7 @@
 		private var _MaxVelocity_walking:int = 200;
 		private var _playstate:PlayState;
 		
-		private const PLAYER_MOVEMENT_SPEED:Number = 80;
+		private const PLAYER_MOVEMENT_SPEED:Number = 550;
 		
         public function  Player(X:Number,Y:Number, p:PlayState):void
         {

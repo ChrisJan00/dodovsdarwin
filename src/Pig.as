@@ -13,10 +13,10 @@
 		private var _MaxVelocity_walking:int = 200;
 		private var _playstate:PlayState;
 		
-		private const PIG_MOVEMENT_SPEED:Number = 20;
+		private const PIG_MOVEMENT_SPEED:Number = 50;
 		//private const PIG_FLEE_HUMAN_DISTANCE:Number = 100;
-		private const PIG_FLEE_DODO_DISTANCE:Number = 100;
-		private const PIG_APPROACH_EGGS_DISTANCE:Number = 100;
+		private const PIG_FLEE_DODO_DISTANCE:Number = 50;
+		private const PIG_APPROACH_FRUIT_DISTANCE:Number = 1000;
 		
 		private var _aiState:String;
 		private var _aiUpdateTimer:Number = 0;
@@ -40,8 +40,8 @@
             maxVelocity.x = 100;
             maxVelocity.y = 100;
             health = 1;         
-            drag.x = 10;
-            drag.y = 10;
+            drag.x = 5;
+            drag.y = 5;
 			
             width = 10;
             height = 14;
@@ -74,6 +74,7 @@
 				} else if ( _aiUpdateTimer <= 0 ) {
 					_loc_toVector = getWander();
 					_loc_toVector.normalize();
+					_loc_toVector.scaleBy(0.7);
 					velocity.x = _loc_toVector.x * PIG_MOVEMENT_SPEED;
 					velocity.y = _loc_toVector.y * PIG_MOVEMENT_SPEED;
 				}
@@ -101,19 +102,17 @@
 		
 		private function getSteering():Vector3D {
 			var _loc_toVector:Vector3D = _playstate.getClosestDodoVector( this );
-			if ( _loc_toVector.length < PIG_FLEE_DODO_DISTANCE ) {
+			if ( _loc_toVector && _loc_toVector.length < PIG_FLEE_DODO_DISTANCE ) {
 				_aiState = PIG_STATE_FLEE;
 				_loc_toVector.scaleBy( -1 );
 				return( _loc_toVector );
-			} 
-			//else {
-				//_loc_toVector = _playstate.getClosestHumanVector( this );
-				//if ( _loc_toVector.length < RAT_FLEE_HUMAN_DISTANCE ) {
-					//_aiState = RAT_STATE_FLEE;
-					//_loc_toVector.scaleBy( -1 );
-					//return ( _loc_toVector );
-				//}
-			//}
+			} else {
+				_loc_toVector = _playstate.getClosestFruitVector( this );
+				if ( _loc_toVector && _loc_toVector.length < PIG_APPROACH_FRUIT_DISTANCE ) {
+					_aiState = PIG_STATE_APPROACH;
+					return ( _loc_toVector );
+				}
+			}
 			return ( null );
 		}
 		

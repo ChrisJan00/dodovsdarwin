@@ -132,11 +132,23 @@ package
 				_block_map.collide(human);
 				human.collideArray(_stones);
 				human.collideArray(_trees);
+				
+				for each(var _loc_rat:Rat in _rats) {
+					if ( human.overlaps(_loc_rat) ) {
+						removeEntity(_loc_rat, _rats);
+					}
+				}
 			}
 			for each(var pig:FlxSprite in _pigs) {
 				_block_map.collide(pig);
 				pig.collideArray(_stones);
 				pig.collideArray(_trees);
+				
+				for each(var _loc_fruit:Fruit in _fruits) {
+					if ( pig.overlaps(_loc_fruit) ) {
+						removeEntity(_loc_fruit, _fruits);
+					}
+				}
 			}
 			
 			for each(var tree:Tree in _trees) {
@@ -181,25 +193,40 @@ package
 			//return (getClosestFrom( a_target, _humans ));
 		//}
 		public function getClosestRatVector( a_target:FlxSprite ):Vector3D {
-			var _loc_closest:FlxSprite = getClosestFrom( a_target, _rats );
-			return ( new Vector3D( _loc_closest.x - a_target.x, _loc_closest.y - a_target.y ) );
+			return ( getClosestVectorFrom(a_target, _rats ) );
 		}
 		public function getClosestDodoVector( a_target:FlxSprite ):Vector3D {
-			var _loc_closest:FlxSprite = getClosestFrom( a_target, _dodos );
-			return ( new Vector3D( _loc_closest.x - a_target.x, _loc_closest.y - a_target.y ) );
+			return ( getClosestVectorFrom(a_target, _dodos ) );
 		}
 		public function getClosestHumanVector( a_target:FlxSprite ):Vector3D {
-			var _loc_closest:FlxSprite = getClosestFrom( a_target, _humans );
-			return ( new Vector3D( _loc_closest.x - a_target.x, _loc_closest.y - a_target.y ) );
+			return ( getClosestVectorFrom(a_target, _humans ) );
 		}
 		public function getClosestPigVector( a_target:FlxSprite ):Vector3D {
-			var _loc_closest:FlxSprite = getClosestFrom( a_target, _pigs );
-			return ( new Vector3D( _loc_closest.x - a_target.x, _loc_closest.y - a_target.y ) );
+			return ( getClosestVectorFrom(a_target, _pigs ) );
+		}
+		public function getClosestFruitVector( a_target:FlxSprite ):Vector3D {
+			return ( getClosestVectorFrom(a_target, _fruits ) );
 		}
 		
-		private var _currentTarget:FlxSprite;
+		//private var _currentTarget:FlxSprite;
 		
-		private function getClosestFrom( a_target:FlxSprite, a_flxSprites:Array ):FlxSprite {
+		private function getClosestVectorFrom( a_target:FlxSprite, a_flxSprites:Array ):Vector3D {
+			if ( a_flxSprites.length == 0 ) return null;
+			
+			var _loc_closestFlxSprite:FlxSprite;
+			var _loc_closestDistanceSquare:Number = Number.MAX_VALUE;
+			
+			for each (var flxSprite:FlxSprite in a_flxSprites) {
+				if ( Math.pow( a_target.x - flxSprite.x, 2) + Math.pow( a_target.y - flxSprite.y, 2) < _loc_closestDistanceSquare ) {
+					_loc_closestFlxSprite = flxSprite;
+					_loc_closestDistanceSquare = Math.pow( a_target.x - flxSprite.x, 2) + Math.pow( a_target.y - flxSprite.y, 2);
+				}
+			}
+			return ( new Vector3D( _loc_closestFlxSprite.x - a_target.x, _loc_closestFlxSprite.y - a_target.y ) );
+		}
+		
+		/*// TODO Remove if no longer needed
+		private function TMPgetClosestFrom( a_target:FlxSprite, a_flxSprites:Array ):FlxSprite {
 			_currentTarget = a_target;
 			// Copy vector here so it isnt passed by reference
 			var _loc_flxSprites:Array = a_flxSprites.slice();
@@ -219,7 +246,7 @@ package
 				return 1;
 			}
 			return ( -1);
-		}
+		}*/
 		
 		public function addSprite(sprite:FlxSprite, destArray:Array) : void
 		{

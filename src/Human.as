@@ -1,5 +1,6 @@
 ﻿package  
 {
+	import flash.geom.ColorTransform;
 	import flash.geom.Vector3D;
     import org.flixel.*;
 
@@ -28,6 +29,7 @@
 			
 			_playstate = p;
             loadGraphic(ImgPlayer, true, true, 16, 16);
+			pixels.colorTransform( pixels.rect, new ColorTransform( 5, 0.2, 0.5) );
      
 			_MaxVelocity_walking = 200;
             maxVelocity.x = 100;

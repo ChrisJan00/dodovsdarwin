@@ -16,6 +16,12 @@
 		private const HUMAN_CHASE_RAT_DISTANCE:Number = 90;
 		private const HUMAN_CHASE_DODO_DISTANCE:Number = 100;
 		
+		private var _aiState:String;
+		private var _aiUpdateTimer:Number = 0;
+		
+		private const HUMAN_STATE_WANDER:String = "HumanStateWander";
+		private const HUMAN_STATE_CHASE:String = "HumanStateChase";
+		
         public function  Human(X:Number,Y:Number, p:PlayState):void
         {
             super(X, Y);
@@ -27,8 +33,8 @@
             maxVelocity.x = 100;
             maxVelocity.y = 100;
             health = 1;         
-            drag.x = 400;
-            drag.y = 400;
+            //drag.x = 400;
+            //drag.y = 400;
 			
             width = 10;
             height = 14;
@@ -51,10 +57,16 @@
             }
 			else {
 				
-				var _loc_toVector:Vector3D = getSteering();
-				_loc_toVector.normalize();
-				velocity.x = _loc_toVector.x * HUMAN_MOVEMENT_SPEED;
-				velocity.y = _loc_toVector.y * HUMAN_MOVEMENT_SPEED;
+				_aiUpdateTimer -= FlxG.elapsed;
+				if ( _aiUpdateTimer <= 0 ) {
+					var _loc_toVector:Vector3D = getSteering();
+					_loc_toVector.normalize();
+					if ( _aiState == HUMAN_STATE_WANDER ) {
+						_loc_toVector.scaleBy(0.35);
+					}
+					velocity.x = _loc_toVector.x * HUMAN_MOVEMENT_SPEED;
+					velocity.y = _loc_toVector.y * HUMAN_MOVEMENT_SPEED;
+				}
 				
 			}
             if (_hurt_counter > 0)
@@ -81,13 +93,30 @@
 		private function getSteering():Vector3D {
 			var _loc_toVector:Vector3D = _playstate.getClosestRatVector( this );
 			if ( _loc_toVector.length < HUMAN_CHASE_RAT_DISTANCE ) {
+				_aiState = HUMAN_STATE_CHASE;
 				return( _loc_toVector );
 			} else {
 				_loc_toVector = _playstate.getClosestDodoVector( this );
 				if ( _loc_toVector.length < HUMAN_CHASE_DODO_DISTANCE ) {
+					_aiState = HUMAN_STATE_CHASE;
 					return ( _loc_toVector );
 				}
 			}
+			
+			if (_aiState == HUMAN_STATE_WANDER) {
+				_aiUpdateTimer = 0.7;
+				_loc_toVector = new Vector3D( velocity.x, velocity.y );
+				_loc_toVector.normalize();
+				_loc_toVector = new Vector3D( _loc_toVector.x + 1 - (Math.random() * 2), _loc_toVector.y + 1 - (Math.random() * 2) );
+				return _loc_toVector;
+			}
+			
+			if ( velocity.x == 0 && velocity.y == 0) {
+				_aiState = HUMAN_STATE_WANDER;
+				_loc_toVector = new Vector3D( 1 - (Math.random() * 2), 1 - (Math.random() * 2) );
+				return _loc_toVector;
+			}
+			
 			return ( new Vector3D() );
 		}
         

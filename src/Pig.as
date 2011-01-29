@@ -69,6 +69,9 @@
 				var _loc_toVector:Vector3D = getSteering();
 				if ( _loc_toVector ) {
 					_loc_toVector.normalize();
+					if ( _aiState == PIG_STATE_APPROACH ) {
+						_loc_toVector.scaleBy(0.5);
+					}
 					velocity.x = _loc_toVector.x * PIG_MOVEMENT_SPEED;
 					velocity.y = _loc_toVector.y * PIG_MOVEMENT_SPEED;
 				} else if ( _aiUpdateTimer <= 0 ) {

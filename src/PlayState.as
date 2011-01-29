@@ -221,7 +221,7 @@ package
 			return ( -1);
 		}
 		
-		protected function addSprite(sprite:FlxSprite, destArray:Array) : void
+		public function addSprite(sprite:FlxSprite, destArray:Array) : void
 		{
 			destArray.push(sprite);
 			lyrSprites.add(sprite);

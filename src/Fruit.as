@@ -92,7 +92,6 @@ package
 			var launchAngle : Number = Math.random() * Math.PI * 2;
 			projectionVector = new Point( launchDistance * Math.cos(launchAngle), launchDistance * Math.sin(launchAngle) );
 			launchFeet = new Point( feetX, feetY );
-			launchDistance = Math.sqrt( projectionVector.x * projectionVector.x + projectionVector.y + projectionVector.y );
 			var launchTime:Number = Math.random() * 2 + 1; // max 3 seconds
 			launchSpeed = new Point( launchDistance / launchTime, 0 );
 			x = originalX;

@@ -86,13 +86,13 @@ package
 			}
         }
 		
-		public function launch(originalX:Number, originalY:Number, feetX: Number, feetY: Number) : void
+		public function launch(originalX:Number, originalY:Number, feetX: Number, feetY: Number, dirX : Number, dirY : Number) : void
 		{
-			launchDistance = Math.random() * 200 + 30;
-			var launchAngle : Number = Math.random() * Math.PI * 2;
-			projectionVector = new Point( launchDistance * Math.cos(launchAngle), launchDistance * Math.sin(launchAngle) );
+			launchDistance = Math.random() * 50 + 10;
+			launchDistance = 250;
+			//var launchAngle : Number = Math.random() * Math.PI * 2;
+			projectionVector = new Point( launchDistance * dirX, launchDistance * dirY );
 			launchFeet = new Point( feetX, feetY );
-			launchDistance = Math.sqrt( projectionVector.x * projectionVector.x + projectionVector.y + projectionVector.y );
 			var launchTime:Number = Math.random() * 2 + 1; // max 3 seconds
 			launchSpeed = new Point( launchDistance / launchTime, 0 );
 			x = originalX;

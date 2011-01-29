@@ -13,9 +13,13 @@ package
 		private var imgHeight:Number;
 		private var fruitTimer:Number;
 		
-        public function Tree(X:Number,Y:Number):void
+		private var _playstate:PlayState;
+		
+        public function Tree(X:Number,Y:Number, p:PlayState):void
         {
 			super(X, Y);
+			
+			_playstate = p;
 			
 			var index:Number = Math.floor(Math.random() * 3);
 			var ImgData:Bitmap;
@@ -62,7 +66,7 @@ package
 					offset.y = 161;
 				break;
 			}
-			fruitTimer = 1; // Math.random() * 10 + 5;
+			fruitTimer = Math.random() * 10 + 5;
         }
 		
         override public function update():void
@@ -91,7 +95,7 @@ package
 			var feetX : Number = x + width / 2;
 			var feetY : Number = y + height / 2;
 			
-			var fruit:Fruit = new Fruit(oX, oY);
+			var fruit:Fruit = new Fruit(oX, oY, _playstate);
 			fruit.launch( oX, oY, feetX, feetY );
 			
 			return fruit;

@@ -14,7 +14,7 @@ package
 		protected var BackgroundImg:Class;
 		
         public var _player:Player;
-        private var _block_map:FlxTilemap;
+        public var _block_map:FlxTilemap;
 		private var _background:Background;
 
 		
@@ -22,13 +22,14 @@ package
         public static var lyrSprites:FlxLayer;
         public static var lyrHUD:FlxLayer;
 		
-		protected var _transp_tile:String
-		protected var _rats:Array;
-		protected var _dodos:Array;
-		protected var _humans:Array;
-		protected var _stones:Array;
-		protected var _trees:Array;
-		protected var _fruits:Array;
+		protected var _transparent_tile:String
+		public var _rats:Array;
+		public var _dodos:Array;
+		public var _humans:Array;
+		public var _stones:Array;
+		public var _trees:Array;
+		public var _fruits:Array;
+		public var _seeds:Array;
         
         override public function PlayState():void
         {
@@ -55,6 +56,7 @@ package
 			_stones = new Array();
 			_trees = new Array();
 			_fruits = new Array();
+			_seeds = new Array();
 	
             FlxG.follow(_player,2.5);
             FlxG.followAdjust(0.5, 0.5);
@@ -91,7 +93,7 @@ package
 				if (rows.length > 0) { 
 					col = 0;
 					for each (var tiles:String in rows.split(",")) {
-						if (tiles == _transp_tile) // the magick number! probably different in every map :(
+						if (tiles == _transparent_tile) // the magick number! probably different in every map :(
 							BlockMap += "0,";
 						else
 							BlockMap += "1,";
@@ -128,7 +130,12 @@ package
 					addSprite(tree.getFruit(), _fruits);
 			}
 			
-			// TODO: player eats fruit
+			for each(var fruit:Fruit in _fruits) {
+				if ( _player.overlaps(fruit) ) {
+					_player.eat();
+					removeEntity(fruit, _fruits);
+				}
+			}
 			
 			
 			//if (_spike_map.overlaps(_player)) {
@@ -200,6 +207,12 @@ package
 		{
 			destArray.push(sprite);
 			lyrSprites.add(sprite);
+		}
+		
+		public function removeEntity(entity:FlxSprite, array:Array) : void
+		{
+			array = array.splice( array.indexOf( entity ), 1);
+			entity.kill();
 		}
     }    
 } 

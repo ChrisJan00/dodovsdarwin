@@ -13,6 +13,8 @@
 		
 		private const PLAYER_MOVEMENT_SPEED:Number = 500;
 		
+		private var eatenFruitCount:Number = 0;
+		
         public function  Player(X:Number,Y:Number, p:PlayState):void
         {
             super(X, Y);
@@ -142,15 +144,10 @@
 			if (Y == -1) { Y = y; }
 		}
 		
-		//public function adjustScaleToHeight():void
-		//{
-			// in the middle of the map, scale = 1.0
-			// on the top 5/6, on the bottom 7/6
-			//var newScale:Number = (y + 2400)/2880;
-			//scale.x = newScale;
-			//scale.y = newScale;
-		//}
-            
+		public function eat() : void
+		{
+			eatenFruitCount += 1;
+		}
     }
     
 } 

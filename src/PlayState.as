@@ -11,13 +11,16 @@ package
 		protected var BlockMap:String;
         protected var SpikeMap:String;
 		
-        private var _player:Player;
+        public var _player:Player;
+        private var _rat:Rat;
         private var _block_map:FlxTilemap;
 		private var _spike_map:FlxTilemap;
 		
 	    public static var lyrStage:FlxLayer;
         public static var lyrSprites:FlxLayer;
         public static var lyrHUD:FlxLayer;
+		
+		protected var _rats:Vector.<Rat>;
         
         override public function PlayState():void
         {
@@ -34,6 +37,7 @@ package
             _player = new Player(48, 240, this);
             lyrSprites.add(_player);
 			
+			_rats = new Vector.<Rat>();
 			
             FlxG.follow(_player,2.5);
             FlxG.followAdjust(0.5, 0.5);

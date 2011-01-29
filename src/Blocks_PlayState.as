@@ -14,6 +14,10 @@ package
             super();
 			LevelMap = _LevelMap;			
 			super.Init();
+			
+			var _loc_rat:Rat = new Rat(60, 200, this);
+			_rats.push(_loc_rat);
+            lyrSprites.add(_loc_rat);
 		}
         
     }    

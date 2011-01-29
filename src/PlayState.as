@@ -116,11 +116,13 @@ package
 			_player.collideArray(_trees);
 			
 			for each(var rat:Rat in _rats) {
+				_block_map.collide(rat);
 				rat.collideArray(_stones);
 				rat.collideArray(_trees);
 			}
 				
 			for each(var human:FlxSprite in _humans) {
+				_block_map.collide(human);
 				human.collideArray(_stones);
 				human.collideArray(_trees);
 			}

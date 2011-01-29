@@ -15,8 +15,8 @@
 		private const PLAYER_MOVEMENT_SPEED:Number = 500;
 		
 		private var shitBlocked:Boolean = false;
-		private var eatenFruitCount:Number = 0;
-		private const SHIT_THRESHOLD:Number = 5;
+		public var eatenFruitCount:Number = 0;
+		public const SHIT_THRESHOLD:Number = 5;
 		
         public function  Player(X:Number,Y:Number, p:PlayState):void
         {

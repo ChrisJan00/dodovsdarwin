@@ -32,13 +32,12 @@ package
 			_iconMask.graphics.drawRect( 0, 0, _iconFilling.width, _iconFilling.height);
 			_iconMask.graphics.endFill();
 			addChild( _iconMask );
-			
 			_iconFilling.mask = _iconMask;
 		}
 		
 		public function update():void {
 			if (_playState._player) {
-				_iconMask.y = Math.min ( 0, _iconFilling.height - ( _playState._player.eatenFruitCount / _playState._player.SHIT_THRESHOLD )) * _iconFilling.height;
+				_iconMask.y = Math.max ( 0, _iconFilling.height - ( _playState._player.eatenFruitCount / _playState._player.SHIT_THRESHOLD ) * _iconFilling.height);
 			}
 		}
 		

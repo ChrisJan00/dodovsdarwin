@@ -33,6 +33,8 @@ package
 		public var _fruits:Array;
 		public var _seeds:Array;
 		public var _pigs:Array;
+		
+		private var _poopDisplay:PoopDisplay;
         
         override public function PlayState():void
         {
@@ -84,6 +86,10 @@ package
             this.add(lyrSprites);
             this.add(lyrHUD);
 			
+			_poopDisplay = new PoopDisplay( this );
+			_poopDisplay.x = FlxG.width - 60;
+			_poopDisplay.y = FlxG.height - 70;
+			addChild( _poopDisplay );
         }
 		
 		public function parseMap(map:String):void
@@ -174,8 +180,8 @@ package
 			if (FlxG.keys.justPressed("ESC")) {
 			}
             
-			
 			lyrSprites.sortByY();
+			_poopDisplay.update();
         }
 		
 		public function reload():void

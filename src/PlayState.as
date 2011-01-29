@@ -14,7 +14,7 @@ package
 		protected var BackgroundImg:Class;
 		
         public var _player:Player;
-        private var _block_map:FlxTilemap;
+        public var _block_map:FlxTilemap;
 		private var _background:Background;
 
 		
@@ -200,6 +200,12 @@ package
 		{
 			destArray.push(sprite);
 			lyrSprites.add(sprite);
+		}
+		
+		public function removeFruit(fruit:Fruit) : void
+		{
+			_fruits = _fruits.splice( _fruits.indexOf( fruit ), 1);
+			fruit.kill();
 		}
     }    
 } 

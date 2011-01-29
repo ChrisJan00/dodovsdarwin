@@ -26,8 +26,7 @@ package
 			addSprite( new Human(600, 320, this), _humans );
 			addSprite( new Stone(640, 480), _stones );
 			addSprite( new Stone(440, 580), _stones );
-			addSprite( new Tree(640, 280), _trees );
-			addSprite( new Fruit(320, 280), _fruits );
+			addSprite( new Tree(640, 280, this), _trees );
 		}
 	    
     }    

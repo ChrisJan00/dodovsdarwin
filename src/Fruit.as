@@ -18,9 +18,13 @@ package
 		private var launchState: Number;
 		private var gravity: Number;
 		
-        public function Fruit(X:Number,Y:Number):void
+		private var _playstate:PlayState;
+		
+        public function Fruit(X:Number,Y:Number, p:PlayState):void
         {
 			super(X, Y);
+			
+			_playstate = p;
 			
 			var index:Number = Math.floor(Math.random() * 3);
 			var ImgData:Bitmap;
@@ -65,7 +69,13 @@ package
 					if (launchState == 1)
 						launchState = 2;
 					else if (launchState == 2)
+					{
 						launchState = 0;
+						if ( _playstate._block_map.overlaps( this ) ) {
+							_playstate.removeFruit( this );
+							return;
+						}
+					}
 					launchVector.y = -launchVector.y;
 					launchSpeed.y = -launchSpeed.y / 2;
 				}

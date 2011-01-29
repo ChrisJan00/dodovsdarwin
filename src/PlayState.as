@@ -26,6 +26,7 @@ package
 		protected var _dodos:Array;
 		protected var _humans:Array;
 		protected var _stones:Array;
+		protected var _trees:Array;
         
         override public function PlayState():void
         {
@@ -50,6 +51,7 @@ package
             lyrSprites.add(_player);
 			
 			_stones = new Array();
+			_trees = new Array();
 	
             FlxG.follow(_player,2.5);
             FlxG.followAdjust(0.5, 0.5);
@@ -106,13 +108,16 @@ package
 			
             _block_map.collide(_player);
 			_player.collideArray(_stones);
+			_player.collideArray(_trees);
 			
 			for each(var rat:Rat in _rats) {
 				rat.collideArray(_stones);
+				rat.collideArray(_trees);
 			}
 				
 			for each(var human:FlxSprite in _humans) {
 				human.collideArray(_stones);
+				human.collideArray(_trees);
 			}
 			
 			

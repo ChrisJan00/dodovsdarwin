@@ -21,21 +21,18 @@ package
 			super.Init();
 			
 			var _loc_flxSprite:FlxSprite
-			_loc_flxSprite = new Rat(360, 200, this);
-			_rats.push(_loc_flxSprite);
-            lyrSprites.add(_loc_flxSprite);
-			_loc_flxSprite = new Rat(460, 600, this);
-			_rats.push(_loc_flxSprite);
-            lyrSprites.add(_loc_flxSprite);
-			_loc_flxSprite = new Human(600, 320, this);
-			_humans.push(_loc_flxSprite);
-            lyrSprites.add(_loc_flxSprite);
-			_loc_flxSprite = new Stone(640, 480);
-			_stones.push(_loc_flxSprite);
-			lyrSprites.add(_loc_flxSprite);
-			_loc_flxSprite = new Stone(440, 580);
-			_stones.push(_loc_flxSprite);
-			lyrSprites.add(_loc_flxSprite);
+			addSprite( new Rat(360, 200, this), _rats );
+			addSprite( new Rat(460, 600, this), _rats );
+			addSprite( new Human(600, 320, this), _humans );
+			addSprite( new Stone(640, 480), _stones );
+			addSprite( new Stone(440, 580), _stones );
+			addSprite( new Tree(640, 280), _trees );
+		}
+		
+		protected function addSprite(sprite:FlxSprite, destArray:Array) : void
+		{
+			destArray.push(sprite);
+			lyrSprites.add(sprite);
 		}
         
     }    

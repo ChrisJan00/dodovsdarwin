@@ -15,7 +15,7 @@
 		private const PLAYER_MOVEMENT_SPEED:Number = 500;
 		
 		private var eatenFruitCount:Number = 0;
-		private const SHIT_THRESHOLD:Number = 10;
+		private const SHIT_THRESHOLD:Number = 1; // TODO Should be 10
 		
         public function  Player(X:Number,Y:Number, p:PlayState):void
         {

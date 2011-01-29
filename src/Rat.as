@@ -27,6 +27,8 @@
 		private const RAT_WANDER_AIUPDATE_DELAY_MIN:Number = 0.5;
 		private const RAT_WANDER_AIUPDATE_DELAY_RANGE:Number = 2.5;
 		
+		private var _lastWanderVector:Vector3D;
+		
         public function  Rat(X:Number,Y:Number, p:PlayState):void
         {
             super(X, Y);
@@ -73,6 +75,7 @@
 				} else if ( _aiUpdateTimer <= 0 ) {
 					_loc_toVector = getWander();
 					_loc_toVector.normalize();
+					_loc_toVector.scaleBy(0.9);
 					velocity.x = _loc_toVector.x * RAT_MOVEMENT_SPEED;
 					velocity.y = _loc_toVector.y * RAT_MOVEMENT_SPEED;
 				}
@@ -80,17 +83,14 @@
             if (_hurt_counter > 0)
             {
                 play("hurt");
-                
             }
             else            
             {
-				
 				if (velocity.x == 0 && velocity.y == 0) {
 					play("stopped");
 				} else {
 					play("normal");
 				}
-				
 				if (health <= 0) { _playstate.reload(); }
             }
 			
@@ -115,18 +115,15 @@
 		}
 		
 		private function getWander():Vector3D {
-			var _loc_toVector:Vector3D;
 			if (_aiState == RAT_STATE_WANDER ) {
 				_aiUpdateTimer = ( RAT_WANDER_AIUPDATE_DELAY_MIN + Math.random() * RAT_WANDER_AIUPDATE_DELAY_RANGE );
-				_loc_toVector = new Vector3D( velocity.x, velocity.y );
-				_loc_toVector.normalize();
-				_loc_toVector = new Vector3D( _loc_toVector.x + 1 - (Math.random() * 2), _loc_toVector.y + 1 - (Math.random() * 2) );
-				return _loc_toVector;
+				_lastWanderVector.normalize();
+				_lastWanderVector = new Vector3D( _lastWanderVector.x + 1 - (Math.random() * 2), _lastWanderVector.y + 1 - (Math.random() * 2) );
+				return _lastWanderVector;
 			}
-			
 			_aiState = RAT_STATE_WANDER;
-			_loc_toVector = new Vector3D( 1 - (Math.random() * 2), 1 - (Math.random() * 2) );
-			return _loc_toVector;
+			_lastWanderVector = new Vector3D( 1 - (Math.random() * 2), 1 - (Math.random() * 2) );
+			return _lastWanderVector;
 		}
         
         override public function hitFloor(Contact:FlxCore=null):Boolean

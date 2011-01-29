@@ -69,7 +69,7 @@
 				} else if ( _aiUpdateTimer <= 0 ) {
 					_loc_toVector = getWander();
 					_loc_toVector.normalize();
-					_loc_toVector.scaleBy(0.35);
+					_loc_toVector.scaleBy( 0.4 - Math.random() * 0.2 );
 					velocity.x = _loc_toVector.x * HUMAN_MOVEMENT_SPEED;
 					velocity.y = _loc_toVector.y * HUMAN_MOVEMENT_SPEED;
 				}

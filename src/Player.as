@@ -125,12 +125,7 @@
 				return super.hurt(Damage);
 			}			
             
-        }       
-		
-		override public function kill():void
-		{
-			//reload();
-		}
+        }
 		
 		public function reload():void
 		{

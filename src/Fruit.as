@@ -6,9 +6,9 @@ package
 
     public class Fruit extends FlxSprite
     {
-        [Embed(source = "img/egg_01.png")] private var ImgFruit01:Class;
-        [Embed(source = "img/egg_02.png")] private var ImgFruit02:Class;
-        [Embed(source = "img/egg_03.png")] private var ImgFruit03:Class;
+        [Embed(source = "img/fruit_01.png")] private var ImgFruit01:Class;
+        [Embed(source = "img/fruit_02.png")] private var ImgFruit02:Class;
+        [Embed(source = "img/fruit_03.png")] private var ImgFruit03:Class;
 		
 		private var projectionVector: Point;
 		private var launchVector: Point;

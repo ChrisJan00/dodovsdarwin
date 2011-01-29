@@ -149,8 +149,7 @@
             if (health > 0) {
 				_hurt_counter = 1.0;
 				return super.hurt(Damage);
-			}			
-            
+			}	
         }
     }
 } 

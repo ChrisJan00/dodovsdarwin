@@ -102,5 +102,18 @@ package org.flixel
 		 * Returns the array of children
 		 */
 		public function children():Array { return _children; }
+		
+		public function sortByY():void {
+			_children.sort( compareY );
+		}
+		
+		private function compareY( a_obj1:FlxCore, a_obj2:FlxCore ):Number {
+			
+			if ( a_obj1.y + a_obj1.height/2 > a_obj2.y + a_obj2.height/2 ) {
+				return 1;
+			}
+			return -1;
+			
+		}
 	}
 }

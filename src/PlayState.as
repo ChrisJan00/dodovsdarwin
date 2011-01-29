@@ -107,8 +107,14 @@ package
             _block_map.collide(_player);
 			_player.collideArray(_stones);
 			
-			for each(var rat:Rat in _rats)
+			for each(var rat:Rat in _rats) {
 				rat.collideArray(_stones);
+			}
+				
+			for each(var human:FlxSprite in _humans) {
+				human.collideArray(_stones);
+			}
+			
 			
 			//if (_spike_map.overlaps(_player)) {
 				//_player.kill()
@@ -120,6 +126,8 @@ package
 			if (FlxG.keys.justPressed("ESC")) {
 			}
             
+			
+			lyrSprites.sortByY();
         }
 		
 		public function reload():void

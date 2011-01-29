@@ -51,7 +51,19 @@ package
 			imgX = x;
 			imgY = y;
 			
+			fruitTimer = Math.random() * 10 + 5;
+			if (adult)
+				growthTimer = 0;
+			else {
+				scale.x = childSize;
+				scale.y = childSize;
+			}
+			if (scale.y <= 1) {
+				y = imgY + imgHeight * (1 - scale.y) * 0.45;
+			}
 			fixed = true;
+			
+			
 			loadGraphic(Img, false, false, imgWidth, imgHeight);
 			
 			switch(index) {
@@ -74,13 +86,7 @@ package
 					offset.y = 161;
 				break;
 			}
-			fruitTimer = Math.random() * 10 + 5;
-			if (adult)
-				growthTimer = 0;
-			else {
-				scale.x = childSize;
-				scale.y = childSize;
-			}
+			
         }
 		
         override public function update():void
@@ -114,8 +120,9 @@ package
 			
 			
 			// originalPos
-			var oX : Number = imgX + (Math.random() * 0.5 + 0.25) * imgWidth;
-			var oY : Number = imgY + (Math.random() * 0.25 + 0.25) * imgHeight;
+			var oX : Number = imgX - offset.x + (Math.random() * 0.5 + 0.25) * imgWidth;
+			var oY : Number = imgY - offset.y + (Math.random() * 0.25 + 0.25) * imgHeight;
+			
 			// feetPos
 			var feetX : Number = x + width / 2;
 			var feetY : Number = y + height / 2;

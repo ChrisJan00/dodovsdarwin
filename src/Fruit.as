@@ -15,7 +15,7 @@ package
 		private var launchSpeed : Point;
 		private var launchFeet : Point;
 		private var launchDistance : Number;
-		private var launchState: Number;
+		private var launchState: Number = 0;
 		private var gravity: Number;
 		
 		private var _playstate:PlayState;
@@ -65,6 +65,7 @@ package
 				launchSpeed.y = launchSpeed.y + gravity * FlxG.elapsed;
 				launchVector.x = launchVector.x + launchSpeed.x * FlxG.elapsed;
 				launchVector.y = launchVector.y + launchSpeed.y * FlxG.elapsed;
+				
 				if (launchVector.y > 0) {
 					if (launchState == 1)
 						launchState = 2;
@@ -91,12 +92,12 @@ package
 			launchDistance = Math.random() * 200 + 30;
 			var launchAngle : Number = Math.random() * Math.PI * 2;
 			projectionVector = new Point( launchDistance * Math.cos(launchAngle), launchDistance * Math.sin(launchAngle) );
-			launchFeet = new Point( feetX, feetY );
+			launchFeet = new Point( originalX, feetY );
 			var launchTime:Number = Math.random() * 2 + 1; // max 3 seconds
 			launchSpeed = new Point( launchDistance / launchTime, 0 );
 			x = originalX;
 			y = originalY;
-			launchVector = new Point( 0, originalY - feetY );
+			launchVector = new Point( 0, originalY - feetY);
 			
 			launchState = 1;
 		}

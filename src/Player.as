@@ -14,8 +14,9 @@
 		
 		private const PLAYER_MOVEMENT_SPEED:Number = 500;
 		
-		public var eatenFruitCount:Number = 0;
-		public const SHIT_THRESHOLD:Number = 5; // TODO Should be 10
+		private var shitBlocked:Boolean = false;
+		private var eatenFruitCount:Number = 0;
+		private const SHIT_THRESHOLD:Number = 5;
 		
         public function  Player(X:Number,Y:Number, p:PlayState):void
         {
@@ -74,8 +75,12 @@
 				}
 				if (FlxG.keys.X || FlxG.keys.CONTROL || FlxG.keys.SPACE) {
 					// Pooing time!
-					unleashShit();
-				}
+					if (!shitBlocked) {
+						shitBlocked = true;
+						unleashShit();
+					}
+				} else if (shitBlocked) 
+					shitBlocked = false;
 			}
 			
 			if (acceleration.x != 0 && acceleration.y != 0) {

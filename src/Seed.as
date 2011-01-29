@@ -6,16 +6,16 @@ package
 
     public class Seed extends FlxSprite
     {
-        [Embed(source = "img/egg_01.png")] private var ImgSeed01:Class;
-        [Embed(source = "img/egg_02.png")] private var ImgSeed02:Class;
-        [Embed(source = "img/egg_03.png")] private var ImgSeed03:Class;
+        [Embed(source = "img/seed_01.png")] private var ImgSeed01:Class;
+        [Embed(source = "img/seed_02.png")] private var ImgSeed02:Class;
+        [Embed(source = "img/seed_03.png")] private var ImgSeed03:Class;
 		
 		private var projectionVector: Point;
 		private var launchVector: Point;
 		private var launchSpeed : Point;
 		private var launchFeet : Point;
 		private var launchDistance : Number;
-		private var launchState: Number;
+		private var launchState: Number = 0;
 		private var gravity: Number;
 		
 		private var germinationTimer:Number = 5;

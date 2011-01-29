@@ -16,6 +16,16 @@
 		private const RAT_CHASE_DODO_DISTANCE:Number = 100;
 		private const RAT_FLEE_HUMAN_DISTANCE:Number = 100;
 		
+		private var _aiState:String;
+		private var _aiUpdateTimer:Number = 0;
+		
+		private const RAT_STATE_WANDER:String = "HumanStateWander";
+		private const RAT_STATE_CHASE:String = "HumanStateChase";
+		private const RAT_STATE_FLEE:String = "HumanStateFlee";
+		
+		private const RAT_WANDER_AIUPDATE_DELAY_MAX:Number = 3;
+		private const RAT_WANDER_AIUPDATE_DELAY_MIN:Number = 0.5;
+		
         public function  Rat(X:Number,Y:Number, p:PlayState):void
         {
             super(X, Y);
@@ -27,8 +37,8 @@
             maxVelocity.x = 100;
             maxVelocity.y = 100;
             health = 1;         
-            drag.x = 400;
-            drag.y = 400;
+            drag.x = 40;
+            drag.y = 40;
 			
             width = 10;
             height = 14;
@@ -51,10 +61,16 @@
             }
 			else {
 				
-				var _loc_toVector:Vector3D = getSteering();
-				_loc_toVector.normalize();
-				velocity.x = _loc_toVector.x * RAT_MOVEMENT_SPEED;
-				velocity.y = _loc_toVector.y * RAT_MOVEMENT_SPEED;
+				_aiUpdateTimer -= FlxG.elapsed;
+				if ( _aiUpdateTimer <= 0 ) {
+					var _loc_toVector:Vector3D = getSteering();
+					_loc_toVector.normalize();
+					if ( _aiState == RAT_STATE_WANDER ) {
+						_loc_toVector.scaleBy(1);
+					}
+					velocity.x = _loc_toVector.x * RAT_MOVEMENT_SPEED;
+					velocity.y = _loc_toVector.y * RAT_MOVEMENT_SPEED;
+				}
 				
 			}
             if (_hurt_counter > 0)
@@ -81,14 +97,31 @@
 		private function getSteering():Vector3D {
 			var _loc_toVector:Vector3D = _playstate.getClosestDodoVector( this );
 			if ( _loc_toVector.length < RAT_CHASE_DODO_DISTANCE ) {
+				_aiState = RAT_STATE_CHASE;
 				return( _loc_toVector );
 			} else {
 				_loc_toVector = _playstate.getClosestHumanVector( this );
 				if ( _loc_toVector.length < RAT_FLEE_HUMAN_DISTANCE ) {
-					_loc_toVector.scaleBy( -1);
+					_aiState = RAT_STATE_FLEE;
+					_loc_toVector.scaleBy( -1 );
 					return ( _loc_toVector );
 				}
 			}
+			
+			if (_aiState == RAT_STATE_WANDER) {
+				_aiUpdateTimer = ( RAT_WANDER_AIUPDATE_DELAY_MAX - Math.random() * ( RAT_WANDER_AIUPDATE_DELAY_MAX - RAT_WANDER_AIUPDATE_DELAY_MIN ) );
+				_loc_toVector = new Vector3D( velocity.x, velocity.y );
+				_loc_toVector.normalize();
+				_loc_toVector = new Vector3D( _loc_toVector.x + 1 - (Math.random() * 2), _loc_toVector.y + 1 - (Math.random() * 2) );
+				return _loc_toVector;
+			}
+			
+			if ( velocity.x == 0 && velocity.y == 0) {
+				_aiState = RAT_STATE_WANDER;
+				_loc_toVector = new Vector3D( 1 - (Math.random() * 2), 1 - (Math.random() * 2) );
+				return _loc_toVector;
+			}
+			
 			return ( new Vector3D() );
 		}
         

@@ -23,6 +23,7 @@ package
         public static var lyrHUD:FlxLayer;
 		
 		protected var _transp_tile:String
+		protected var _rats:Vector.<Rat>;
         
         override public function PlayState():void
         {
@@ -41,6 +42,7 @@ package
 			
 			_background = new Background(BackgroundImg);
 			lyrStage.add(_background);
+			_rats = new Vector.<Rat>();
 			
             FlxG.follow(_player,2.5);
             FlxG.followAdjust(0.5, 0.5);

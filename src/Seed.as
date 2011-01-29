@@ -4,11 +4,11 @@ package
     import org.flixel.*;
 	import flash.display.Bitmap;
 
-    public class Fruit extends FlxSprite
+    public class Seed extends FlxSprite
     {
-        [Embed(source = "img/egg_01.png")] private var ImgFruit01:Class;
-        [Embed(source = "img/egg_02.png")] private var ImgFruit02:Class;
-        [Embed(source = "img/egg_03.png")] private var ImgFruit03:Class;
+        [Embed(source = "img/egg_01.png")] private var ImgSeed01:Class;
+        [Embed(source = "img/egg_02.png")] private var ImgSeed02:Class;
+        [Embed(source = "img/egg_03.png")] private var ImgSeed03:Class;
 		
 		private var projectionVector: Point;
 		private var launchVector: Point;
@@ -20,7 +20,7 @@ package
 		
 		private var _playstate:PlayState;
 		
-        public function Fruit(X:Number,Y:Number, p:PlayState):void
+        public function Seed(X:Number,Y:Number, p:PlayState):void
         {
 			super(X, Y);
 			
@@ -32,16 +32,16 @@ package
 			
 			switch(index) {
 				case 0: 
-					ImgData = new ImgFruit01();
-					Img = ImgFruit01;
+					ImgData = new ImgSeed01();
+					Img = ImgSeed01;
 				break;
 				case 1:
-					ImgData = new ImgFruit02();
-					Img = ImgFruit02;
+					ImgData = new ImgSeed02();
+					Img = ImgSeed02;
 				break;
 				case 2:
-					ImgData = new ImgFruit03();
-					Img = ImgFruit03;
+					ImgData = new ImgSeed03();
+					Img = ImgSeed03;
 				break;
 			}
 			
@@ -72,7 +72,7 @@ package
 					{
 						launchState = 0;
 						if ( _playstate._block_map.overlaps( this ) ) {
-							_playstate.removeEntity( this, _playstate._fruits );
+							_playstate.removeEntity( this, _playstate._seeds );
 							return;
 						}
 					}

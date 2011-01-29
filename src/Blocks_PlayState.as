@@ -17,7 +17,7 @@ package
             super();
 			LevelMap = _LevelMap;	
 			BackgroundImg = _Background;
-			_transp_tile = "17";
+			_transparent_tile = "17";
 			super.Init();
 			
 			var _loc_flxSprite:FlxSprite

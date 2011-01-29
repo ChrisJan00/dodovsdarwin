@@ -4,9 +4,8 @@
 
     public class Player extends FlxSprite
     {
-        [Embed(source = "img/dodo.png")] private var ImgPlayer:Class;
+        [Embed(source = "img/dodo_walk.png")] private var ImgPlayer:Class;
         public var _max_health:int = 1;
-        public var _hurt_counter:Number = 0;
         private var _stars:Array;
 		private var _MaxVelocity_walking:int = 200;
 		private var _playstate:PlayState;
@@ -23,65 +22,51 @@
             super(X, Y);
 			
 			_playstate = p;
-            loadGraphic(ImgPlayer, false, true, 128, 127);
-     
+            loadGraphic(ImgPlayer, true, true, 70, 70);
+			
 			_MaxVelocity_walking = 200;
             maxVelocity.x = 100;
             maxVelocity.y = 100;
-            health = 1;         
+            health = 1;
             drag.x = 400;
             drag.y = 400;
 			
-            width = 49;
-            height = 40;
-            offset.x = 54;
-            offset.y = 87;
+            width = 33;
+            height = 17;
+            offset.x = 11;
+            offset.y = 49;
 			
-            //addAnimation("normal", [0, 1, 2, 3], 10);
-            //addAnimation("jump", [4, 5, 6], 25);
-            //addAnimation("attack", [4,5,6],10);
-            //addAnimation("stopped", [0]);
-            //addAnimation("hurt", [7,8,8,8,8,8,8,8],5);
-            //addAnimation("dead", [7, 8, 8], 5);
+            addAnimation("normal", [0, 1, 2, 3], 5);
+            addAnimation("stopped", [1]);
             facing = RIGHT;
         }
         override public function update():void
         {
-			if (_hurt_counter > 0) {
-				_hurt_counter -= FlxG.elapsed;
+			acceleration.x = acceleration.y = 0;
+			
+			//move left and right   
+			if (FlxG.keys.LEFT || FlxG.keys.A)	{
+				facing = LEFT;
+				acceleration.x = -1 * PLAYER_MOVEMENT_SPEED;
 			}
-			else {
-				acceleration.x = acceleration.y = 0;
-				
-				//move left and right   
-				if (FlxG.keys.LEFT || FlxG.keys.A)	{
-					facing = LEFT;
-					acceleration.x = -1 * PLAYER_MOVEMENT_SPEED;
-				}
-				if (FlxG.keys.RIGHT || FlxG.keys.D) {
-					facing = RIGHT;
-					acceleration.x = PLAYER_MOVEMENT_SPEED;
-				}
-				if (FlxG.keys.UP || FlxG.keys.W) {
-					// Commented out for now because of animation?
-					//facing = UP;
-					facing = RIGHT;
-					acceleration.y = -1 * PLAYER_MOVEMENT_SPEED;
-				}
-				if (FlxG.keys.DOWN || FlxG.keys.S)	{
-					//facing = DOWN;
-					facing = RIGHT;
-					acceleration.y = PLAYER_MOVEMENT_SPEED;
-				}
-				if (FlxG.keys.X || FlxG.keys.CONTROL || FlxG.keys.SPACE) {
-					// Pooing time!
-					if (!shitBlocked) {
-						shitBlocked = true;
-						unleashShit();
-					}
-				} else if (shitBlocked) 
-					shitBlocked = false;
+			if (FlxG.keys.RIGHT || FlxG.keys.D) {
+				facing = RIGHT;
+				acceleration.x = PLAYER_MOVEMENT_SPEED;
 			}
+			if (FlxG.keys.UP || FlxG.keys.W) {
+				acceleration.y = -1 * PLAYER_MOVEMENT_SPEED;
+			}
+			if (FlxG.keys.DOWN || FlxG.keys.S)	{
+				acceleration.y = PLAYER_MOVEMENT_SPEED;
+			}
+			if (FlxG.keys.X || FlxG.keys.CONTROL || FlxG.keys.SPACE) {
+				// Pooing time!
+				if (!shitBlocked) {
+					shitBlocked = true;
+					unleashShit();
+				}
+			} else if (shitBlocked) 
+				shitBlocked = false;
 			
 			if (acceleration.x != 0 && acceleration.y != 0) {
 				acceleration.x /= Math.pow(2, 0.5);
@@ -91,19 +76,14 @@
 			if (acceleration.x != 0 || acceleration.y != 0) {
 				_looking_angle = recomputeLookingAngle( acceleration.x, acceleration.y );
 			}
-			if (_hurt_counter > 0) {
-				//play("hurt");				
+			if (velocity.x == 0 && velocity.y == 0) {
+				play("stopped");
+			} else {
+				play("normal");
 			}
-			else {
-				if (velocity.x == 0 && velocity.y == 0) {
-					//play("stopped");
-				} else {
-					//play("normal");
-				}
-				
-				if (health <= 0) { 
-					_playstate.reload(); 
-				}
+			
+			if (health <= 0) { 
+				_playstate.reload(); 
 			}
 			
 			super.update();
@@ -122,15 +102,6 @@
 			if (vecx == 0 && vecy > 0) return Math.PI / 2;
 			return 0;
 		}
-                
-        override public function hurt(Damage:Number):void
-        {
-            if (health > 0) {
-				_hurt_counter = 1.0;
-				return super.hurt(Damage);
-			}			
-            
-        }
 		
 		public function reload():void
 		{

@@ -259,5 +259,10 @@ package
 			array = array.splice( array.indexOf( entity ), 1);
 			entity.kill();
 		}
+		
+		public function growTree(treeX:Number, treeY:Number) : void
+		{
+			addSprite( new Tree(treeX, treeY, this, false), _trees );
+		}
     }    
 } 

@@ -11,11 +11,17 @@ package
 		
 		private var imgWidth:Number;
 		private var imgHeight:Number;
-		private var fruitTimer:Number;
+		private var imgX:Number;
+		private var imgY:Number;
+		
+		private var fruitTimer:Number = 0;
+		private const growthLimit:Number = 6;
+		private var growthTimer:Number = growthLimit;
+		private const childSize:Number = 0.3;
 		
 		private var _playstate:PlayState;
 		
-        public function Tree(X:Number,Y:Number, p:PlayState):void
+        public function Tree(X:Number,Y:Number, p:PlayState, adult:Boolean = true):void
         {
 			super(X, Y);
 			
@@ -42,6 +48,8 @@ package
 			
 			imgWidth = (ImgData as Bitmap).width;
 			imgHeight = (ImgData as Bitmap).height;
+			imgX = x;
+			imgY = y;
 			
 			fixed = true;
 			loadGraphic(Img, false, false, imgWidth, imgHeight);
@@ -67,30 +75,47 @@ package
 				break;
 			}
 			fruitTimer = Math.random() * 10 + 5;
+			if (adult)
+				growthTimer = 0;
+			else {
+				scale.x = childSize;
+				scale.y = childSize;
+			}
         }
 		
         override public function update():void
         {			
             super.update();
-			if (fruitTimer > 0)
+			if (growthTimer > 0) {
+				growthTimer -= FlxG.elapsed; 
+				var newScale:Number = (growthLimit - growthTimer) * (1 - childSize) / growthLimit + childSize;
+				if (growthTimer <= 0)
+					newScale = 1;
+				scale.x = newScale;
+				scale.y = newScale;
+			}
+				
+			if (growthTimer <= 0 && fruitTimer > 0)
 				fruitTimer -= FlxG.elapsed;
+				
+			if (scale.y <= 1) {
+				y = imgY + imgHeight * (1 - scale.y) * 0.45;
+			}
         }
 		
 		public function wantsFruit():Boolean
 		{
-			return fruitTimer <= 0;
-			
+			return growthTimer <= 0 && fruitTimer <= 0;
 		}
 		
 		public function getFruit():Fruit
 		{
 			fruitTimer = Math.random() * 10 + 5;
 			
-			var spriteX : Number = x - offset.x;
-			var spriteY : Number = y - offset.y;
+			
 			// originalPos
-			var oX : Number = spriteX + (Math.random() * 0.5 + 0.25) * imgWidth;
-			var oY : Number = spriteY + (Math.random() * 0.25 + 0.25) * imgHeight;
+			var oX : Number = imgX + (Math.random() * 0.5 + 0.25) * imgWidth;
+			var oY : Number = imgY + (Math.random() * 0.25 + 0.25) * imgHeight;
 			// feetPos
 			var feetX : Number = x + width / 2;
 			var feetY : Number = y + height / 2;

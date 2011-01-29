@@ -107,6 +107,9 @@ package
             _block_map.collide(_player);
 			_player.collideArray(_stones);
 			
+			for each(var rat:Rat in _rats)
+				rat.collideArray(_stones);
+			
 			//if (_spike_map.overlaps(_player)) {
 				//_player.kill()
 				//_player.hurt(1);

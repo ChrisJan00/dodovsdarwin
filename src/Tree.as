@@ -66,7 +66,7 @@ package
 					offset.y = 161;
 				break;
 			}
-			fruitTimer = 1; // Math.random() * 10 + 5;
+			fruitTimer = Math.random() * 10 + 5;
         }
 		
         override public function update():void

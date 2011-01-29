@@ -7,7 +7,7 @@
 	{			
 		public function Main() 
 		{
-			super(320, 240, Blocks_PlayState, 2); 
+			super(640, 480, Blocks_PlayState, 1); 
 			showLogo = false;
 		}
 		

@@ -30,6 +30,12 @@ package
 			_loc_flxSprite = new Human(600, 320, this);
 			_humans.push(_loc_flxSprite);
             lyrSprites.add(_loc_flxSprite);
+			_loc_flxSprite = new Stone(640, 480);
+			_stones.push(_loc_flxSprite);
+			lyrSprites.add(_loc_flxSprite);
+			_loc_flxSprite = new Stone(440, 580);
+			_stones.push(_loc_flxSprite);
+			lyrSprites.add(_loc_flxSprite);
 		}
         
     }    

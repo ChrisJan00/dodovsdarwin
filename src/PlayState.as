@@ -15,6 +15,7 @@ package
         public var _player:Player;
         private var _block_map:FlxTilemap;
 		private var _background:Background;
+
 		
 	    public static var lyrStage:FlxLayer;
         public static var lyrSprites:FlxLayer;
@@ -24,6 +25,7 @@ package
 		protected var _rats:Vector.<FlxSprite>;
 		protected var _dodos:Vector.<FlxSprite>;
 		protected var _humans:Vector.<FlxSprite>;
+		protected var _stones:Array;
         
         override public function PlayState():void
         {
@@ -39,14 +41,16 @@ package
 			_rats = new Vector.<FlxSprite>();
 			_dodos = new Vector.<FlxSprite>();
 			_humans = new Vector.<FlxSprite>();
+
+			_background = new Background(BackgroundImg);
+			lyrStage.add(_background);
 			
             _player = new Player(648, 240, this);
 			_dodos.push( _player );
             lyrSprites.add(_player);
 			
-			_background = new Background(BackgroundImg);
-			lyrStage.add(_background);
-			
+			_stones = new Array();
+	
             FlxG.follow(_player,2.5);
             FlxG.followAdjust(0.5, 0.5);
             FlxG.followBounds(1,1,1280-1,960-1);
@@ -101,6 +105,7 @@ package
             //map collisions
 			
             _block_map.collide(_player);
+			_player.collideArray(_stones);
 			
 			//if (_spike_map.overlaps(_player)) {
 				//_player.kill()

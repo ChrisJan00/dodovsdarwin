@@ -223,12 +223,12 @@ package
 			var _loc_closestDistanceSquare:Number = Number.MAX_VALUE;
 			
 			for each (var flxSprite:FlxSprite in a_flxSprites) {
-				if ( Math.pow( a_target.x - flxSprite.x, 2) + Math.pow( a_target.y - flxSprite.y, 2) < _loc_closestDistanceSquare ) {
+				if ( Math.pow( a_target.cX - flxSprite.cX, 2) + Math.pow( a_target.cY - flxSprite.cY, 2) < _loc_closestDistanceSquare ) {
 					_loc_closestFlxSprite = flxSprite;
-					_loc_closestDistanceSquare = Math.pow( a_target.x - flxSprite.x, 2) + Math.pow( a_target.y - flxSprite.y, 2);
+					_loc_closestDistanceSquare = Math.pow( a_target.cX - flxSprite.cX, 2) + Math.pow( a_target.cY - flxSprite.cY, 2);
 				}
 			}
-			return ( new Vector3D( _loc_closestFlxSprite.x - a_target.x, _loc_closestFlxSprite.y - a_target.y ) );
+			return ( new Vector3D( _loc_closestFlxSprite.cX - a_target.cX, _loc_closestFlxSprite.cY - a_target.cY ) );
 		}
 		
 		/*// TODO Remove if no longer needed

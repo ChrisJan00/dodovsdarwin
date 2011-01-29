@@ -678,5 +678,12 @@ package org.flixel
 		{
 			_pixels = _framePixels = Pixels;
 		}
+		
+		public function get cX():Number {
+			return ( x + offset.x + (width / 2) );
+		}
+		public function get cY():Number {
+			return ( y + offset.y + (height / 2) );
+		}
 	}
 }

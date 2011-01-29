@@ -6,7 +6,7 @@
 
     public class Pig extends FlxSprite
     {
-        [Embed(source = "img/Player.png")] private var ImgPlayer:Class;
+        [Embed(source = "img/pig_anim.png")] private var ImgPlayer:Class;
         public var _max_health:int = 1;
         public var _hurt_counter:Number = 0;
         private var _stars:Array;
@@ -33,8 +33,8 @@
             super(X, Y);
 			
 			_playstate = p;
-            loadGraphic(ImgPlayer, true, true, 16, 16);
-			pixels.colorTransform( pixels.rect, new ColorTransform( 10, 0.5, 2) );
+            loadGraphic(ImgPlayer, true, true, 110, 70);
+			//pixels.colorTransform( pixels.rect, new ColorTransform( 10, 0.5, 2) );
 			
 			_MaxVelocity_walking = 200;
             maxVelocity.x = 100;
@@ -43,17 +43,17 @@
             drag.x = 5;
             drag.y = 5;
 			
-            width = 10;
-            height = 14;
-            offset.x = 2;
-            offset.y = 2;
+            width = 110;
+            height = 70;
+            offset.x = 0;
+            offset.y = 0;
 			
-            addAnimation("normal", [0, 1, 2, 3], 10);
-            addAnimation("jump", [4, 5, 6], 25);
-            addAnimation("attack", [4,5,6],10);
+            addAnimation("normal", [0, 1], 10);
+            //addAnimation("jump", [4, 5, 6], 25);
+            //addAnimation("attack", [4,5,6],10);
             addAnimation("stopped", [0]);
-            addAnimation("hurt", [7,8,8,8,8,8,8,8],5);
-            addAnimation("dead", [7, 8, 8], 5);
+            //addAnimation("hurt", [7,8,8,8,8,8,8,8],5);
+            //addAnimation("dead", [7, 8, 8], 5);
             facing = RIGHT;
         }
         override public function update():void
@@ -84,7 +84,7 @@
 			}
             if (_hurt_counter > 0)
             {
-                play("hurt");
+                //play("hurt");
                 
             }
             else            

@@ -4,7 +4,7 @@
 
     public class Player extends FlxSprite
     {
-        [Embed(source = "img/Player.png")] private var ImgPlayer:Class;
+        [Embed(source = "img/dodo.png")] private var ImgPlayer:Class;
         public var _max_health:int = 1;
         public var _hurt_counter:Number = 0;
         private var _stars:Array;
@@ -23,7 +23,7 @@
             super(X, Y);
 			
 			_playstate = p;
-            loadGraphic(ImgPlayer, true, true, 16, 16);
+            loadGraphic(ImgPlayer, false, true, 128, 127);
      
 			_MaxVelocity_walking = 200;
             maxVelocity.x = 100;
@@ -32,17 +32,17 @@
             drag.x = 400;
             drag.y = 400;
 			
-            width = 10;
-            height = 14;
-            offset.x = 2;
-            offset.y = 2;
+            width = 128;
+            height = 127;
+            offset.x = 0;
+            offset.y = 0;
 			
-            addAnimation("normal", [0, 1, 2, 3], 10);
-            addAnimation("jump", [4, 5, 6], 25);
-            addAnimation("attack", [4,5,6],10);
-            addAnimation("stopped", [0]);
-            addAnimation("hurt", [7,8,8,8,8,8,8,8],5);
-            addAnimation("dead", [7, 8, 8], 5);
+            //addAnimation("normal", [0, 1, 2, 3], 10);
+            //addAnimation("jump", [4, 5, 6], 25);
+            //addAnimation("attack", [4,5,6],10);
+            //addAnimation("stopped", [0]);
+            //addAnimation("hurt", [7,8,8,8,8,8,8,8],5);
+            //addAnimation("dead", [7, 8, 8], 5);
             facing = RIGHT;
         }
         override public function update():void
@@ -92,13 +92,13 @@
 				_looking_angle = recomputeLookingAngle( acceleration.x, acceleration.y );
 			}
 			if (_hurt_counter > 0) {
-				play("hurt");				
+				//play("hurt");				
 			}
 			else {
 				if (velocity.x == 0 && velocity.y == 0) {
-					play("stopped");
+					//play("stopped");
 				} else {
-					play("normal");
+					//play("normal");
 				}
 				
 				if (health <= 0) { 

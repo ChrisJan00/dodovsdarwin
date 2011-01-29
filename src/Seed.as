@@ -18,6 +18,8 @@ package
 		private var launchState: Number;
 		private var gravity: Number;
 		
+		private var germinationTimer:Number = 5;
+		
 		private var _playstate:PlayState;
 		
         public function Seed(X:Number,Y:Number, p:PlayState):void
@@ -70,7 +72,7 @@ package
 						launchState = 2;
 					else if (launchState == 2)
 					{
-						launchState = 0;
+						launchState = 3;
 						if ( _playstate._block_map.overlaps( this ) ) {
 							_playstate.removeEntity( this, _playstate._seeds );
 							return;
@@ -84,12 +86,22 @@ package
 				x = launchVector.x * projectionVector.x / launchDistance + launchFeet.x;
 				y = launchVector.x * projectionVector.y / launchDistance + launchVector.y + launchFeet.y;
 			}
+			
+			// germination
+			if (launchState == 3) {
+				if (germinationTimer > 0)
+					germinationTimer -= FlxG.elapsed;
+				if (germinationTimer <= 0) {
+					// grow tree
+					_playstate.growTree( x, y );
+					_playstate.removeEntity( this, _playstate._seeds );
+				}
+			}
         }
 		
 		public function launch(originalX:Number, originalY:Number, feetX: Number, feetY: Number, dirX : Number, dirY : Number) : void
 		{
-			launchDistance = Math.random() * 50 + 10;
-			launchDistance = 250;
+			launchDistance = Math.random() * 60 + 60;
 			//var launchAngle : Number = Math.random() * Math.PI * 2;
 			projectionVector = new Point( launchDistance * dirX, launchDistance * dirY );
 			launchFeet = new Point( feetX, feetY );

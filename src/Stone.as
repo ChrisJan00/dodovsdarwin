@@ -37,6 +37,11 @@ package
 			
 			fixed = true;
 			loadGraphic(Img);
+			
+			offset.x = width / 10;
+			width *= 8 / 10;
+			offset.y = height / 3;
+			height *= 2 / 3;
      
         }
         //override public function update():void

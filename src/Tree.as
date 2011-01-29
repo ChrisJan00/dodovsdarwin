@@ -32,11 +32,32 @@ package
 				break;
 			}
 			
-			width = (ImgData as Bitmap).width;
-			height = (ImgData as Bitmap).height;
+			var imgWidth:Number = (ImgData as Bitmap).width;
+			var imgHeight:Number = (ImgData as Bitmap).height;
 			
 			fixed = true;
-			loadGraphic(Img);
+			loadGraphic(Img, false, false, imgWidth, imgHeight);
+			
+			switch(index) {
+				case 0: 
+					width = 48;
+					height = 19;
+					offset.x = 58;
+					offset.y = 176;
+				break;
+				case 1:
+					width = 53;
+					height = 18;
+					offset.x = 51;
+					offset.y = 192;
+				break;
+				case 2:
+					width = 47;
+					height = 22;
+					offset.x = 54;
+					offset.y = 161;
+				break;
+			}
      
         }
         //override public function update():void

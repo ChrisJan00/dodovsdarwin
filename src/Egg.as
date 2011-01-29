@@ -4,11 +4,12 @@ package
     import org.flixel.*;
 	import flash.display.Bitmap;
 
-    public class Seed extends FlxSprite
+    public class Egg extends FlxSprite
     {
-        [Embed(source = "img/seed_01.png")] private var ImgSeed01:Class;
-        [Embed(source = "img/seed_02.png")] private var ImgSeed02:Class;
-        [Embed(source = "img/seed_03.png")] private var ImgSeed03:Class;
+        [Embed(source = "img/egg_01.png")] private var ImgEgg01:Class;
+        [Embed(source = "img/egg_02.png")] private var ImgEgg02:Class;
+        [Embed(source = "img/egg_03.png")] private var ImgEgg03:Class;
+        [Embed(source = "img/egg_04.png")] private var ImgEgg04:Class;
 		
 		private var projectionVector: Point;
 		private var launchVector: Point;
@@ -22,28 +23,32 @@ package
 		
 		private var _playstate:PlayState;
 		
-        public function Seed(X:Number,Y:Number, p:PlayState):void
+        public function Egg(X:Number,Y:Number, p:PlayState):void
         {
 			super(X, Y);
 			
 			_playstate = p;
 			
-			var index:Number = Math.floor(Math.random() * 3);
+			var index:Number = Math.floor(Math.random() * 4);
 			var ImgData:Bitmap;
 			var Img:Class
 			
 			switch(index) {
 				case 0: 
-					ImgData = new ImgSeed01();
-					Img = ImgSeed01;
+					ImgData = new ImgEgg01();
+					Img = ImgEgg01;
 				break;
 				case 1:
-					ImgData = new ImgSeed02();
-					Img = ImgSeed02;
+					ImgData = new ImgEgg02();
+					Img = ImgEgg02;
 				break;
 				case 2:
-					ImgData = new ImgSeed03();
-					Img = ImgSeed03;
+					ImgData = new ImgEgg03();
+					Img = ImgEgg03;
+				break;
+				case 3:
+					ImgData = new ImgEgg04();
+					Img = ImgEgg04;
 				break;
 			}
 			
@@ -74,7 +79,7 @@ package
 					{
 						launchState = 3;
 						if ( _playstate._block_map.overlaps( this ) ) {
-							_playstate.removeEntity( this, _playstate._seeds );
+							_playstate.removeEntity( this, _playstate._eggs );
 							return;
 						}
 					}
@@ -93,8 +98,8 @@ package
 					germinationTimer -= FlxG.elapsed;
 				if (germinationTimer <= 0) {
 					// grow tree
-					_playstate.growTree( x - width/2, y + height/2 );
-					_playstate.removeEntity( this, _playstate._seeds );
+					_playstate.growTree( x, y );
+					_playstate.removeEntity( this, _playstate._eggs );
 				}
 			}
         }

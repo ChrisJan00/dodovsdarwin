@@ -1,6 +1,7 @@
 ﻿
 package 
 {
+	import flash.geom.Vector3D;
     import org.flixel.*;
 
     public class PlayState extends FlxState
@@ -148,6 +149,18 @@ package
 		}
 		public function getClosestHuman( a_target:FlxSprite ):FlxSprite {
 			return (getClosestFrom( a_target, _humans ));
+		}
+		public function getClosestRatVector( a_target:FlxSprite ):Vector3D {
+			var _loc_closest:FlxSprite = getClosestFrom( a_target, _rats );
+			return ( new Vector3D( _loc_closest.x - a_target.x, _loc_closest.y - a_target.y ) );
+		}
+		public function getClosestDodoVector( a_target:FlxSprite ):Vector3D {
+			var _loc_closest:FlxSprite = getClosestFrom( a_target, _dodos );
+			return ( new Vector3D( _loc_closest.x - a_target.x, _loc_closest.y - a_target.y ) );
+		}
+		public function getClosestHumanVector( a_target:FlxSprite ):Vector3D {
+			var _loc_closest:FlxSprite = getClosestFrom( a_target, _humans );
+			return ( new Vector3D( _loc_closest.x - a_target.x, _loc_closest.y - a_target.y ) );
 		}
 		
 		private var _currentTarget:FlxSprite;

@@ -12,7 +12,9 @@
 		private var _MaxVelocity_walking:int = 200;
 		private var _playstate:PlayState;
 		
-		private const RAT_MOVEMENT_SPEED:Number = 50;
+		private const RAT_MOVEMENT_SPEED:Number = 40;
+		private const RAT_CHASE_DODO_DISTANCE:Number = 100;
+		private const RAT_FLEE_HUMAN_DISTANCE:Number = 100;
 		
         public function  Rat(X:Number,Y:Number, p:PlayState):void
         {
@@ -48,19 +50,12 @@
                 _hurt_counter -= FlxG.elapsed;
             }
 			else {
-			// Rat movement
-			
-			var _loc_toPlayerVector:Vector3D = new Vector3D( _playstate._player.x - this.x, _playstate._player.y - this.y );
-			_loc_toPlayerVector.normalize();
-			
-			// Follow
-			velocity.x = _loc_toPlayerVector.x * RAT_MOVEMENT_SPEED;
-			velocity.y = _loc_toPlayerVector.y * RAT_MOVEMENT_SPEED;
-			
-			// Flee
-			//velocity.x = -1 * _loc_toPlayerVector.x * RAT_MOVEMENT_SPEED;
-			//velocity.y = -1 * _loc_toPlayerVector.y * RAT_MOVEMENT_SPEED;
-			
+				
+				var _loc_toVector:Vector3D = getSteering();
+				_loc_toVector.normalize();
+				velocity.x = _loc_toVector.x * RAT_MOVEMENT_SPEED;
+				velocity.y = _loc_toVector.y * RAT_MOVEMENT_SPEED;
+				
 			}
             if (_hurt_counter > 0)
             {
@@ -82,6 +77,20 @@
             super.update();
             
         }
+		
+		private function getSteering():Vector3D {
+			var _loc_toVector:Vector3D = _playstate.getClosestDodoVector( this );
+			if ( _loc_toVector.length < RAT_CHASE_DODO_DISTANCE ) {
+				return( _loc_toVector );
+			} else {
+				_loc_toVector = _playstate.getClosestHumanVector( this );
+				if ( _loc_toVector.length < RAT_FLEE_HUMAN_DISTANCE ) {
+					_loc_toVector.scaleBy( -1);
+					return ( _loc_toVector );
+				}
+			}
+			return ( new Vector3D() );
+		}
         
         override public function hitFloor(Contact:FlxCore=null):Boolean
         {

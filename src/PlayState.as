@@ -13,7 +13,7 @@ package
 		
 		protected var BackgroundImg:Class;
 		
-        private var _player:Player;
+        public var _player:Player;
         private var _block_map:FlxTilemap;
 		private var _spike_map:FlxTilemap;
 		private var _background:Background;

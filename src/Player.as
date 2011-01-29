@@ -11,7 +11,7 @@
 		private var _MaxVelocity_walking:int = 200;
 		private var _playstate:PlayState;
 		
-		private const PLAYER_MOVEMENT_SPEED:Number = 100;
+		private const PLAYER_MOVEMENT_SPEED:Number = 500;
 		
         public function  Player(X:Number,Y:Number, p:PlayState):void
         {
@@ -21,8 +21,8 @@
             loadGraphic(ImgPlayer, true, true, 16, 16);
      
 			_MaxVelocity_walking = 200;
-            maxVelocity.x = 350;
-            maxVelocity.y = 350;
+            maxVelocity.x = 100;
+            maxVelocity.y = 100;
             health = 1;         
             drag.x = 400;
             drag.y = 400;
@@ -47,33 +47,38 @@
                 _hurt_counter -= FlxG.elapsed;
             }
 			else {
+				
+			acceleration.x = acceleration.y = 0;
 			
             //move left and right   
             if (FlxG.keys.LEFT)
 			{
 				facing = LEFT;
-				velocity.x = -1 * PLAYER_MOVEMENT_SPEED;
+				acceleration.x = -1 * PLAYER_MOVEMENT_SPEED;
 			}
 			if (FlxG.keys.RIGHT)
 			{
 				facing = RIGHT;
-				velocity.x = PLAYER_MOVEMENT_SPEED;
+				acceleration.x = PLAYER_MOVEMENT_SPEED;
 			}
 			if (FlxG.keys.UP)
 			{
 				// TODO Commented out for now because of animation?
 				//facing = UP;
 				facing = RIGHT;
-				velocity.y = -1 * PLAYER_MOVEMENT_SPEED;
+				acceleration.y = -1 * PLAYER_MOVEMENT_SPEED;
 			}
 			if (FlxG.keys.DOWN)
 			{
 				//facing = DOWN;
 				facing = RIGHT;
-				velocity.y = PLAYER_MOVEMENT_SPEED;
+				acceleration.y = PLAYER_MOVEMENT_SPEED;
+			}
 			}
 			
-			
+			if (acceleration.x != 0 && acceleration.y != 0) {
+				acceleration.x /= Math.pow(2, 0.5);
+				acceleration.y /= Math.pow(2, 0.5);
 			}
             if (_hurt_counter > 0)
             {

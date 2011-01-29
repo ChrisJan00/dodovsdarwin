@@ -37,7 +37,7 @@ package
             lyrHUD = new FlxLayer;
            
 			
-            _player = new Player(248, 240, this);
+            _player = new Player(648, 240, this);
             lyrSprites.add(_player);
 			
 			_background = new Background(BackgroundImg);
@@ -46,7 +46,7 @@ package
 			
             FlxG.follow(_player,2.5);
             FlxG.followAdjust(0.5, 0.5);
-            FlxG.followBounds(1,1,600-1,400-1);
+            FlxG.followBounds(1,1,1280-1,960-1);
             
 			parseMap(new LevelMap);
 			

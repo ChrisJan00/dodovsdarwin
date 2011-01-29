@@ -8,7 +8,7 @@ package
         {
             super(0,0);
 			
-	       loadGraphic(img, false, false, 600, 400);
+	       loadGraphic(img, false, false, 1280, 960);
  
         }
             

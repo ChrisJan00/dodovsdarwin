@@ -7,7 +7,7 @@ package
     {
         
         [Embed(source = 'maps/level1.txt', mimeType = "application/octet-stream")] protected var _LevelMap:Class;
-		[Embed(source = 'img/background.png')] protected var _Background:Class;
+		[Embed(source = 'img/level_01.png')] protected var _Background:Class;
 		
 		
 		
@@ -17,10 +17,10 @@ package
             super();
 			LevelMap = _LevelMap;	
 			BackgroundImg = _Background;
-			_transp_tile = "15";
+			_transp_tile = "17";
 			super.Init();
 			
-			var _loc_rat:Rat = new Rat(60, 200, this);
+			var _loc_rat:Rat = new Rat(360, 200, this);
 			_rats.push(_loc_rat);
             lyrSprites.add(_loc_rat);
 		}

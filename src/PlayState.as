@@ -28,6 +28,7 @@ package
 		protected var _humans:Array;
 		protected var _stones:Array;
 		protected var _trees:Array;
+		protected var _fruits:Array;
         
         override public function PlayState():void
         {
@@ -53,6 +54,7 @@ package
 			
 			_stones = new Array();
 			_trees = new Array();
+			_fruits = new Array();
 	
             FlxG.follow(_player,2.5);
             FlxG.followAdjust(0.5, 0.5);
@@ -110,6 +112,8 @@ package
             _block_map.collide(_player);
 			_player.collideArray(_stones);
 			_player.collideArray(_trees);
+			
+			// TODO: player eats fruit
 			
 			for each(var rat:Rat in _rats) {
 				rat.collideArray(_stones);

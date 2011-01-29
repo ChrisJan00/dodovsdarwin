@@ -29,12 +29,6 @@ package
 			addSprite( new Tree(640, 280), _trees );
 			addSprite( new Fruit(320, 280), _fruits );
 		}
-		
-		protected function addSprite(sprite:FlxSprite, destArray:Array) : void
-		{
-			destArray.push(sprite);
-			lyrSprites.add(sprite);
-		}
-        
+	    
     }    
 } 

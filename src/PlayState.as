@@ -113,8 +113,6 @@ package
 			_player.collideArray(_stones);
 			_player.collideArray(_trees);
 			
-			// TODO: player eats fruit
-			
 			for each(var rat:Rat in _rats) {
 				rat.collideArray(_stones);
 				rat.collideArray(_trees);
@@ -124,6 +122,13 @@ package
 				human.collideArray(_stones);
 				human.collideArray(_trees);
 			}
+			
+			for each(var tree:Tree in _trees) {
+				if (tree.wantsFruit())
+					addSprite(tree.getFruit(), _fruits);
+			}
+			
+			// TODO: player eats fruit
 			
 			
 			//if (_spike_map.overlaps(_player)) {
@@ -189,6 +194,12 @@ package
 				return 1;
 			}
 			return ( -1);
+		}
+		
+		protected function addSprite(sprite:FlxSprite, destArray:Array) : void
+		{
+			destArray.push(sprite);
+			lyrSprites.add(sprite);
 		}
     }    
 } 

@@ -13,6 +13,7 @@
 		private const HUMAN_MOVEMENT_SPEED:Number = 50;
 		private const HUMAN_CHASE_RAT_DISTANCE:Number = 150;
 		private const HUMAN_CHASE_DODO_DISTANCE:Number = 150;
+		private const HUMAN_APPROACH_TREE_DISTANCE:Number = 100;
 		
 		private var _aiState:String;
 		private var _aiUpdateTimer:Number = 0;
@@ -100,6 +101,12 @@
 				if ( _loc_toVector && _loc_toVector.length < HUMAN_CHASE_DODO_DISTANCE ) {
 					_aiState = HUMAN_STATE_CHASE;
 					return ( _loc_toVector );
+				} else {
+					_loc_toVector = _playstate.getClosestTreeVector( this );
+					if ( _loc_toVector && _playstate.isOkToChopTree && _loc_toVector.length < HUMAN_APPROACH_TREE_DISTANCE ) {
+						_aiState = HUMAN_STATE_CHASE;
+						return( _loc_toVector );
+					}
 				}
 			}
 			return ( null );

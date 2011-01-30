@@ -38,6 +38,8 @@ package
 		private var _poopDisplay:PoopDisplay;
 		private var _eggDisplay:EggDisplay;
 		
+		public var isOkToChopTree:Boolean = false;
+		
 		private var treeKillerTimer:Number = 0;
         
         override public function PlayState():void
@@ -168,6 +170,21 @@ package
 						removeEntityFromArrayOnly(_loc_dodo, _dodos);
 					}
 				}
+				// Bounding box hacks ftw
+				human.x -= 1;
+				human.y -= 1;
+				human.height += 2;
+				human.width += 2;
+				for each(var _loc_tree:Tree in _trees) {
+					if ( human.overlaps(_loc_tree) && isOkToChopTree ) {
+						human.attack();
+						_loc_tree.takeHumanDamage();
+					}
+				}
+				human.x += 1;
+				human.y += 1;
+				human.height -= 2;
+				human.width -= 2;
 			}
 			for each(var pig:Pig in _pigs) {
 				_block_map.collide(pig);
@@ -192,6 +209,10 @@ package
 					_player.eat();
 					removeEntity(fruit, _fruits);
 				}
+			}
+			
+			if ( _trees.length > 5 ) {
+				isOkToChopTree = true;
 			}
 			
 			var newTreeKillerTimer:Number = treeKillerTimer;
@@ -240,6 +261,9 @@ package
 		}
 		public function getClosestEggVector( a_target:FlxSprite ):Vector3D {
 			return ( getClosestVectorFrom(a_target, _eggs ) );
+		}
+		public function getClosestTreeVector( a_target:FlxSprite ):Vector3D {
+			return ( getClosestVectorFrom(a_target, _trees ) );
 		}
 		
 		

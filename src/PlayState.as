@@ -1,6 +1,8 @@
 ﻿
 package 
 {
+	import flash.display.Bitmap;
+	import flash.display.Sprite;
 	import flash.utils.getDefinitionByName;
 	import flash.utils.getQualifiedClassName;
 
@@ -269,6 +271,17 @@ package
 				FlxG.switchState(MainMenu);
 			}
 			
+			if ( _displayGoalTimer > 0 ) {
+				_displayGoalTimer -= FlxG.elapsed;
+				if ( _displayGoalTimer <= 0 ) {
+					if ( _displayGoalImage ) {
+						_displayGoalImage.visible = false;
+						removeChild( _displayGoalImage );
+						_displayGoalImage = null;
+					}
+				}
+			}
+			
 			checkLevelAndChange();
         }
 		
@@ -410,6 +423,17 @@ package
 		{
 			if (isVictoryAchieved())
 				FlxG.switchState( nextLevel() );
+		}
+		
+		private var _displayGoalImage:Bitmap;
+		private var _displayGoalTimer:Number = 0;
+		public function displayGoal( a_ImageClass:Class, a_time:Number = 3 ) : void
+		{
+			_displayGoalImage = new a_ImageClass();
+			_displayGoalImage.x = FlxG.width / 1.7 - _displayGoalImage.width / 2;
+			_displayGoalImage.y = FlxG.height / 2.7 - _displayGoalImage.height / 2;
+			addChild( _displayGoalImage );
+			_displayGoalTimer = a_time;
 		}
     }    
 } 

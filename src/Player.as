@@ -18,7 +18,7 @@
 		public var eatenFruitCount:Number = 0;
 		public const SHIT_THRESHOLD:Number = 5;
 		
-		private var pregnant:Boolean = true;
+		private var pregnant:Boolean = false;
 		public var matingProgress:Number = 0;
 		protected var matingSpeed:Number = 0.2; // 5 seconds of sex
 		protected var lover:Dodo = null;
@@ -48,9 +48,9 @@
             drag.y = 400;
 			
             width = 40;
-            height = 13;
+            height = 17;
             offset.x = 20;
-            offset.y = 52;
+            offset.y = 48;
 						
             addAnimation("normal", [0, 1, 2, 3], 5);
             addAnimation("eating", [4,5.6,7], 7);

@@ -120,6 +120,12 @@
 			
 			if (health <= 0) { _playstate.reload(); }
 			
+			if (_aiState == DODO_STATE_MATE) {
+				_playstate._player.makeLove( this );
+			} else { 
+				_playstate._player.dontMakeLove( this );
+			}
+			
             super.update();
             
         }
@@ -141,6 +147,9 @@
 					if ( _loc_toVector && _loc_toVector.length < DODO_APPROACH_DODO_DISTANCE && _loc_toVector.length > DODO_APPROACH_DODO_DISTANCE_STOP ) {
 						_aiState = DODO_STATE_APPROACH;
 						return ( _loc_toVector );
+					} else if ( _loc_toVector && _loc_toVector.length < DODO_APPROACH_DODO_DISTANCE_STOP) {
+						_aiState = DODO_STATE_MATE;
+						return ( _loc_toVector );
 					}
 				}
 			}
@@ -161,16 +170,24 @@
 			_loc_toVector = new Vector3D( 1 - (Math.random() * 2), 1 - (Math.random() * 2) );
 			return _loc_toVector;
 		}
-        
-        override public function hitFloor(Contact:FlxCore=null):Boolean
-        {
-            return super.hitFloor();
-        }
+
+		private function getMatingWander():Vector3D {
+			var _loc_toVector:Vector3D;
+			if ( _aiUpdateTimer <= 0 )  {
+				_aiUpdateTimer = ( DODO_WANDER_AIUPDATE_DELAY_MIN + Math.random() * DODO_WANDER_AIUPDATE_DELAY_RANGE );
+				_loc_toVector = new Vector3D( velocity.x, velocity.y );
+				_loc_toVector.normalize();
+				_loc_toVector = new Vector3D( _loc_toVector.x + 1 - (Math.random() * 2), _loc_toVector.y + 1 - (Math.random() * 2) );
+				return _loc_toVector;
+			}
+			
+			_loc_toVector = new Vector3D( velocity.x, velocity.y );
+			return _loc_toVector;
+		}
 		
-		override public function hitCeiling(Contact:FlxCore=null):Boolean
-        {
-            return super.hitFloor();
-        }
+		public function flyAway():void {
+		}
+
 		
 		/* INTERFACE IDodo */
 		

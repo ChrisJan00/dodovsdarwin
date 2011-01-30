@@ -36,6 +36,7 @@ package
 		public var _eggs:Array;
 		
 		private var _poopDisplay:PoopDisplay;
+		private var _eggDisplay:EggDisplay;
 		
 		private var treeKillerTimer:Number = 0;
         
@@ -94,6 +95,11 @@ package
 			_poopDisplay.x = FlxG.width - 60;
 			_poopDisplay.y = FlxG.height - 70;
 			addChild( _poopDisplay );
+			
+			_eggDisplay = new EggDisplay( this );
+			_eggDisplay.x = 20;
+			_eggDisplay.y = FlxG.height - 70;
+			addChild( _eggDisplay );
         }
 		
 		public function parseMap(map:String):void
@@ -208,6 +214,7 @@ package
             
 			lyrSprites.sortByY();
 			_poopDisplay.update();
+			_eggDisplay.update();
         }
 		
 		public function reload():void

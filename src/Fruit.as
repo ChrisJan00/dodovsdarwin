@@ -72,7 +72,7 @@ package
 					else if (launchState == 2)
 					{
 						launchState = 0;
-						if ( _playstate._block_map.overlaps( this ) ) {
+						if ( _playstate._block_map.overlaps( this ) || x<0 || x>1280 || y<0 || y>960) {
 							_playstate.removeEntity( this, _playstate._fruits );
 							return;
 						}

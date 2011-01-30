@@ -11,7 +11,7 @@ package
     public class PlayState extends FlxState
     {
 		[Embed(source = "img/fruit_01.png")] private var ImgFruit01:Class;
-		[Embed(source = "snd/endlevel.mp3")] private var EndLevelSound:Class;
+		//[Embed(source = "snd/endlevel.mp3")] private var EndLevelSound:Class;
 		
 		[Embed(source = "snd/dodo4.mp3")] private var BackgroundMusic:Class;
 		
@@ -113,7 +113,7 @@ package
 			addChild( _eggDisplay );
 			
 			
-			FlxG.play(EndLevelSound);
+			//FlxG.play(EndLevelSound);
 			FlxG.play(BackgroundMusic, 1.0, true);
         }
 		
@@ -268,9 +268,9 @@ package
 			_poopDisplay.update();
 			_eggDisplay.update();
 			
-			if (FlxG.keys.justPressed("R")) {
-				resetLevel();
-			}
+			//if (FlxG.keys.justPressed("R")) {
+				//resetLevel();
+			//}
 			
 			if (FlxG.keys.justPressed("ESC")) {
 				FlxG.switchState(MainMenu);

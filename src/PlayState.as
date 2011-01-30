@@ -10,8 +10,8 @@ package
 
     public class PlayState extends FlxState
     {
-		[Embed(source = 'img/Tiles.png')] protected var ImgTiles:Class;
-
+		[Embed(source = "img/fruit_01.png")] private var ImgFruit01:Class;
+		
 		protected var LevelMap:Class;
 		protected var BlockMap:String;
 		
@@ -45,6 +45,8 @@ package
 		
 		private var treeKillerTimer:Number = 0;
 		private var dodoArrivingTimer:Number = 0;
+		
+		private const TREE_MIN_CHOPPING:Number = 5;
         
         override public function PlayState():void
         {
@@ -86,7 +88,7 @@ package
 			parseMap(new LevelMap);
 			
             _block_map = new FlxTilemap;
-			_block_map.loadMap(BlockMap, ImgTiles, 8);
+			_block_map.loadMap(BlockMap, ImgFruit01, 8);
             _block_map.drawIndex = 1;
             _block_map.collideIndex = 1;
 			_block_map.visible = false;
@@ -216,7 +218,7 @@ package
 				}
 			}
 			
-			if ( _trees.length > 5 ) {
+			if ( _trees.length > TREE_MIN_CHOPPING ) {
 				isOkToChopTree = true;
 			}
 			
@@ -240,7 +242,7 @@ package
 			if (_dodos.length == 1) {
 				dodoArrivingTimer -= FlxG.elapsed;
 				if (dodoArrivingTimer <= 0) {
-					var probability: Number = Math.max(0, Math.min(1.0, ( _trees.length - 1) * 0.04));
+					var probability: Number = Math.max(0, Math.min(1.0, ( _trees.length - TREE_MIN_CHOPPING + 1) * 0.04));
 					var num:Number = Math.random();
 					if ( num < probability ) {
 						var newDodo:Dodo = new Dodo( -100, -100, this);
@@ -248,9 +250,11 @@ package
 						addSprite( newDodo, _dodos );
 					} else {
 						// 1 second until the next candidate
-						dodoArrivingTimer = 1;
+						dodoArrivingTimer = 2;
 					}
 				}
+			} else {
+				dodoArrivingTimer = 10;
 			}
 			
 			lyrSprites.sortByY();

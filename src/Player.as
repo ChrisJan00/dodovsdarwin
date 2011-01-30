@@ -16,7 +16,7 @@
 		
 		private var shitBlocked:Boolean = false;
 		public var eatenFruitCount:Number = 0;
-		public const SHIT_THRESHOLD:Number = 0;
+		public const SHIT_THRESHOLD:Number = 5;
 		
 		private var pregnant:Boolean = false;
 		public var matingProgress:Number = 0;
@@ -97,6 +97,7 @@
 			if (FlxG.keys.X || FlxG.keys.CONTROL || FlxG.keys.SPACE) {
 				if (pregnant) {
 					pregnant = false;
+					shitBlocked = true;
 					matingProgress = 0;
 					launchEgg();
 				}

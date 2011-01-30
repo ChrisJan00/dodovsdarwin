@@ -8,7 +8,6 @@
     {
         [Embed(source = "img/dodo_male_walk.png")] private var ImgPlayer:Class;
         public var _max_health:int = 1;
-        private var _stars:Array;
 		private var _MaxVelocity_walking:int = 200;
 		private var _playstate:PlayState;
 		

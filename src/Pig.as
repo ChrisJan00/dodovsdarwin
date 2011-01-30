@@ -8,13 +8,12 @@
     {
         [Embed(source = "img/pig_anim.png")] private var ImgPlayer:Class;
         public var _max_health:int = 1;
-        private var _stars:Array;
 		private var _MaxVelocity_walking:int = 200;
 		private var _playstate:PlayState;
 		
 		private const PIG_MOVEMENT_SPEED:Number = 50;
-		private const PIG_FLEE_DODO_DISTANCE:Number = 50;
-		private const PIG_APPROACH_FRUIT_DISTANCE:Number = 1000;
+		private const PIG_FLEE_DODO_DISTANCE:Number = 70;
+		private const PIG_APPROACH_FRUIT_DISTANCE:Number = 300;
 		
 		private var _aiState:String;
 		private var _aiUpdateTimer:Number = 0;
@@ -26,6 +25,9 @@
 		
 		private const PIG_WANDER_AIUPDATE_DELAY_MIN:Number = 0.5;
 		private const PIG_WANDER_AIUPDATE_DELAY_RANGE:Number = 2.5;
+		
+		private const PIG_EAT_ANIMATION_DURATION:Number = 2;
+		private var _eatAnimationTimer:Number = 0;
 		
         public function  Pig(X:Number,Y:Number, p:PlayState):void
         {
@@ -48,7 +50,7 @@
 			
             addAnimation("normal", [0, 1, 2, 3], 7);
             addAnimation("fleeing", [4, 5, 6, 7], 7);
-            addAnimation("eating", [8, 9], 7);
+            addAnimation("eating", [8, 9], 5);
             addAnimation("stopped", [1]);
             facing = RIGHT;
         }
@@ -72,10 +74,19 @@
 				velocity.y = _loc_toVector.y * PIG_MOVEMENT_SPEED;
 			}
 			
-			if (velocity.x < 0) {
+			
+			if ( _eatAnimationTimer > 0 ) {
+				_eatAnimationTimer -= FlxG.elapsed;
+				velocity.x = velocity.y = 0;
+				_aiState = PIG_STATE_EAT;
+			} else if (velocity.x < 0) {
 				_facing = LEFT;
 			} else {
 				_facing = RIGHT;
+			}
+			
+			if ( _aiState == PIG_STATE_EAT ) {
+				play("eating");
 			}
 			if ( _aiState == PIG_STATE_WANDER ) {
 				play("normal");
@@ -83,6 +94,11 @@
 			if ( _aiState == PIG_STATE_FLEE ) {
 				play("fleeing");
 			}
+			if ( _aiState == PIG_STATE_APPROACH ) {
+				play("normal");
+			}
+			
+			
 			
 			if (health <= 0) { _playstate.reload(); }
 			
@@ -130,6 +146,11 @@
         {
             return super.hitFloor();
         }
+		
+		public function eat() : void
+		{
+			_eatAnimationTimer = PIG_EAT_ANIMATION_DURATION;
+		}
     }
 } 
 

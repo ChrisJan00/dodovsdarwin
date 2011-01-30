@@ -6,12 +6,14 @@
     {
         [Embed(source = "img/dodo_walk.png")] private var ImgPlayer:Class;
         public var _max_health:int = 1;
-        private var _stars:Array;
 		private var _MaxVelocity_walking:int = 200;
 		private var _playstate:PlayState;
 		private var _looking_angle: Number = 0;
 		
 		private const PLAYER_MOVEMENT_SPEED:Number = 500;
+		
+		private const PLAYER_EAT_ANIMATION_DURATION:Number = 2;
+		private var _eatAnimationTimer:Number = 0;
 		
 		private var shitBlocked:Boolean = false;
 		public var eatenFruitCount:Number = 0;
@@ -39,6 +41,7 @@
             offset.y = 49;
 			
             addAnimation("normal", [0, 1, 2, 3], 5);
+            addAnimation("eating", [2, 3], 16);
             addAnimation("stopped", [1]);
             facing = RIGHT;
         }
@@ -82,11 +85,17 @@
 			if (acceleration.x != 0 || acceleration.y != 0) {
 				_looking_angle = recomputeLookingAngle( acceleration.x, acceleration.y );
 			}
-			if (velocity.x == 0 && velocity.y == 0) {
-				play("stopped");
+			if ( _eatAnimationTimer > 0 ) {
+				_eatAnimationTimer -= FlxG.elapsed;
+				play("eating");
 			} else {
-				play("normal");
+				if (velocity.x == 0 && velocity.y == 0) {
+					play("stopped");
+				} else {
+					play("normal");
+				}
 			}
+			
 			
 			if (health <= 0) { 
 				_playstate.reload(); 
@@ -127,6 +136,7 @@
 		public function eat() : void
 		{
 			eatenFruitCount += 1;
+			_eatAnimationTimer = PLAYER_EAT_ANIMATION_DURATION;
 		}
 		
 		public function unleashShit() : void

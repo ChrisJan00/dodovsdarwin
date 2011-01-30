@@ -9,6 +9,16 @@ package
 		{
 			super();
 			var txt:FlxText
+			
+			txt = new FlxText(0, 48, FlxG.width, "DarwinVsDodo")
+			txt.setFormat(null, 32, 0xFFFFFFFF, "center");
+			this.add(txt);
+			
+			txt = new FlxText(0, 128, FlxG.width, "by Max Dohme, Johann Scholz & Christiaan Janssen")
+			txt.setFormat(null, 16, 0xFFFFFFFF, "center");
+			this.add(txt);
+			
+			
 			txt = new FlxText(0, FlxG.height  -48, FlxG.width, "PRESS X TO START")
 			txt.setFormat(null, 16, 0xFFFFFFFF, "center");
 			this.add(txt);

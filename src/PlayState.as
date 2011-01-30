@@ -215,16 +215,23 @@ package
 		public function getClosestFruitVector( a_target:FlxSprite ):Vector3D {
 			return ( getClosestVectorFrom(a_target, _fruits ) );
 		}
+		public function getClosestEggVector( a_target:FlxSprite ):Vector3D {
+			return ( getClosestVectorFrom(a_target, _eggs ) );
+		}
 		
 		//private var _currentTarget:FlxSprite;
 		
 		private function getClosestVectorFrom( a_target:FlxSprite, a_flxSprites:Array ):Vector3D {
 			if ( a_flxSprites.length == 0 ) return null;
+			if ( a_flxSprites.length == 1 && a_flxSprites[0] == a_target ) return null;
 			
 			var _loc_closestFlxSprite:FlxSprite;
 			var _loc_closestDistanceSquare:Number = Number.MAX_VALUE;
 			
 			for each (var flxSprite:FlxSprite in a_flxSprites) {
+				if ( flxSprite == a_target ) {
+					continue;
+				}
 				if ( Math.pow( a_target.cX - flxSprite.cX, 2) + Math.pow( a_target.cY - flxSprite.cY, 2) < _loc_closestDistanceSquare ) {
 					_loc_closestFlxSprite = flxSprite;
 					_loc_closestDistanceSquare = Math.pow( a_target.cX - flxSprite.cX, 2) + Math.pow( a_target.cY - flxSprite.cY, 2);
@@ -276,7 +283,7 @@ package
 		public function spawnDodo(dodoX:Number, dodoY:Number) : void
 		{
 			// until the new dodos are ready, spawn rats instead
-			addSprite( new Rat(dodoX, dodoY, this), _rats );
+			addSprite( new Dodo(dodoX, dodoY, this), _dodos );
 		}
     }    
 } 

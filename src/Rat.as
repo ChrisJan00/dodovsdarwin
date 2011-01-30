@@ -13,8 +13,9 @@
 		private var _playstate:PlayState;
 		
 		private const RAT_MOVEMENT_SPEED:Number = 40;
-		private const RAT_CHASE_DODO_DISTANCE:Number = 100;
-		private const RAT_FLEE_HUMAN_DISTANCE:Number = 100;
+		private const RAT_CHASE_DODO_DISTANCE:Number = 200;
+		private const RAT_FLEE_HUMAN_DISTANCE:Number = 130;
+		private const RAT_APPROACH_EGG_DISTANCE:Number = 250;
 		
 		private var _aiState:String;
 		private var _aiUpdateTimer:Number = 0;
@@ -22,6 +23,7 @@
 		private const RAT_STATE_WANDER:String = "RatStateWander";
 		private const RAT_STATE_CHASE:String = "RatStateChase";
 		private const RAT_STATE_FLEE:String = "RatStateFlee";
+		private const RAT_STATE_APPROACH:String = "RatStateApproach";
 		
 		private const RAT_WANDER_AIUPDATE_DELAY_MIN:Number = 0.5;
 		private const RAT_WANDER_AIUPDATE_DELAY_RANGE:Number = 2.5;
@@ -96,6 +98,12 @@
 					_aiState = RAT_STATE_FLEE;
 					_loc_toVector.scaleBy( -1 );
 					return ( _loc_toVector );
+				} else {
+					_loc_toVector = _playstate.getClosestEggVector( this );
+					if ( _loc_toVector && _loc_toVector.length < RAT_APPROACH_EGG_DISTANCE ) {
+						_aiState = RAT_STATE_APPROACH;
+						return ( _loc_toVector );
+					}
 				}
 			}
 			return ( null );

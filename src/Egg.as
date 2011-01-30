@@ -18,7 +18,6 @@ package
 		private var launchDistance : Number;
 		private var launchState: Number = 0;
 		private var gravity: Number;
-		
 		private var hatchTimer:Number = 15;
 		private const birthTime:Number = 1.2;
 		

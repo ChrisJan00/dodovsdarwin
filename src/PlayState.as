@@ -125,13 +125,13 @@ package
         override public function update():void
         {
 		   super.update();
-            //map collisions
-			
-            _block_map.collide(_player);
-			_player.collideArray(_stones);
-			_player.collideArray(_trees);
-			
-			for each(var rat:Rat in _rats) {
+		   
+			for each(var dodo:FlxSprite in _dodos) {
+				_block_map.collide(dodo);
+				dodo.collideArray(_stones);
+				dodo.collideArray(_trees);
+			}
+			for each(var rat:FlxSprite in _rats) {
 				_block_map.collide(rat);
 				rat.collideArray(_stones);
 				rat.collideArray(_trees);
@@ -141,7 +141,7 @@ package
 				human.collideArray(_stones);
 				human.collideArray(_trees);
 				
-				for each(var _loc_rat:Rat in _rats) {
+				for each(var _loc_rat:FlxSprite in _rats) {
 					if ( human.overlaps(_loc_rat) ) {
 						removeEntity(_loc_rat, _rats);
 					}
@@ -152,7 +152,7 @@ package
 				pig.collideArray(_stones);
 				pig.collideArray(_trees);
 				
-				for each(var _loc_fruit:Fruit in _fruits) {
+				for each(var _loc_fruit:FlxSprite in _fruits) {
 					if ( pig.overlaps(_loc_fruit) ) {
 						removeEntity(_loc_fruit, _fruits);
 					}
@@ -164,20 +164,12 @@ package
 					addSprite(tree.getFruit(), _fruits);
 			}
 			
-			for each(var fruit:Fruit in _fruits) {
+			for each(var fruit:FlxSprite in _fruits) {
 				if ( _player.overlaps(fruit) ) {
 					_player.eat();
 					removeEntity(fruit, _fruits);
 				}
 			}
-			
-			
-			//if (_spike_map.overlaps(_player)) {
-				//_player.kill()
-				//_player.hurt(1);
-			//}
-			
-			//if (_player.dead) FlxG.score = 0;
 			
 			if (FlxG.keys.justPressed("ESC")) {
 			}
@@ -191,15 +183,6 @@ package
 			_player.reload();
 		}
 		
-		//public function getClosestRat( a_target:FlxSprite ):FlxSprite {
-			//return (getClosestFrom( a_target, _rats ));
-		//}
-		//public function getClosestDodo( a_target:FlxSprite ):FlxSprite {
-			//return (getClosestFrom( a_target, _dodos ));
-		//}
-		//public function getClosestHuman( a_target:FlxSprite ):FlxSprite {
-			//return (getClosestFrom( a_target, _humans ));
-		//}
 		public function getClosestRatVector( a_target:FlxSprite ):Vector3D {
 			return ( getClosestVectorFrom(a_target, _rats ) );
 		}
@@ -219,7 +202,6 @@ package
 			return ( getClosestVectorFrom(a_target, _eggs ) );
 		}
 		
-		//private var _currentTarget:FlxSprite;
 		
 		private function getClosestVectorFrom( a_target:FlxSprite, a_flxSprites:Array ):Vector3D {
 			if ( a_flxSprites.length == 0 ) return null;

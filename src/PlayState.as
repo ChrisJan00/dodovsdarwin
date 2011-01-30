@@ -250,12 +250,17 @@ package
 				}
 			}
 			
-			if (FlxG.keys.justPressed("ESC")) {
-			}
-            
 			lyrSprites.sortByY();
 			_poopDisplay.update();
 			_eggDisplay.update();
+			
+			if (FlxG.keys.justPressed("R")) {
+				FlxG.switchState(Blocks_PlayState);
+			}
+			
+			if (FlxG.keys.justPressed("ESC")) {
+				FlxG.switchState(MainMenu);
+			}
         }
 		
 		public function reload():void

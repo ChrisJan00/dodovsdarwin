@@ -27,7 +27,7 @@ package
 		private var _invincibleTimer:Number = 0;
 		private var _remainDeadTimer:Number = 0;
 		
-        public function Egg(X:Number,Y:Number, p:PlayState):void
+        public function Egg(X:Number,Y:Number, p:PlayState, hatch:Boolean = false):void
         {
 			super(X, Y);
 			
@@ -61,8 +61,12 @@ package
 			// TODO cracked image
 			addAnimation("dead", [6]);
 			
-			launchState = 0;
+			if (hatch)
+				launchState = 3;
+			else
+				launchState = 0;
 			gravity = 200; // pixels per second
+			
      
         }
         override public function update():void

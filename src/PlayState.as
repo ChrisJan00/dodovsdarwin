@@ -310,6 +310,25 @@ package
 			return ( new Vector3D( _loc_closestFlxSprite.cX - a_target.cX, _loc_closestFlxSprite.cY - a_target.cY ) );
 		}
 		
+		public function getClosestEgg( a_target:FlxSprite ):FlxSprite {
+			if ( _eggs.length == 0 ) return null;
+			if ( _eggs.length == 1 && _eggs[0] == a_target ) return null;
+			
+			var _loc_closestFlxSprite:FlxSprite;
+			var _loc_closestDistanceSquare:Number = Number.MAX_VALUE;
+			
+			for each (var flxSprite:FlxSprite in _eggs) {
+				if ( flxSprite == a_target ) {
+					continue;
+				}
+				if ( Math.pow( a_target.cX - flxSprite.cX, 2) + Math.pow( a_target.cY - flxSprite.cY, 2) < _loc_closestDistanceSquare ) {
+					_loc_closestFlxSprite = flxSprite;
+					_loc_closestDistanceSquare = Math.pow( a_target.cX - flxSprite.cX, 2) + Math.pow( a_target.cY - flxSprite.cY, 2);
+				}
+			}
+			return(_loc_closestFlxSprite);
+		}
+		
 		/*// TODO Remove if no longer needed
 		private function TMPgetClosestFrom( a_target:FlxSprite, a_flxSprites:Array ):FlxSprite {
 			_currentTarget = a_target;

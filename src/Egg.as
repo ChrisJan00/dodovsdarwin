@@ -23,6 +23,10 @@ package
 		
 		private var _playstate:PlayState;
 		
+		private var _keepFlashingRedTimer:Number = 0;
+		private var _invincibleTimer:Number = 0;
+		private var _remainDeadTimer:Number = 0;
+		
         public function Egg(X:Number,Y:Number, p:PlayState, hatch:Boolean = false):void
         {
 			super(X, Y);
@@ -54,6 +58,8 @@ package
 			addAnimation("normal", [0], 5);
 			addAnimation("hatch", [0, 1, 2, 3, 4, 5], 10);
 			addAnimation("birth", [6, 7, 8, 9, 10, 11], 5);
+			// TODO cracked image
+			addAnimation("dead", [6]);
 			
 			if (hatch)
 				launchState = 3;
@@ -64,7 +70,26 @@ package
      
         }
         override public function update():void
-        {			
+        {		
+			if ( _remainDeadTimer > 0 ) {
+				velocity.x = velocity.y = 0;
+				if ( _keepFlashingRedTimer > 0 ) {
+					_keepFlashingRedTimer -= FlxG.elapsed;
+					color = 0xFF0066;
+				} else {
+					color = 0x00ffffff;
+					_keepFlashingRedTimer = 0;
+				}
+				// TODO needs to be "cracked"
+				play("dead");
+				_remainDeadTimer -= FlxG.elapsed;
+				if ( _remainDeadTimer <= 0 ) {
+					kill();
+				}
+				super.update();
+				return;
+			}
+			
             super.update();
 			
 			// falling
@@ -112,6 +137,17 @@ package
 			} else {
 				play("normal");
 			}
+			
+			if ( _keepFlashingRedTimer > 0 ) {
+				_keepFlashingRedTimer -= FlxG.elapsed;
+				color = 0xFF0066;
+			} else {
+				color = 0x00ffffff;
+				_keepFlashingRedTimer = 0;
+			}
+			if ( _invincibleTimer > 0 ) {
+				_invincibleTimer -= FlxG.elapsed;
+			}
         }
 		
 		public function launch(originalX:Number, originalY:Number, feetX: Number, feetY: Number, dirX : Number, dirY : Number) : void
@@ -127,6 +163,25 @@ package
 			launchVector = new Point( 0, originalY - feetY );
 			
 			launchState = 1;
+		}
+		
+		public function killedByEnemy():void {
+			_remainDeadTimer = 5;
+			_keepFlashingRedTimer = 0.2;
+			_playstate.removeEntityFromArrayOnly(this, _playstate._eggs);
+		}
+		
+		public function takeRatDamage():void
+		{
+			if ( _invincibleTimer <= 0 ) {
+				health -= 0.2;
+				if ( health <= 0 ) {
+					killedByEnemy();
+				} else {
+					_keepFlashingRedTimer += 0.3;
+					_invincibleTimer += 1.2;
+				}
+			}
 		}
     }
     

@@ -1,6 +1,7 @@
 ﻿package  
 {
 	import flash.geom.ColorTransform;
+	import flash.geom.Point;
 	import flash.geom.Vector3D;
     import org.flixel.*;
 
@@ -26,6 +27,8 @@
 		private const DODO_STATE_MATE:String = "DodoStateMate";
 		private const DODO_STATE_CHASE:String = "DodoStateChase";
 		private const DODO_STATE_APPROACH:String = "DodoStateApproach";
+		private const DODO_STATE_FLYING_IN:String = "DodoStateFlyingIn";
+		private const DODO_STATE_FLYING_OUT:String = "DodoStateFlyingOut";
 		
 		private const DODO_WANDER_AIUPDATE_DELAY_MIN:Number = 0.5;
 		private const DODO_WANDER_AIUPDATE_DELAY_RANGE:Number = 2.5;
@@ -35,7 +38,10 @@
 		private var _isFlashing:Boolean = true;
 		private var _flashTimer:Number = 0;
 		
+		
+		private var destination: Point;
 		private var _remainDeadTimer:Number = 0;
+
 		
         public function  Dodo(X:Number,Y:Number, p:PlayState):void
         {
@@ -58,11 +64,13 @@
 			
             addAnimation("normal", [0, 1, 2, 3], 5);
             addAnimation("stopped", [1]);
+			addAnimation("flying", [2, 5], 10);
             addAnimation("dead", [5]);
             facing = RIGHT;
         }
         override public function update():void
         {
+			var _loc_toVector:Vector3D;
 			if ( _remainDeadTimer > 0 ) {
 				velocity.x = velocity.y = 0;
 				if ( _keepFlashingRedTimer > 0 ) {
@@ -83,20 +91,35 @@
 			
 			_aiUpdateTimer -= FlxG.elapsed;
 			
-			var _loc_toVector:Vector3D = getSteering();
-			if ( _loc_toVector ) {
+			if (isFlying()) {
+				_loc_toVector = new Vector3D( destination.x - cX, destination.y - cY );
+					if (_aiState == DODO_STATE_FLYING_IN && _loc_toVector.length < DODO_APPROACH_DODO_DISTANCE_STOP)
+						_aiState = DODO_STATE_WANDER;
+					else if (_aiState == DODO_STATE_FLYING_OUT && (x<0 || x>=FlxG.width || y<0 || y>=FlxG.height) ) {
+						_playstate.removeEntity(this, _playstate._dodos);
+						return;
+					}
 				_loc_toVector.normalize();
-				if ( _aiState == DODO_STATE_APPROACH ) {
-					_loc_toVector.scaleBy(0.7);
+				_loc_toVector.scaleBy(3);
+				velocity.x = _loc_toVector.x * DODO_MOVEMENT_SPEED;
+				velocity.y = _loc_toVector.y * DODO_MOVEMENT_SPEED;
+				
+			} else {
+				_loc_toVector = getSteering();
+				if ( _loc_toVector ) {
+					_loc_toVector.normalize();
+					if ( _aiState == DODO_STATE_APPROACH ) {
+						_loc_toVector.scaleBy(0.7);
+					}
+					velocity.x = _loc_toVector.x * DODO_MOVEMENT_SPEED;
+					velocity.y = _loc_toVector.y * DODO_MOVEMENT_SPEED;
+				} else if ( _aiUpdateTimer <= 0 ) {
+					_loc_toVector = getWander();
+					_loc_toVector.normalize();
+					_loc_toVector.scaleBy(0.5);
+					velocity.x = _loc_toVector.x * DODO_MOVEMENT_SPEED;
+					velocity.y = _loc_toVector.y * DODO_MOVEMENT_SPEED;
 				}
-				velocity.x = _loc_toVector.x * DODO_MOVEMENT_SPEED;
-				velocity.y = _loc_toVector.y * DODO_MOVEMENT_SPEED;
-			} else if ( _aiUpdateTimer <= 0 ) {
-				_loc_toVector = getWander();
-				_loc_toVector.normalize();
-				_loc_toVector.scaleBy(0.5);
-				velocity.x = _loc_toVector.x * DODO_MOVEMENT_SPEED;
-				velocity.y = _loc_toVector.y * DODO_MOVEMENT_SPEED;
 			}
 			
 			if (velocity.x < 0) {
@@ -107,6 +130,8 @@
 			
 			if (velocity.x == 0 && velocity.y == 0) {
 				play("stopped");
+			} else if (isFlying()) {
+				play("flying");
 			} else {
 				play("normal");
 			}
@@ -205,7 +230,46 @@
 			return _loc_toVector;
 		}
 		
+		public function flyIn():void 
+		{
+			_aiState = DODO_STATE_FLYING_IN;
+			if (Math.random() < 0.5) {
+				if (Math.random() < 0.5)
+					y = FlxG.height;
+				else
+					y = -height;
+				x = Math.floor(Math.random() * FlxG.width);
+			} else {
+				if (Math.random() < 0.5)
+					x = FlxG.width;
+				else
+					x = -width;
+				y = Math.floor(Math.random() * FlxG.height);
+			}
+			
+			destination = new Point( (Math.random() * 0.4 + 0.3) * 1280, (Math.random() * 0.4 + 0.3) * 960 );
+		}
+		
 		public function flyAway():void {
+			_aiState = DODO_STATE_FLYING_OUT;
+			destination = new Point();
+			if (Math.random() < 0.5) {
+				if (Math.random() < 0.5)
+					destination.y = FlxG.height;
+				else
+					destination.y = -height;
+				destination.x = Math.floor(Math.random() * FlxG.width);
+			} else {
+				if (Math.random() < 0.5)
+					destination.x = FlxG.width;
+				else
+					destination.x = -width;
+				destination.y = Math.floor(Math.random() * FlxG.height);
+			}
+		}
+
+		public function isFlying():Boolean {
+			return _aiState == DODO_STATE_FLYING_IN || _aiState == DODO_STATE_FLYING_OUT;
 		}
 		
 		public function killedByEnemy():void {

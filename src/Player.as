@@ -2,7 +2,7 @@
 {
     import org.flixel.*;
 
-    public class Player extends FlxSprite
+    public class Player extends FlxSprite implements IDodo
     {
         [Embed(source = "img/dodo_walk.png")] private var ImgPlayer:Class;
         public var _max_health:int = 1;
@@ -26,7 +26,7 @@
             super(X, Y);
 			
 			_playstate = p;
-            loadGraphic(ImgPlayer, true, true, 70, 70);
+            loadGraphic(ImgPlayer, true, true, 80, 70);
 			
 			_MaxVelocity_walking = 200;
             maxVelocity.x = 100;
@@ -41,8 +41,8 @@
             offset.y = 49;
 			
             addAnimation("normal", [0, 1, 2, 3], 5);
-            addAnimation("eating", [2, 3], 16);
-            addAnimation("stopped", [1]);
+            addAnimation("eating", [4,5.6,7], 7);
+            addAnimation("stopped", [1, 3], 2);
             facing = RIGHT;
         }
         override public function update():void
@@ -185,6 +185,18 @@
 			egg.launch( oX, oY, feetX, feetY, dirX, dirY );
 			
 			_playstate.addSprite(egg, _playstate._eggs);
+		}
+		
+		/* INTERFACE IDodo */
+		
+		public function takeHumanDamage():void
+		{
+			trace("Taking Human Damage: " + this);
+		}
+		
+		public function takeRatDamage():void
+		{
+			trace("Taking Rat Damage: " + this);
 		}
     }
     

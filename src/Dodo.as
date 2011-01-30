@@ -4,7 +4,7 @@
 	import flash.geom.Vector3D;
     import org.flixel.*;
 
-    public class Dodo extends FlxSprite
+    public class Dodo extends FlxSprite implements IDodo
     {
         [Embed(source = "img/dodo_male_walk.png")] private var ImgPlayer:Class;
         public var _max_health:int = 1;
@@ -139,6 +139,20 @@
         {
             return super.hitFloor();
         }
+		
+		/* INTERFACE IDodo */
+		
+		public function takeHumanDamage():void
+		{
+			trace("Taking Human Damage: " + this);
+		}
+		
+		public function takeRatDamage():void
+		{
+			trace("Taking Rat Damage: " + this);
+		}
+		
+		
     }
 } 
 

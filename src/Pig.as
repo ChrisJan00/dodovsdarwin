@@ -48,7 +48,7 @@
             offset.x = 20;
             offset.y = 30;
 			
-            addAnimation("normal", [0, 1, 2, 3], 7);
+            addAnimation("normal", [0, 2], 5);
             addAnimation("fleeing", [4, 5, 6, 7], 7);
             addAnimation("eating", [8, 9], 5);
             addAnimation("stopped", [1]);

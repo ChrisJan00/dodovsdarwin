@@ -53,7 +53,11 @@ package
 			
 			launchState = 0;
 			gravity = 200; // pixels per second
-     
+			
+			width = 32;
+            height = 16;
+            offset.x = 1;
+            offset.y = 20;
         }
         override public function update():void
         {			

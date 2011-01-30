@@ -11,7 +11,7 @@
 		private var _MaxVelocity_walking:int = 200;
 		private var _playstate:PlayState;
 		
-		private const RAT_MOVEMENT_SPEED:Number = 40;
+		private const RAT_MOVEMENT_SPEED:Number = 45;
 		private const RAT_CHASE_DODO_DISTANCE:Number = 200;
 		private const RAT_FLEE_HUMAN_DISTANCE:Number = 130;
 		private const RAT_APPROACH_EGG_DISTANCE:Number = 250;
@@ -49,10 +49,11 @@
             offset.y = 28;
 			
             addAnimation("normal", [0, 1, 2, 3], 5);
+            addAnimation("approaching", [0, 1, 2, 3], 3);
             addAnimation("dead", [4]);
-            addAnimation("eating", [5, 6], 5);
-            addAnimation("chasing", [7, 8,9.10], 20);
-            addAnimation("stopped", [1]);
+            addAnimation("eating", [5, 6], 10);
+            addAnimation("chasing", [7, 8,9,10], 8);
+            addAnimation("fleeing", [0, 1, 2, 3], 10);
             facing = RIGHT;
         }
         override public function update():void
@@ -63,6 +64,9 @@
 			var _loc_toVector:Vector3D = getSteering();
 			if ( _loc_toVector ) {
 				_loc_toVector.normalize();
+				//if (_aiState == RAT_STATE_CHASE) {
+					//_loc_toVector.scaleBy( 1.3);
+				//}
 				velocity.x = _loc_toVector.x * RAT_MOVEMENT_SPEED;
 				velocity.y = _loc_toVector.y * RAT_MOVEMENT_SPEED;
 			} else if ( _aiUpdateTimer <= 0 ) {
@@ -82,13 +86,13 @@
 				play("normal");
 			}
 			if ( _aiState == RAT_STATE_APPROACH ) {
-				play("normal");
+				play("approaching");
 			}
 			if ( _aiState == RAT_STATE_CHASE ) {
 				play("chasing");
 			}
 			if ( _aiState == RAT_STATE_FLEE ) {
-				play("chasing");
+				play("fleeing");
 			}
 			
             super.update();

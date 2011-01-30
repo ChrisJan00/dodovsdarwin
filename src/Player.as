@@ -21,6 +21,11 @@
 		
 		private var hatchReady:Boolean = true;
 		
+		private var _keepFlashingRedTimer:Number = 0;
+		private var _invincibleTimer:Number = 0;
+		private var _isFlashing:Boolean = true;
+		private var _flashTimer:Number = 0;
+		
         public function  Player(X:Number,Y:Number, p:PlayState):void
         {
             super(X, Y);
@@ -94,6 +99,33 @@
 				} else {
 					play("normal");
 				}
+			}
+			
+			if ( _keepFlashingRedTimer > 0 ) {
+				_keepFlashingRedTimer -= FlxG.elapsed;
+				color = 0xFF1111;
+			} else {
+				color = 0x00ffffff;
+				_keepFlashingRedTimer = 0;
+			}
+			if ( _invincibleTimer > 0 ) {
+				_invincibleTimer -= FlxG.elapsed;
+				_flashTimer -= FlxG.elapsed;
+				if ( _flashTimer <= 0 ) {
+					if ( _isFlashing ) {
+						alpha = 1;
+						_flashTimer = 0.09;
+						_isFlashing = false;
+					} else {
+						alpha = 0;
+						_flashTimer = 0.09;
+						_isFlashing = true;
+					}
+				}
+			} else {
+				alpha = 1;
+				_isFlashing = true;
+				_flashTimer = 0;
 			}
 			
 			
@@ -191,12 +223,18 @@
 		
 		public function takeHumanDamage():void
 		{
-			trace("Taking Human Damage: " + this);
+			if ( _invincibleTimer <= 0 ) {
+				_keepFlashingRedTimer += 0.3;
+				_invincibleTimer += 1.2;
+			}
 		}
 		
 		public function takeRatDamage():void
 		{
-			trace("Taking Rat Damage: " + this);
+			if ( _invincibleTimer <= 0 ) {
+				_keepFlashingRedTimer += 0.3;
+				_invincibleTimer += 1.2;
+			}
 		}
     }
     

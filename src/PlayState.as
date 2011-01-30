@@ -133,23 +133,27 @@ package
 				dodo.collideArray(_stones);
 				dodo.collideArray(_trees);
 			}
-			for each(var rat:FlxSprite in _rats) {
+			for each(var rat:Rat in _rats) {
 				_block_map.collide(rat);
 				rat.collideArray(_stones);
 				rat.collideArray(_trees);
+				for each(var _loc_dodo2:FlxSprite in _dodos) {
+					if ( rat.overlaps(_loc_dodo2) ) {
+						rat.attack();
+						(dodo as IDodo).takeRatDamage();
+					}
+				}
 			}
 			for each(var human:Human in _humans) {
 				_block_map.collide(human);
 				human.collideArray(_stones);
 				human.collideArray(_trees);
-				
 				for each(var _loc_rat:FlxSprite in _rats) {
 					if ( human.overlaps(_loc_rat) ) {
 						human.attack();
 						removeEntity(_loc_rat, _rats);
 					}
 				}
-				
 				for each(var _loc_dodo:FlxSprite in _dodos) {
 					if ( human.overlaps(_loc_dodo) ) {
 						human.attack();

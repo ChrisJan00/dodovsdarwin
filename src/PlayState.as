@@ -36,6 +36,8 @@ package
 		public var _eggs:Array;
 		
 		private var _poopDisplay:PoopDisplay;
+		
+		private var treeKillerTimer:Number = 0;
         
         override public function PlayState():void
         {
@@ -169,6 +171,22 @@ package
 				if ( _player.overlaps(fruit) ) {
 					_player.eat();
 					removeEntity(fruit, _fruits);
+				}
+			}
+			
+			var newTreeKillerTimer:Number = treeKillerTimer;
+			if (_trees.length > 1)
+				newTreeKillerTimer = 180 / _trees.length;
+			if (newTreeKillerTimer < treeKillerTimer || (newTreeKillerTimer>0 && treeKillerTimer<=0))
+				treeKillerTimer = newTreeKillerTimer;
+			
+			if (treeKillerTimer > 0) {
+				treeKillerTimer -= FlxG.elapsed;
+				if (treeKillerTimer <= 0) {
+					if (_trees.length > 1) {
+						_trees[0].markForDeath();
+						_trees.shift();
+					}
 				}
 			}
 			

@@ -20,8 +20,8 @@ package
 		private const childSize:Number = 0.3;
 		
 		private var ageTimer:Number = 0;
-		private const retirementTime:Number = 140;
 		private const dyingTime:Number = 20;
+		private var startDecay:Boolean = false;
 		
 		private var _playstate:PlayState;
 		
@@ -107,17 +107,18 @@ package
 				scale.x = newScale;
 				scale.y = newScale;
 			} else {
-				ageTimer += FlxG.elapsed;
-				if (ageTimer < retirementTime) {
+				if (!startDecay) {
 					if (fruitTimer > 0)
 						fruitTimer -= FlxG.elapsed;
 					play("normal");
-				}
-				else if (ageTimer < retirementTime + dyingTime) {
-					play("decay");
 				} else {
-					_playstate.removeEntity(this, _playstate._trees);
-					play("dead");
+					ageTimer += FlxG.elapsed;
+					if (ageTimer < dyingTime) {
+						play("decay");
+					} else {
+						_playstate.removeEntity(this, _playstate._trees);
+						play("dead");
+					}
 				}
 				
 			}
@@ -149,6 +150,12 @@ package
 			fruit.launch( oX, oY, feetX, feetY );
 			
 			return fruit;
+		}
+		
+		
+		public function markForDeath() : void
+		{
+			startDecay = true;
 		}
     }
     

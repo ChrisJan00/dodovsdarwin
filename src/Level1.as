@@ -4,7 +4,7 @@ package
 	import flash.geom.Point;
     import org.flixel.*;
 
-    public class Blocks_PlayState extends PlayState
+    public class Level1 extends PlayState
     {
         
         [Embed(source = 'maps/level1.txt', mimeType = "application/octet-stream")] protected var _LevelMap:Class;
@@ -13,7 +13,7 @@ package
 		
 		
         
-        override public function Blocks_PlayState():void
+        override public function Level1():void
         {
             super();
 			LevelMap = _LevelMap;	

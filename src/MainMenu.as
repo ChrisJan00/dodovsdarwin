@@ -41,7 +41,7 @@ package
 		
 		private function onFade():void
 		{
-			FlxG.switchState(Blocks_PlayState);
+			FlxG.switchState(Level1);
 		}
 	}
 	

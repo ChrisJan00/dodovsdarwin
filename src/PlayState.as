@@ -39,6 +39,7 @@ package
 		private var _eggDisplay:EggDisplay;
 		
 		private var treeKillerTimer:Number = 0;
+		private var dodoArrivingTimer:Number = 0;
         
         override public function PlayState():void
         {
@@ -135,6 +136,8 @@ package
 		   super.update();
 		   
 			for each(var dodo:FlxSprite in _dodos) {
+				if (dodo != _player && (dodo as Dodo).isFlying())
+					continue;
 				_block_map.collide(dodo);
 				dodo.collideArray(_stones);
 				dodo.collideArray(_trees);
@@ -204,6 +207,23 @@ package
 					if (_trees.length > 1) {
 						_trees[0].markForDeath();
 						_trees.shift();
+					}
+				}
+			}
+			
+			// New Dodos
+			if (_dodos.length == 1) {
+				dodoArrivingTimer -= FlxG.elapsed;
+				if (dodoArrivingTimer <= 0) {
+					var probability: Number = Math.max(0, Math.min(1.0, ( _trees.length - 1) * 0.04));
+					var num:Number = Math.random();
+					if ( num < probability ) {
+						var newDodo:Dodo = new Dodo( -100, -100, this);
+						newDodo.flyIn();
+						addSprite( newDodo, _dodos );
+					} else {
+						// 1 second until the next candidate
+						dodoArrivingTimer = 1;
 					}
 				}
 			}

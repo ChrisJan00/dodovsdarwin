@@ -1,6 +1,9 @@
 ﻿
 package 
 {
+	import flash.utils.getDefinitionByName;
+	import flash.utils.getQualifiedClassName;
+
 	import flash.geom.Point;
 	import flash.geom.Vector3D;
     import org.flixel.*;
@@ -255,7 +258,7 @@ package
 			_eggDisplay.update();
 			
 			if (FlxG.keys.justPressed("R")) {
-				FlxG.switchState(Blocks_PlayState);
+				FlxG.switchState(Class(getDefinitionByName(getQualifiedClassName(this))));
 			}
 			
 			if (FlxG.keys.justPressed("ESC")) {

@@ -8,6 +8,7 @@ package
     {
         [Embed(source = 'maps/level1.txt', mimeType = "application/octet-stream")] protected var _LevelMap:Class;
 		[Embed(source = 'img/level_01.png')] protected var _Background:Class;
+        [Embed(source = 'img/Level2_goal.png')] protected var _Level2_GoalPNG:Class;
 		
         
         override public function Level2():void
@@ -48,6 +49,7 @@ package
 			addSprite( new Human(871, 712, this), _humans );
 			
 			
+			displayGoal( _Level2_GoalPNG );
 		}
 	    
 		private var _victoryCounter:Number = 0;

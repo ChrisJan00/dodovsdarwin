@@ -12,7 +12,8 @@
 		private var _playstate:PlayState;
 		
 		private const PIG_MOVEMENT_SPEED:Number = 50;
-		private const PIG_FLEE_DODO_DISTANCE:Number = 70;
+		private const PIG_FLEE_DODO_DISTANCE:Number = 100;
+		private const PIG_KEEP_FLEEING_DODO_DISTANCE:Number = 150;
 		private const PIG_APPROACH_FRUIT_DISTANCE:Number = 300;
 		
 		private var _aiState:String;
@@ -48,7 +49,7 @@
             offset.x = 20;
             offset.y = 30;
 			
-            addAnimation("normal", [0, 1, 2, 3], 7);
+            addAnimation("normal", [0, 2], 5);
             addAnimation("fleeing", [4, 5, 6, 7], 7);
             addAnimation("eating", [8, 9], 5);
             addAnimation("stopped", [1]);
@@ -63,6 +64,9 @@
 				_loc_toVector.normalize();
 				if ( _aiState == PIG_STATE_APPROACH ) {
 					_loc_toVector.scaleBy(0.5);
+				}
+				if ( _aiState == PIG_STATE_FLEE ) {
+					_loc_toVector.scaleBy(2.7);
 				}
 				velocity.x = _loc_toVector.x * PIG_MOVEMENT_SPEED;
 				velocity.y = _loc_toVector.y * PIG_MOVEMENT_SPEED;
@@ -108,15 +112,20 @@
 		
 		private function getSteering():Vector3D {
 			var _loc_toVector:Vector3D = _playstate.getClosestDodoVector( this );
-			if ( _loc_toVector && _loc_toVector.length < PIG_FLEE_DODO_DISTANCE ) {
-				_aiState = PIG_STATE_FLEE;
+			if ( _loc_toVector && _aiState == PIG_STATE_FLEE && _loc_toVector.length < PIG_KEEP_FLEEING_DODO_DISTANCE ) {
 				_loc_toVector.scaleBy( -1 );
 				return( _loc_toVector );
 			} else {
-				_loc_toVector = _playstate.getClosestFruitVector( this );
-				if ( _loc_toVector && _loc_toVector.length < PIG_APPROACH_FRUIT_DISTANCE ) {
-					_aiState = PIG_STATE_APPROACH;
-					return ( _loc_toVector );
+				if ( _loc_toVector && _loc_toVector.length < PIG_FLEE_DODO_DISTANCE ) {
+					_aiState = PIG_STATE_FLEE;
+					_loc_toVector.scaleBy( -1 );
+					return( _loc_toVector );
+				} else {
+					_loc_toVector = _playstate.getClosestFruitVector( this );
+					if ( _loc_toVector && _loc_toVector.length < PIG_APPROACH_FRUIT_DISTANCE ) {
+						_aiState = PIG_STATE_APPROACH;
+						return ( _loc_toVector );
+					}
 				}
 			}
 			return ( null );

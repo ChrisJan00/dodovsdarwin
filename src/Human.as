@@ -20,6 +20,10 @@
 		
 		private const HUMAN_STATE_WANDER:String = "HumanStateWander";
 		private const HUMAN_STATE_CHASE:String = "HumanStateChase";
+		private const HUMAN_STATE_ATTACK:String = "HumanStateAttack";
+		
+		private const HUMAN_ATTACK_ANIMATION_DURATION:Number = 1.5;
+		private var _attackAnimationTimer:Number = 0;
 		
         public function  Human(X:Number,Y:Number, p:PlayState):void
         {
@@ -40,7 +44,7 @@
 			
             addAnimation("normal", [0, 1, 2, 3], 5);
             addAnimation("chasing", [4, 5, 6, 7], 4);
-            addAnimation("attacking", [8, 9, 10], 4);
+            addAnimation("attacking", [8, 9, 10], 6);
             addAnimation("stopped", [1]);
             facing = RIGHT;
         }
@@ -61,10 +65,18 @@
 				velocity.y = _loc_toVector.y * HUMAN_MOVEMENT_SPEED;
 			}
 			
-			if (velocity.x < 0) {
+			if ( _attackAnimationTimer > 0 ) {
+				_attackAnimationTimer -= FlxG.elapsed;
+				velocity.x = velocity.y = 0;
+				_aiState = HUMAN_STATE_ATTACK;
+			} else if (velocity.x < 0) {
 				_facing = LEFT;
 			} else {
 				_facing = RIGHT;
+			}
+			
+			if ( _aiState == HUMAN_STATE_ATTACK ) {
+				play("attacking");
 			}
 			if ( _aiState == HUMAN_STATE_WANDER ) {
 				play("normal");
@@ -118,6 +130,10 @@
         {
             return super.hitFloor();
         }
+		
+		public function attack():void {
+			_attackAnimationTimer = HUMAN_ATTACK_ANIMATION_DURATION;
+		}
     }
 } 
 

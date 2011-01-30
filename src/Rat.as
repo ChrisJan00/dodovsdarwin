@@ -11,7 +11,7 @@
 		private var _MaxVelocity_walking:int = 200;
 		private var _playstate:PlayState;
 		
-		private const RAT_MOVEMENT_SPEED:Number = 40;
+		private const RAT_MOVEMENT_SPEED:Number = 45;
 		private const RAT_CHASE_DODO_DISTANCE:Number = 200;
 		private const RAT_FLEE_HUMAN_DISTANCE:Number = 130;
 		private const RAT_APPROACH_EGG_DISTANCE:Number = 250;
@@ -23,11 +23,15 @@
 		private const RAT_STATE_CHASE:String = "RatStateChase";
 		private const RAT_STATE_FLEE:String = "RatStateFlee";
 		private const RAT_STATE_APPROACH:String = "RatStateApproach";
+		private const RAT_STATE_ATTACK:String = "RatStateAttack";
 		
 		private const RAT_WANDER_AIUPDATE_DELAY_MIN:Number = 0.5;
 		private const RAT_WANDER_AIUPDATE_DELAY_RANGE:Number = 2.5;
 		
 		private var _lastWanderVector:Vector3D;
+		
+		private const RAT_ATTACK_ANIMATION_DURATION:Number = 1;
+		private var _attackAnimationTimer:Number = 0;
 		
         public function  Rat(X:Number,Y:Number, p:PlayState):void
         {
@@ -49,10 +53,12 @@
             offset.y = 28;
 			
             addAnimation("normal", [0, 1, 2, 3], 5);
-            addAnimation("dead", [4]);
-            addAnimation("eating", [5, 6], 5);
-            addAnimation("chasing", [7, 8,9.10], 20);
-            addAnimation("stopped", [1]);
+            addAnimation("approaching", [0, 1, 2, 3], 3);
+            //addAnimation("dead", [4]);
+            addAnimation("eating", [5, 6], 10);
+            addAnimation("chasing", [7, 8,9,10], 8);
+            addAnimation("fleeing", [0, 1, 2, 3], 10);
+            addAnimation("attacking", [5,6], 8);
             facing = RIGHT;
         }
         override public function update():void
@@ -63,6 +69,9 @@
 			var _loc_toVector:Vector3D = getSteering();
 			if ( _loc_toVector ) {
 				_loc_toVector.normalize();
+				//if (_aiState == RAT_STATE_CHASE) {
+					//_loc_toVector.scaleBy( 1.3);
+				//}
 				velocity.x = _loc_toVector.x * RAT_MOVEMENT_SPEED;
 				velocity.y = _loc_toVector.y * RAT_MOVEMENT_SPEED;
 			} else if ( _aiUpdateTimer <= 0 ) {
@@ -73,22 +82,29 @@
 				velocity.y = _loc_toVector.y * RAT_MOVEMENT_SPEED;
 			}
 			
-			if (velocity.x < 0) {
+			if ( _attackAnimationTimer > 0 ) {
+				_attackAnimationTimer -= FlxG.elapsed;
+				velocity.x = velocity.y = 0;
+				_aiState = RAT_STATE_ATTACK;
+			} else if (velocity.x < 0) {
 				_facing = LEFT;
 			} else {
 				_facing = RIGHT;
+			}
+			if ( _aiState == RAT_STATE_ATTACK ) {
+				play("attacking");
 			}
 			if ( _aiState == RAT_STATE_WANDER ) {
 				play("normal");
 			}
 			if ( _aiState == RAT_STATE_APPROACH ) {
-				play("normal");
+				play("approaching");
 			}
 			if ( _aiState == RAT_STATE_CHASE ) {
 				play("chasing");
 			}
 			if ( _aiState == RAT_STATE_FLEE ) {
-				play("chasing");
+				play("fleeing");
 			}
 			
             super.update();
@@ -137,6 +153,10 @@
         {
             return super.hitFloor();
         }
+		
+		public function attack():void {
+			_attackAnimationTimer = RAT_ATTACK_ANIMATION_DURATION;
+		}
     }
 } 
 

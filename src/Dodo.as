@@ -4,7 +4,7 @@
 	import flash.geom.Vector3D;
     import org.flixel.*;
 
-    public class Dodo extends FlxSprite
+    public class Dodo extends FlxSprite implements IDodo
     {
         [Embed(source = "img/dodo_male_walk.png")] private var ImgPlayer:Class;
         public var _max_health:int = 1;
@@ -31,12 +31,17 @@
 		private const DODO_WANDER_AIUPDATE_DELAY_MIN:Number = 0.5;
 		private const DODO_WANDER_AIUPDATE_DELAY_RANGE:Number = 2.5;
 		
+		private var _keepFlashingRedTimer:Number = 0;
+		private var _invincibleTimer:Number = 0;
+		private var _isFlashing:Boolean = true;
+		private var _flashTimer:Number = 0;
+		
         public function  Dodo(X:Number,Y:Number, p:PlayState):void
         {
             super(X, Y);
 			
 			_playstate = p;
-            loadGraphic(ImgPlayer, true, true, 70, 70);
+            loadGraphic(ImgPlayer, true, true, 80, 70);
 			
 			_MaxVelocity_walking = 200;
             maxVelocity.x = 100;
@@ -84,6 +89,33 @@
 				play("stopped");
 			} else {
 				play("normal");
+			}
+			
+			if ( _keepFlashingRedTimer > 0 ) {
+				_keepFlashingRedTimer -= FlxG.elapsed;
+				color = 0xFF1111;
+			} else {
+				color = 0x00ffffff;
+				_keepFlashingRedTimer = 0;
+			}
+			if ( _invincibleTimer > 0 ) {
+				_invincibleTimer -= FlxG.elapsed;
+				_flashTimer -= FlxG.elapsed;
+				if ( _flashTimer <= 0 ) {
+					if ( _isFlashing ) {
+						alpha = 1;
+						_flashTimer = 0.09;
+						_isFlashing = false;
+					} else {
+						alpha = 0;
+						_flashTimer = 0.09;
+						_isFlashing = true;
+					}
+				}
+			} else {
+				alpha = 1;
+				_isFlashing = true;
+				_flashTimer = 0;
 			}
 			
 			if (health <= 0) { _playstate.reload(); }
@@ -138,7 +170,7 @@
 			_loc_toVector = new Vector3D( 1 - (Math.random() * 2), 1 - (Math.random() * 2) );
 			return _loc_toVector;
 		}
-		
+
 		private function getMatingWander():Vector3D {
 			var _loc_toVector:Vector3D;
 			if ( _aiUpdateTimer <= 0 )  {
@@ -156,6 +188,24 @@
 		public function flyAway():void {
 		}
 
+		
+		/* INTERFACE IDodo */
+		
+		public function takeHumanDamage():void
+		{
+			if ( _invincibleTimer <= 0 ) {
+				_keepFlashingRedTimer += 0.3;
+				_invincibleTimer += 1.2;
+			}
+		}
+		
+		public function takeRatDamage():void
+		{
+			if ( _invincibleTimer <= 0 ) {
+				_keepFlashingRedTimer += 0.3;
+				_invincibleTimer += 1.2;
+			}
+		}
     }
 } 
 

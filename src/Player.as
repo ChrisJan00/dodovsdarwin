@@ -247,7 +247,6 @@
 				lover = null;
 			}
 		}
-	}
 	
 		/* INTERFACE IDodo */
 		
@@ -267,5 +266,4 @@
 			}
 		}
     }
-
-} 
+}

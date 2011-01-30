@@ -40,8 +40,8 @@ package
 		public function update():void {
 			if (_playState._player) {
 				_iconMask.y = Math.max ( 0, _iconFilling.height - _playState._player.matingProgress * _iconFilling.height );
-				if (_iconMask.y < _iconFilling.height)
-					visible = true;
+				visible = (_iconMask.y < _iconFilling.height);
+					
 			}
 		}
 		

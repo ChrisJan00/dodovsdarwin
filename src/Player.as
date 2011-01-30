@@ -59,6 +59,7 @@
         {
 			if ( _remainDeadTimer > 0 ) {
 				velocity.x = velocity.y = 0;
+				acceleration.x = acceleration.y = 0;
 				if ( _keepFlashingRedTimer > 0 ) {
 					_keepFlashingRedTimer -= FlxG.elapsed;
 					color = 0xFF0000;
@@ -66,11 +67,11 @@
 					color = 0x00ffffff;
 					_keepFlashingRedTimer = 0;
 				}
+				alpha = 1;
 				play("dead");
 				_remainDeadTimer -= FlxG.elapsed;
 				if ( _remainDeadTimer <= 0 ) {
-					// TODO Game breaks here, playState should just end now
-					trace("GAME OVER");
+					FlxG.switchState(MainMenu);
 				}
 				super.update();
 				return;

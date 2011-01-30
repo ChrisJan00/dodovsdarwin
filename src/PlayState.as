@@ -282,8 +282,26 @@ package
 				}
 			}
 			
+			generateRats();
+			
 			checkLevelAndChange();
         }
+		
+		private var _ratGenerationCounter:Number = 0;
+		private function generateRats():void {
+			
+			_ratGenerationCounter -= FlxG.elapsed;
+			if ( _ratGenerationCounter <= 0 && _stones.length > 0 && _humans.length > 0 ) {
+				var _loc_probRat:Number = 0.1 + Math.min( 0.9, Math.max( 0, ( _humans.length * 3 ) - _rats.length ) * 0.1 );
+				
+				if ( Math.random() < _loc_probRat ) {
+					var _whichStone:Number = Math.floor( Math.random() * _stones.length );
+					addSprite( new Rat( _stones[_whichStone].cX, _stones[_whichStone].cY, this), _rats);
+				}
+				_ratGenerationCounter = 4 + Math.random() * 2;
+			}
+			
+		}
 		
 		public function reload():void
 		{

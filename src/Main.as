@@ -8,7 +8,7 @@
 		public function Main() 
 		{
 			//super(640, 480, MainMenu, 1); 
-			super(640, 480, Level1, 1); 
+			super(640, 480, Level2, 1); 
 			showLogo = false;
 		}
 		

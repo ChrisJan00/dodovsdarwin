@@ -31,13 +31,16 @@ package
 			//addSprite( new Rat(890, 500, this), _rats );
 			//addSprite( new Human(600, 370, this), _humans );
 			//addSprite( new Human(800, 700, this), _humans );
-			addSprite( new Stone(320, 500), _stones );
+			addSprite( new Stone(312, 349), _stones );
 			
 			addSprite( new Stone(350, 300), _stones );
 			//addSprite( new Stone(598, 260), _stones );
 			
 			addSprite( new Stone(800, 235), _stones );
 			addSprite( new Stone(880, 270), _stones );
+			
+			addSprite( new Stone(759, 712), _stones );
+			
 			addSprite( new Tree(590, 245, this), _trees );
 			addSprite( new Tree(900, 550, this), _trees );
 			addSprite( new Tree(590, 670, this), _trees );

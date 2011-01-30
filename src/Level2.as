@@ -17,24 +17,47 @@ package
 			BackgroundImg = _Background;
 			_transparent_tile = "17";
 			
-			_playerStartPos = new Point( 500, 440 );
+			_playerStartPos = new Point( 300, 580 );
 			super.Init();
 			
 			var _loc_flxSprite:FlxSprite;
-			addSprite( new Pig(670, 250, this), _pigs );
-			//addSprite( new Rat(360, 200, this), _rats );
-			//addSprite( new Rat(400, 600, this), _rats );
-			//addSprite( new Rat(890, 500, this), _rats );
-			//addSprite( new Human(600, 370, this), _humans );
-			//addSprite( new Human(800, 700, this), _humans );
-			addSprite( new Stone(640, 480), _stones );
-			addSprite( new Stone(440, 580), _stones );
-			addSprite( new Tree(740, 320, this), _trees );
+			addSprite( new Pig(720, 500, this), _pigs );
+			
+			addSprite( new Stone(312, 349), _stones );
+			
+			addSprite( new Stone(350, 300), _stones );
+			
+			addSprite( new Stone(800, 235), _stones );
+			addSprite( new Stone(880, 270), _stones );
+			
+			addSprite( new Stone(759, 712), _stones );
+			
+			addSprite( new Tree(683, 222, this), _trees );
+			//addSprite( new Tree(590, 245, this), _trees );
+			addSprite( new Tree(561, 282, this), _trees );
+			
+			addSprite( new Tree(985, 361, this), _trees );
+			//addSprite( new Tree(900, 550, this), _trees );
+			addSprite( new Tree(950, 550, this), _trees );
+			
+			//addSprite( new Tree(590, 670, this), _trees );
+			
+			addSprite( new Rat(520, 320, this), _rats );
+			addSprite( new Rat(420, 255, this), _rats );
+			addSprite( new Rat(720, 301, this), _rats );
+			addSprite( new Human(871, 712, this), _humans );
+			
+			
 		}
 	    
+		private var _victoryCounter:Number = 0;
 		override public function isVictoryAchieved() : Boolean
 		{
-			return  _trees.length > 2;
+			if ( false ) {
+				_victoryCounter += FlxG.elapsed;
+			}
+			
+			return ( _victoryCounter > 8 );
 		}
 		
 		override public function nextLevel() : Class

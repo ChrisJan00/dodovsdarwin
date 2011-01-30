@@ -268,9 +268,13 @@ package
 			_poopDisplay.update();
 			_eggDisplay.update();
 			
-			//if (FlxG.keys.justPressed("R")) {
-				//resetLevel();
-			//}
+			if (FlxG.keys.justPressed("R")) {
+				resetLevel();
+			}
+			
+			if (FlxG.keys.justPressed("N")) {
+				FlxG.switchState(nextLevel());
+			}
 			
 			if (FlxG.keys.justPressed("ESC")) {
 				FlxG.switchState(MainMenu);

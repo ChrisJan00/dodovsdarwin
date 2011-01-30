@@ -6,10 +6,10 @@ package
 
     public class Egg extends FlxSprite
     {
-        [Embed(source = "img/egg_01.png")] private var ImgEgg01:Class;
-        [Embed(source = "img/egg_02.png")] private var ImgEgg02:Class;
-        [Embed(source = "img/egg_03.png")] private var ImgEgg03:Class;
-        [Embed(source = "img/egg_04.png")] private var ImgEgg04:Class;
+        [Embed(source = "img/egg_01_hatch_anim.png")] private var ImgEgg01:Class;
+        [Embed(source = "img/egg_02_hatch_anim.png")] private var ImgEgg02:Class;
+        //[Embed(source = "img/egg_03.png")] private var ImgEgg03:Class;
+        //[Embed(source = "img/egg_04.png")] private var ImgEgg04:Class;
 		
 		private var projectionVector: Point;
 		private var launchVector: Point;
@@ -20,6 +20,7 @@ package
 		private var gravity: Number;
 		
 		private var hatchTimer:Number = 15;
+		private const birthTime:Number = 1.2;
 		
 		private var _playstate:PlayState;
 		
@@ -29,34 +30,31 @@ package
 			
 			_playstate = p;
 			
-			var index:Number = Math.floor(Math.random() * 4);
+			var index:Number = Math.floor(Math.random() * 2);
 			var ImgData:Bitmap;
 			var Img:Class
 			
 			switch(index) {
 				case 0: 
-					ImgData = new ImgEgg01();
 					Img = ImgEgg01;
 				break;
 				case 1:
-					ImgData = new ImgEgg02();
 					Img = ImgEgg02;
-				break;
-				case 2:
-					ImgData = new ImgEgg03();
-					Img = ImgEgg03;
-				break;
-				case 3:
-					ImgData = new ImgEgg04();
-					Img = ImgEgg04;
 				break;
 			}
 			
-			width = (ImgData as Bitmap).width;
-			height = (ImgData as Bitmap).height;
+			//width = (ImgData as Bitmap).width;
+			//height = (ImgData as Bitmap).height;
+			width = 20
+			height = 40
+			offset.x = 10
+			offset.y = 40
 			
 			fixed = true;
-			loadGraphic(Img);
+			loadGraphic(Img, true, false, 40, 80);
+			addAnimation("normal", [0], 5);
+			addAnimation("hatch", [0, 1, 2, 3, 4, 5], 10);
+			addAnimation("birth", [6, 7, 8, 9, 10, 11], 5);
 			
 			launchState = 0;
 			gravity = 200; // pixels per second
@@ -96,12 +94,20 @@ package
 			if (launchState == 3) {
 				if (hatchTimer > 0)
 					hatchTimer -= FlxG.elapsed;
+					if (hatchTimer > birthTime * 2)
+						play("normal");
+					else if (hatchTimer > birthTime)
+						play("hatch");
+					else
+						play("birth");
 				if (hatchTimer <= 0) {
 					// grow tree
 					_playstate.spawnDodo( x, y );
 					launchState = 4;
 					_playstate.removeEntity( this, _playstate._eggs );
 				}
+			} else {
+				play("normal");
 			}
         }
 		

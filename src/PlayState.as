@@ -143,7 +143,7 @@ package
 		   super.update();
 		   
 			for each(var dodo:FlxSprite in _dodos) {
-				if (dodo != _player && (dodo as Dodo).isFlying())
+				if (dodo != _player && (dodo as IDodo).isFlying())
 					continue;
 				_block_map.collide(dodo);
 				dodo.collideArray(_stones);
@@ -154,9 +154,9 @@ package
 				rat.collideArray(_stones);
 				rat.collideArray(_trees);
 				for each(var _loc_dodo2:FlxSprite in _dodos) {
-					if ( rat.overlaps(_loc_dodo2) ) {
+					if ( rat.overlaps(_loc_dodo2) && !(_loc_dodo2 as IDodo).isFlying()) {
 						rat.attack();
-						(dodo as IDodo).takeRatDamage();
+						(_loc_dodo2 as IDodo).takeRatDamage();
 					}
 				}
 			}
@@ -172,7 +172,7 @@ package
 					}
 				}
 				for each(var _loc_dodo:FlxSprite in _dodos) {
-					if ( human.overlaps(_loc_dodo) ) {
+					if ( human.overlaps(_loc_dodo) && !(_loc_dodo as IDodo).isFlying()) {
 						human.attack();
 						(_loc_dodo as IDodo).takeHumanDamage();
 					}

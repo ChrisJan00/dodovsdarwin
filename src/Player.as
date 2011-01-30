@@ -24,7 +24,7 @@
 		public var eatenFruitCount:Number = 0;
 		public const SHIT_THRESHOLD:Number = 5;
 		
-		private var pregnant:Boolean = false;
+		private var pregnant:Boolean = true;
 		public var matingProgress:Number = 0;
 		protected var matingSpeed:Number = 0.2; // 5 seconds of sex
 		protected var lover:Dodo = null;
@@ -35,6 +35,9 @@
 		private var _flashTimer:Number = 0;
 		
 		private var _remainDeadTimer:Number = 0;
+		
+		private var _sinceLastMadeLove:Number = Number.MAX_VALUE;
+		private var _sinceLastPooped:Number = Number.MAX_VALUE;
 		
         public function  Player(X:Number,Y:Number, p:PlayState):void
         {
@@ -50,15 +53,17 @@
             drag.x = 400;
             drag.y = 400;
 			
-            width = 33;
-            height = 17;
-            offset.x = 11;
-            offset.y = 49;
+            width = 40;
+            height = 13;
+            offset.x = 20;
+            offset.y = 52;
 						
             addAnimation("normal", [0, 1, 2, 3], 5);
             addAnimation("eating", [4,5.6,7], 7);
-            addAnimation("stopped", [1, 3], 2);
+            addAnimation("stopped", [1]);
             addAnimation("dead", [5]);
+            addAnimation("pooping", [8, 9], 4);
+            addAnimation("mating", [10, 11], 5);
             facing = RIGHT;
         }
         override public function update():void
@@ -77,7 +82,7 @@
 				play("dead");
 				_remainDeadTimer -= FlxG.elapsed;
 				if ( _remainDeadTimer <= 0 ) {
-					FlxG.switchState(MainMenu);
+					_playstate.resetLevel();
 				}
 				super.update();
 				return;
@@ -123,7 +128,11 @@
 			if (acceleration.x != 0 || acceleration.y != 0) {
 				_looking_angle = recomputeLookingAngle( acceleration.x, acceleration.y );
 			}
-			if ( _eatAnimationTimer > 0 ) {
+			if ( _sinceLastPooped <= 0.6 ) {
+				play("pooping");
+			} else if ( _sinceLastMadeLove <= 0.1 ) {
+				play("mating");
+			} else if ( _eatAnimationTimer > 0 ) {
 				_eatAnimationTimer -= FlxG.elapsed;
 				play("eating");
 			} else {
@@ -161,6 +170,8 @@
 				_flashTimer = 0;
 			}
 			
+			_sinceLastMadeLove += FlxG.elapsed;
+			_sinceLastPooped += FlxG.elapsed;
 			
 			if (health <= 0) { 
 				_playstate.reload(); 
@@ -231,6 +242,8 @@
 			seed.launch( oX, oY, feetX, feetY, dirX, dirY );
 			
 			_playstate.addSprite(seed, _playstate._seeds);
+			
+			_sinceLastPooped = 0;
 		}
 		
 		public function launchEgg() : void
@@ -251,8 +264,10 @@
 			egg.launch( oX, oY, feetX, feetY, dirX, dirY );
 			
 			_playstate.addSprite(egg, _playstate._eggs);
+			
+			_sinceLastPooped = 0;
 		}
-				 
+		
 		// Mating
 		public function makeLove( dodo: Dodo ) : void
 		{
@@ -268,6 +283,7 @@
 			else if (lover == null) {
 				lover = dodo;
 			}
+			_sinceLastMadeLove = 0;
 		}
 		
 		public function dontMakeLove( dodo: Dodo ) : void
@@ -313,6 +329,10 @@
 					_invincibleTimer += 1.2;
 				}
 			}
+		}
+		
+		public function isFlying():Boolean {
+			return (false);
 		}
     }
 }

@@ -9,6 +9,7 @@ package
 	{
 		function takeHumanDamage():void
 		function takeRatDamage():void
+		function isFlying():Boolean
 	}
 	
 }

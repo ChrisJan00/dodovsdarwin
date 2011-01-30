@@ -69,6 +69,7 @@
 				play("dead");
 				_remainDeadTimer -= FlxG.elapsed;
 				if ( _remainDeadTimer <= 0 ) {
+					// TODO Game breaks here, playState should just end now
 					trace("GAME OVER");
 				}
 				super.update();
@@ -271,6 +272,7 @@
 		public function killedByEnemy():void {
 			_remainDeadTimer = 5;
 			_keepFlashingRedTimer = 0.2;
+			_playstate.removeEntityFromArrayOnly(this, _playstate._dodos);
 		}
 		
 		/* INTERFACE IDodo */

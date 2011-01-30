@@ -170,7 +170,6 @@ package
 					if ( human.overlaps(_loc_dodo) ) {
 						human.attack();
 						(_loc_dodo as IDodo).takeHumanDamage();
-						removeEntityFromArrayOnly(_loc_dodo, _dodos);
 					}
 				}
 				// Bounding box hacks ftw

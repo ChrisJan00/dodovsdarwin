@@ -275,6 +275,7 @@
 		public function killedByEnemy():void {
 			_remainDeadTimer = 5;
 			_keepFlashingRedTimer = 0.2;
+			_playstate.removeEntityFromArrayOnly(this, _playstate._dodos);
 		}
 		
 		/* INTERFACE IDodo */

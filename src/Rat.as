@@ -7,6 +7,10 @@
     public class Rat extends FlxSprite
     {
         [Embed(source = "img/rat_anim.png")] private var ImgPlayer:Class;
+		
+		[Embed(source = "snd/enemydie.mp3")] private var DeathSound:Class;
+		
+		
 		private var _MaxVelocity_walking:int = 200;
 		private var _playstate:PlayState;
 		
@@ -187,6 +191,7 @@
 		}
 		
 		public function killedByHuman():void {
+			FlxG.play(DeathSound);
 			_remainDeadTimer = 5;
 			_keepFlashingRedTimer = 0.2;
 		}

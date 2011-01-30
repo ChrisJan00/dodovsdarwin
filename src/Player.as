@@ -5,6 +5,12 @@
     public class Player extends FlxSprite implements IDodo
     {
         [Embed(source = "img/dodo_walk.png")] private var ImgPlayer:Class;
+		
+		[Embed(source = "snd/eat.mp3")] public var EatSound:Class;
+		[Embed(source = "snd/playerhurt.mp3")] public var HurtSound:Class;
+		[Embed(source = "snd/playerdie.mp3")] public var DeathSound:Class;
+		
+		
 		private var _MaxVelocity_walking:int = 200;
 		private var _playstate:PlayState;
 		private var _looking_angle: Number = 0;
@@ -207,6 +213,7 @@
 		{
 			eatenFruitCount += 1;
 			_eatAnimationTimer = PLAYER_EAT_ANIMATION_DURATION;
+			FlxG.play(EatSound);
 		}
 		
 		public function unleashShit() : void
@@ -288,6 +295,7 @@
 		}
 		
 		public function killedByEnemy():void {
+			FlxG.play(DeathSound);
 			_remainDeadTimer = 5;
 			_keepFlashingRedTimer = 0.2;
 			_playstate.removeEntityFromArrayOnly(this, _playstate._dodos);
@@ -298,6 +306,7 @@
 		public function takeHumanDamage():void
 		{
 			if ( _invincibleTimer <= 0 ) {
+				FlxG.play(HurtSound);
 				health -= 0.6;
 				if ( health <= 0 ) {
 					killedByEnemy();
@@ -311,6 +320,7 @@
 		public function takeRatDamage():void
 		{
 			if ( _invincibleTimer <= 0 ) {
+				FlxG.play(HurtSound);
 				health -= 0.3;
 				if ( health <= 0 ) {
 					killedByEnemy();

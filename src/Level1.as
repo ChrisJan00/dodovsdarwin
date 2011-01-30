@@ -55,7 +55,7 @@ package
 				_victoryCounter += FlxG.elapsed;
 			}
 			
-			return ( _victoryCounter > 5 );
+			return ( _victoryCounter > 8 );
 		}
 		
 		override public function nextLevel() : Class

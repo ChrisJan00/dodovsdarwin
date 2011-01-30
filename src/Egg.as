@@ -23,7 +23,7 @@ package
 		
 		private var _playstate:PlayState;
 		
-        public function Egg(X:Number,Y:Number, p:PlayState):void
+        public function Egg(X:Number,Y:Number, p:PlayState, hatch:Boolean = false):void
         {
 			super(X, Y);
 			
@@ -55,8 +55,12 @@ package
 			addAnimation("hatch", [0, 1, 2, 3, 4, 5], 10);
 			addAnimation("birth", [6, 7, 8, 9, 10, 11], 5);
 			
-			launchState = 0;
+			if (hatch)
+				launchState = 3;
+			else
+				launchState = 0;
 			gravity = 200; // pixels per second
+			
      
         }
         override public function update():void

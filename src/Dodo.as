@@ -8,7 +8,6 @@
     public class Dodo extends FlxSprite implements IDodo
     {
         [Embed(source = "img/dodo_male_walk.png")] private var ImgPlayer:Class;
-        public var _max_health:int = 1;
 		private var _MaxVelocity_walking:int = 200;
 		private var _playstate:PlayState;
 		
@@ -39,7 +38,10 @@
 		private var _isFlashing:Boolean = true;
 		private var _flashTimer:Number = 0;
 		
+		
 		private var destination: Point;
+		private var _remainDeadTimer:Number = 0;
+
 		
         public function  Dodo(X:Number,Y:Number, p:PlayState):void
         {
@@ -63,11 +65,29 @@
             addAnimation("normal", [0, 1, 2, 3], 5);
             addAnimation("stopped", [1]);
 			addAnimation("flying", [2, 5], 10);
+            addAnimation("dead", [5]);
             facing = RIGHT;
         }
         override public function update():void
         {
 			var _loc_toVector:Vector3D;
+			if ( _remainDeadTimer > 0 ) {
+				velocity.x = velocity.y = 0;
+				if ( _keepFlashingRedTimer > 0 ) {
+					_keepFlashingRedTimer -= FlxG.elapsed;
+					color = 0xFF0000;
+				} else {
+					color = 0x00ffffff;
+					_keepFlashingRedTimer = 0;
+				}
+				play("dead");
+				_remainDeadTimer -= FlxG.elapsed;
+				if ( _remainDeadTimer <= 0 ) {
+					kill();
+				}
+				super.update();
+				return;
+			}
 			
 			_aiUpdateTimer -= FlxG.elapsed;
 			
@@ -252,21 +272,36 @@
 			return _aiState == DODO_STATE_FLYING_IN || _aiState == DODO_STATE_FLYING_OUT;
 		}
 		
+		public function killedByEnemy():void {
+			_remainDeadTimer = 5;
+			_keepFlashingRedTimer = 0.2;
+		}
+		
 		/* INTERFACE IDodo */
 		
 		public function takeHumanDamage():void
 		{
 			if ( _invincibleTimer <= 0 ) {
-				_keepFlashingRedTimer += 0.3;
-				_invincibleTimer += 1.2;
+				health -= 1;
+				if ( health <= 0 ) {
+					killedByEnemy();
+				} else {
+					_keepFlashingRedTimer += 0.3;
+					_invincibleTimer += 1.2;
+				}
 			}
 		}
 		
 		public function takeRatDamage():void
 		{
 			if ( _invincibleTimer <= 0 ) {
-				_keepFlashingRedTimer += 0.3;
-				_invincibleTimer += 1.2;
+				health -= 0.3;
+				if ( health <= 0 ) {
+					killedByEnemy();
+				} else {
+					_keepFlashingRedTimer += 0.3;
+					_invincibleTimer += 1.2;
+				}
 			}
 		}
     }

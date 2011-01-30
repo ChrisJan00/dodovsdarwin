@@ -8,6 +8,12 @@
     public class Dodo extends FlxSprite implements IDodo
     {
         [Embed(source = "img/dodo_male_walk.png")] private var ImgPlayer:Class;
+		[Embed(source = "snd/playerhurt.mp3")] private var HurtSound:Class;
+		[Embed(source = "snd/playerdie.mp3")] private var DeathSound:Class;
+		
+		[Embed(source = "snd/mating.mp3")] private var MateSound:Class;		
+		[Embed(source = "snd/birdcome.mp3")] private var FlySound:Class;
+		
 		private var _MaxVelocity_walking:int = 200;
 		private var _playstate:PlayState;
 		
@@ -71,6 +77,8 @@
         }
         override public function update():void
         {
+			var oldState: String = _aiState;
+			
 			var _loc_toVector:Vector3D;
 			if ( _remainDeadTimer > 0 ) {
 				velocity.x = velocity.y = 0;
@@ -184,6 +192,13 @@
 				_playstate._player.dontMakeLove( this );
 			}
 			
+			if (oldState != _aiState) {
+				if (_aiState == DODO_STATE_MATE)
+					FlxG.play(MateSound);
+				if (isFlying())
+					FlxG.play(FlySound);
+			}
+			
             super.update();
             
         }
@@ -288,6 +303,7 @@
 		}
 		
 		public function killedByEnemy():void {
+			FlxG.play(DeathSound);
 			_remainDeadTimer = 5;
 			_keepFlashingRedTimer = 0.2;
 			_playstate.removeEntityFromArrayOnly(this, _playstate._dodos);
@@ -299,6 +315,7 @@
 		{
 			if ( _invincibleTimer <= 0 ) {
 				health -= 1;
+				FlxG.play(HurtSound);
 				if ( health <= 0 ) {
 					killedByEnemy();
 				} else {
@@ -311,6 +328,7 @@
 		public function takeRatDamage():void
 		{
 			if ( _invincibleTimer <= 0 ) {
+				FlxG.play(HurtSound);
 				health -= 0.3;
 				if ( health <= 0 ) {
 					killedByEnemy();

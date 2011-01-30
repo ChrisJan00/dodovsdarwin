@@ -38,8 +38,8 @@ package
 	    
 		override public function isVictoryAchieved() : Boolean
 		{
-			//return _player.eatenFruitCount > 1;
-			return( false) ;
+			return _player.eatenFruitCount > 1;
+			//return( false) ;
 		}
 		
 		override public function nextLevel() : Class

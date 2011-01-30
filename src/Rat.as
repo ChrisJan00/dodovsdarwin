@@ -138,8 +138,8 @@
 			}
 			
 			if (_aiState != oldState) {
-				if (_aiState == RAT_STATE_CHASE)
-					FlxG.play(AngrySound);
+				//if (_aiState == RAT_STATE_CHASE)
+					//FlxG.play(AngrySound);
 				
 			}
 			

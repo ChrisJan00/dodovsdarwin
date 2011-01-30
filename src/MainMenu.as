@@ -8,6 +8,8 @@ package
 		[Embed(source = "img/nokiafc22.ttf", fontFamily = "NES", embedAsCFF = "false")]
 		public var nokiafc22:String;
 		
+		protected static var layer:FlxLayer;
+		
 		override public function MainMenu() 
 		{
 			super();
@@ -26,6 +28,10 @@ package
 			txt.setFormat("NES", 16, 0xFFFFFFFF, "center");
 			this.add(txt);
 			
+			
+			layer = new FlxLayer;
+			this.add(layer);
+			layer.add(new WalkingDodo(280, 240));
 		}
 		
 		

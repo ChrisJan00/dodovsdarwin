@@ -13,8 +13,8 @@
 		private var _playstate:PlayState;
 		
 		private const HUMAN_MOVEMENT_SPEED:Number = 50;
-		private const HUMAN_CHASE_RAT_DISTANCE:Number = 90;
-		private const HUMAN_CHASE_DODO_DISTANCE:Number = 100;
+		private const HUMAN_CHASE_RAT_DISTANCE:Number = 150;
+		private const HUMAN_CHASE_DODO_DISTANCE:Number = 200;
 		
 		private var _aiState:String;
 		private var _aiUpdateTimer:Number = 0;

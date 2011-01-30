@@ -19,7 +19,7 @@ package
 		private var launchState: Number = 0;
 		private var gravity: Number;
 		
-		private var hatchTimer:Number = 15;
+		private var hatchTimer:Number = 1;
 		
 		private var _playstate:PlayState;
 		

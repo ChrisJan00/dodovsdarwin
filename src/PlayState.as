@@ -262,12 +262,14 @@ package
 			_eggDisplay.update();
 			
 			if (FlxG.keys.justPressed("R")) {
-				FlxG.switchState(Class(getDefinitionByName(getQualifiedClassName(this))));
+				resetLevel();
 			}
 			
 			if (FlxG.keys.justPressed("ESC")) {
 				FlxG.switchState(MainMenu);
 			}
+			
+			checkLevelAndChange();
         }
 		
 		public function reload():void
@@ -384,6 +386,30 @@ package
 		{
 			// until the new dodos are ready, spawn rats instead
 			addSprite( new Dodo(dodoX, dodoY, this), _dodos );
+		}
+		
+		//////////////////// multi level: override this
+		public function isVictoryAchieved() : Boolean
+		{
+			return false;
+		}
+		
+		// override this
+		public function nextLevel() : Class
+		{
+			// should return class of the next level, E.G. "Level1" or "MainMenu"
+			return Class(getDefinitionByName(getQualifiedClassName(this)));
+		}
+		
+		public function resetLevel() : void 
+		{
+			FlxG.switchState(Class(getDefinitionByName(getQualifiedClassName(this))));
+		}
+		
+		public function checkLevelAndChange() : void
+		{
+			if (isVictoryAchieved())
+				FlxG.switchState( nextLevel() );
 		}
     }    
 } 

@@ -19,7 +19,10 @@
 		public var eatenFruitCount:Number = 0;
 		public const SHIT_THRESHOLD:Number = 5;
 		
-		private var hatchReady:Boolean = true;
+		private var pregnant:Boolean = false;
+		public var matingProgress:Number = 0;
+		protected var matingSpeed:Number = 0.2; // 5 seconds of sex
+		protected var lover:Dodo = null;
 		
         public function  Player(X:Number,Y:Number, p:PlayState):void
         {
@@ -39,7 +42,7 @@
             height = 17;
             offset.x = 11;
             offset.y = 49;
-			
+						
             addAnimation("normal", [0, 1, 2, 3], 5);
             addAnimation("eating", [2, 3], 16);
             addAnimation("stopped", [1]);
@@ -65,8 +68,9 @@
 				acceleration.y = PLAYER_MOVEMENT_SPEED;
 			}
 			if (FlxG.keys.X || FlxG.keys.CONTROL || FlxG.keys.SPACE) {
-				if (hatchReady) {
-					hatchReady = false;
+				if (pregnant) {
+					pregnant = false;
+					matingProgress = 0;
 					launchEgg();
 				}
 				// Pooing time!
@@ -186,6 +190,31 @@
 			
 			_playstate.addSprite(egg, _playstate._eggs);
 		}
-    }
-    
+		
+		 
+		// Mating
+		public function makeLove( dodo: Dodo ) : void
+		{
+			if (lover == dodo) {
+				matingProgress += FlxG.elapsed * matingSpeed;
+				if (matingProgress >= 1) {
+					matingProgress = 1;
+					pregnant = true;
+					lover.flyAway();
+					lover = null;
+				}
+			}
+			else if (lover == null) {
+				lover = dodo;
+			}
+		}
+		
+		public function dontMakeLove( dodo: Dodo ) : void
+		{
+			if (lover == dodo) {
+				matingProgress = 0;
+				lover = null;
+			}
+		}
+	}
 } 

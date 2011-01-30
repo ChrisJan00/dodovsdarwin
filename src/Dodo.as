@@ -14,10 +14,10 @@
 		private const DODO_MOVEMENT_SPEED:Number = 80;
 		private const DODO_FLEE_HUMAN_DISTANCE:Number = 150;
 		private const DODO_FLEE_RAT_DISTANCE:Number = 150;
-		private const DODO_APPROACH_DODO_DISTANCE:Number = 150;
+		private const DODO_APPROACH_DODO_DISTANCE:Number = 140;
 		private const DODO_APPROACH_DODO_DISTANCE_STOP:Number = 30;
 		private const DODO_APPROACH_PIG_DISTANCE:Number = 100;
-		private const DODO_APPROACH_FRUIT_DISTANCE:Number = 400;
+		private const DODO_APPROACH_FRUIT_DISTANCE:Number = 200;
 		
 		private var _aiState:String;
 		private var _aiUpdateTimer:Number = 0;

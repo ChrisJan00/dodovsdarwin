@@ -11,6 +11,8 @@ package
         //[Embed(source = "img/egg_03.png")] private var ImgEgg03:Class;
         //[Embed(source = "img/egg_04.png")] private var ImgEgg04:Class;
 		
+		[Embed(source = "snd/pigeat.mp3")] private var EatSound : Class;
+		
 		private var projectionVector: Point;
 		private var launchVector: Point;
 		private var launchSpeed : Point;
@@ -175,6 +177,7 @@ package
 		{
 			if ( _invincibleTimer <= 0 ) {
 				health -= 0.2;
+				FlxG.play( EatSound );
 				if ( health <= 0 ) {
 					killedByEnemy();
 				} else {

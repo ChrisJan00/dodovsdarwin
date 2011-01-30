@@ -8,7 +8,8 @@
     {
         [Embed(source = "img/rat_anim.png")] private var ImgPlayer:Class;
 		
-		[Embed(source = "snd/enemydie.mp3")] private var DeathSound:Class;
+		[Embed(source = "snd/enemydie.mp3")] private var DeathSound:Class;		
+		[Embed(source = "snd/angryrat.mp3")] private var AngrySound:Class;
 		
 		
 		private var _MaxVelocity_walking:int = 200;
@@ -71,6 +72,8 @@
         }
         override public function update():void
         {
+			var oldState: String = _aiState;
+			
 			if ( _remainDeadTimer > 0 ) {
 				if ( _keepFlashingRedTimer > 0 ) {
 					_keepFlashingRedTimer -= FlxG.elapsed;
@@ -117,21 +120,27 @@
 			}
 			if ( _aiState == RAT_STATE_ATTACK ) {
 				play("attacking");
-			}
+			} else
 			if ( _aiState == RAT_STATE_WANDER ) {
 				play("normal");
-			}
+			} else
 			if ( _aiState == RAT_STATE_APPROACH ) {
 				play("approaching");
-			}
+			} else
 			if ( _aiState == RAT_STATE_CHASE ) {
 				play("chasing");
-			}
+			} else
 			if ( _aiState == RAT_STATE_FLEE ) {
 				play("fleeing");
-			}
+			} else
 			if ( _aiState == RAT_STATE_EAT ) {
 				play("eating");
+			}
+			
+			if (_aiState != oldState) {
+				if (_aiState == RAT_STATE_CHASE)
+					FlxG.play(AngrySound);
+				
 			}
 			
             super.update();

@@ -76,7 +76,7 @@
 				play("dead");
 				_remainDeadTimer -= FlxG.elapsed;
 				if ( _remainDeadTimer <= 0 ) {
-					FlxG.switchState(MainMenu);
+					_playstate.resetLevel();
 				}
 				super.update();
 				return;
@@ -319,6 +319,10 @@
 					_invincibleTimer += 1.2;
 				}
 			}
+		}
+		
+		public function isFlying():Boolean {
+			return (false);
 		}
     }
 }

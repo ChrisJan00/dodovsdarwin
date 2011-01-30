@@ -148,10 +148,11 @@ package
 				_block_map.collide(human);
 				human.collideArray(_stones);
 				human.collideArray(_trees);
-				for each(var _loc_rat:FlxSprite in _rats) {
+				for each(var _loc_rat:Rat in _rats) {
 					if ( human.overlaps(_loc_rat) ) {
 						human.attack();
-						removeEntity(_loc_rat, _rats);
+						_loc_rat.killedByHuman();
+						removeEntityFromArrayOnly(_loc_rat, _rats);
 					}
 				}
 				for each(var _loc_dodo:FlxSprite in _dodos) {
@@ -286,6 +287,10 @@ package
 		{
 			array = array.splice( array.indexOf( entity ), 1);
 			entity.kill();
+		}
+		public function removeEntityFromArrayOnly(entity:FlxSprite, array:Array) : void
+		{
+			array = array.splice( array.indexOf( entity ), 1);
 		}
 		
 		public function growTree(treeX:Number, treeY:Number) : void

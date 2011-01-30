@@ -32,6 +32,9 @@
 		
 		private const RAT_ATTACK_ANIMATION_DURATION:Number = 1;
 		private var _attackAnimationTimer:Number = 0;
+		private var _keepFlashingRedTimer:Number = 0;
+		
+		private var _remainDeadTimer:Number = 0;
 		
         public function  Rat(X:Number,Y:Number, p:PlayState):void
         {
@@ -53,25 +56,41 @@
             offset.y = 28;
 			
             addAnimation("normal", [0, 1, 2, 3], 5);
-            addAnimation("approaching", [0, 1, 2, 3], 3);
-            //addAnimation("dead", [4]);
-            addAnimation("eating", [5, 6], 10);
-            addAnimation("chasing", [7, 8,9,10], 8);
-            addAnimation("fleeing", [0, 1, 2, 3], 10);
+            addAnimation("approaching", [7,8,9,10], 2);
+            addAnimation("dead", [4]);
+            addAnimation("eating", [5,6], 10);
+            addAnimation("chasing", [7,8,9,10], 8);
+            addAnimation("fleeing", [0,1,2,3], 10);
             addAnimation("attacking", [5,6], 8);
             facing = RIGHT;
         }
         override public function update():void
         {
+			if ( _remainDeadTimer > 0 ) {
+				if ( _keepFlashingRedTimer > 0 ) {
+					_keepFlashingRedTimer -= FlxG.elapsed;
+					color = 0xFF0000;
+				} else {
+					color = 0x00ffffff;
+					_keepFlashingRedTimer = 0;
+				}
+				play("dead");
+				_remainDeadTimer -= FlxG.elapsed;
+				if ( _remainDeadTimer <= 0 ) {
+					this.kill();
+				}
+				super.update();
+				return;
+			}
 			
 			_aiUpdateTimer -= FlxG.elapsed;
 			
 			var _loc_toVector:Vector3D = getSteering();
 			if ( _loc_toVector ) {
 				_loc_toVector.normalize();
-				//if (_aiState == RAT_STATE_CHASE) {
-					//_loc_toVector.scaleBy( 1.3);
-				//}
+				if (_aiState == RAT_STATE_APPROACH) {
+					_loc_toVector.scaleBy(0.5);
+				}
 				velocity.x = _loc_toVector.x * RAT_MOVEMENT_SPEED;
 				velocity.y = _loc_toVector.y * RAT_MOVEMENT_SPEED;
 			} else if ( _aiUpdateTimer <= 0 ) {
@@ -156,6 +175,11 @@
 		
 		public function attack():void {
 			_attackAnimationTimer = RAT_ATTACK_ANIMATION_DURATION;
+		}
+		
+		public function killedByHuman():void {
+			_remainDeadTimer = 5;
+			_keepFlashingRedTimer = 0.2;
 		}
     }
 } 

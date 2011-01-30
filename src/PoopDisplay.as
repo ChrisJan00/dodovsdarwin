@@ -9,7 +9,7 @@ package
 	 */
 	public class PoopDisplay extends Sprite
 	{
-		[Embed(source = "img/seed_02.png")] private var ImgPoopSeed:Class;
+		[Embed(source = "img/fruit_03.png")] private var ImgPoopSeed:Class;
 		
 		private var _playState:PlayState;
 		private var _iconBackground:Bitmap;

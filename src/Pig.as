@@ -22,6 +22,7 @@
 		private const PIG_STATE_WANDER:String = "PigStateWander";
 		private const PIG_STATE_APPROACH:String = "PigStateApproach";
 		private const PIG_STATE_FLEE:String = "PigStateFlee";
+		private const PIG_STATE_EAT:String = "PigStateEat";
 		
 		private const PIG_WANDER_AIUPDATE_DELAY_MIN:Number = 0.5;
 		private const PIG_WANDER_AIUPDATE_DELAY_RANGE:Number = 2.5;
@@ -46,6 +47,8 @@
             offset.y = 30;
 			
             addAnimation("normal", [0, 1, 2, 3], 7);
+            addAnimation("fleeing", [4, 5, 6, 7], 7);
+            addAnimation("eating", [8, 9], 7);
             addAnimation("stopped", [1]);
             facing = RIGHT;
         }
@@ -74,11 +77,11 @@
 			} else {
 				_facing = RIGHT;
 			}
-			
-			if (velocity.x == 0 && velocity.y == 0) {
-				play("stopped");
-			} else {
+			if ( _aiState == PIG_STATE_WANDER ) {
 				play("normal");
+			}
+			if ( _aiState == PIG_STATE_FLEE ) {
+				play("fleeing");
 			}
 			
 			if (health <= 0) { _playstate.reload(); }

@@ -6,7 +6,7 @@
 
     public class Human extends FlxSprite
     {
-        [Embed(source = "img/conqui_anim_move.png")] private var ImgPlayer:Class;
+        [Embed(source = "img/conqui_anim.png")] private var ImgPlayer:Class;
         public var _max_health:int = 1;
         private var _stars:Array;
 		private var _MaxVelocity_walking:int = 200;
@@ -27,7 +27,7 @@
             super(X, Y);
 			
 			_playstate = p;
-            loadGraphic(ImgPlayer, true, true, 88, 112);
+            loadGraphic(ImgPlayer, true, true, 112, 112);
      
 			_MaxVelocity_walking = 200;
             maxVelocity.x = 100;
@@ -40,6 +40,8 @@
             offset.y = 83;
 			
             addAnimation("normal", [0, 1, 2, 3], 5);
+            addAnimation("chasing", [4, 5, 6, 7], 4);
+            addAnimation("attacking", [8, 9, 10], 4);
             addAnimation("stopped", [1]);
             facing = RIGHT;
         }
@@ -65,10 +67,11 @@
 			} else {
 				_facing = RIGHT;
 			}
-			if (velocity.x == 0 && velocity.y == 0) {
-				play("stopped");
-			} else {
+			if ( _aiState == HUMAN_STATE_WANDER ) {
 				play("normal");
+			}
+			if ( _aiState == HUMAN_STATE_CHASE ) {
+				play("chasing");
 			}
 			
 			if (health <= 0) { _playstate.reload(); }

@@ -164,7 +164,8 @@ package
 				for each(var _loc_dodo:FlxSprite in _dodos) {
 					if ( human.overlaps(_loc_dodo) ) {
 						human.attack();
-						(dodo as IDodo).takeHumanDamage();
+						(_loc_dodo as IDodo).takeHumanDamage();
+						removeEntityFromArrayOnly(_loc_dodo, _dodos);
 					}
 				}
 			}

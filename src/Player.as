@@ -5,7 +5,6 @@
     public class Player extends FlxSprite implements IDodo
     {
         [Embed(source = "img/dodo_walk.png")] private var ImgPlayer:Class;
-        public var _max_health:int = 1;
 		private var _MaxVelocity_walking:int = 200;
 		private var _playstate:PlayState;
 		private var _looking_angle: Number = 0;
@@ -19,7 +18,7 @@
 		public var eatenFruitCount:Number = 0;
 		public const SHIT_THRESHOLD:Number = 5;
 		
-		private var pregnant:Boolean = false;
+		private var pregnant:Boolean = true;
 		public var matingProgress:Number = 0;
 		protected var matingSpeed:Number = 0.2; // 5 seconds of sex
 		protected var lover:Dodo = null;
@@ -29,10 +28,12 @@
 		private var _isFlashing:Boolean = true;
 		private var _flashTimer:Number = 0;
 		
+		private var _remainDeadTimer:Number = 0;
+		
         public function  Player(X:Number,Y:Number, p:PlayState):void
         {
             super(X, Y);
-			
+			this.health
 			_playstate = p;
             loadGraphic(ImgPlayer, true, true, 80, 70);
 			
@@ -51,10 +52,29 @@
             addAnimation("normal", [0, 1, 2, 3], 5);
             addAnimation("eating", [4,5.6,7], 7);
             addAnimation("stopped", [1, 3], 2);
+            addAnimation("dead", [5]);
             facing = RIGHT;
         }
         override public function update():void
         {
+			if ( _remainDeadTimer > 0 ) {
+				velocity.x = velocity.y = 0;
+				if ( _keepFlashingRedTimer > 0 ) {
+					_keepFlashingRedTimer -= FlxG.elapsed;
+					color = 0xFF0000;
+				} else {
+					color = 0x00ffffff;
+					_keepFlashingRedTimer = 0;
+				}
+				play("dead");
+				_remainDeadTimer -= FlxG.elapsed;
+				if ( _remainDeadTimer <= 0 ) {
+					trace("GAME OVER");
+				}
+				super.update();
+				return;
+			}
+			
 			acceleration.x = acceleration.y = 0;
 			
 			//move left and right   
@@ -247,22 +267,37 @@
 				lover = null;
 			}
 		}
-	
+		
+		public function killedByEnemy():void {
+			_remainDeadTimer = 5;
+			_keepFlashingRedTimer = 0.2;
+		}
+		
 		/* INTERFACE IDodo */
 		
 		public function takeHumanDamage():void
 		{
 			if ( _invincibleTimer <= 0 ) {
-				_keepFlashingRedTimer += 0.3;
-				_invincibleTimer += 1.2;
+				health -= 0.6;
+				if ( health <= 0 ) {
+					killedByEnemy();
+				} else {
+					_keepFlashingRedTimer += 0.3;
+					_invincibleTimer += 1.2;
+				}
 			}
 		}
 		
 		public function takeRatDamage():void
 		{
 			if ( _invincibleTimer <= 0 ) {
-				_keepFlashingRedTimer += 0.3;
-				_invincibleTimer += 1.2;
+				health -= 0.3;
+				if ( health <= 0 ) {
+					killedByEnemy();
+				} else {
+					_keepFlashingRedTimer += 0.3;
+					_invincibleTimer += 1.2;
+				}
 			}
 		}
     }

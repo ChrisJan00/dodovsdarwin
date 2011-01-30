@@ -7,7 +7,6 @@
     public class Pig extends FlxSprite
     {
         [Embed(source = "img/pig_anim.png")] private var ImgPlayer:Class;
-        public var _max_health:int = 1;
 		private var _MaxVelocity_walking:int = 200;
 		private var _playstate:PlayState;
 		

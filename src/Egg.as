@@ -11,6 +11,9 @@ package
         //[Embed(source = "img/egg_03.png")] private var ImgEgg03:Class;
         //[Embed(source = "img/egg_04.png")] private var ImgEgg04:Class;
 		
+		[Embed(source = "snd/pigeat.mp3")] private var EatSound : Class;
+		[Embed(source = "snd/egghatch.mp3")] private var HatchSound : Class;
+		
 		private var projectionVector: Point;
 		private var launchVector: Point;
 		private var launchSpeed : Point;
@@ -129,7 +132,8 @@ package
 					else
 						play("birth");
 				if (hatchTimer <= 0) {
-					// grow tree
+					// grow dodo
+					FlxG.play(HatchSound);
 					_playstate.spawnDodo( x, y );
 					launchState = 4;
 					_playstate.removeEntity( this, _playstate._eggs );
@@ -175,6 +179,7 @@ package
 		{
 			if ( _invincibleTimer <= 0 ) {
 				health -= 0.2;
+				FlxG.play( EatSound );
 				if ( health <= 0 ) {
 					killedByEnemy();
 				} else {

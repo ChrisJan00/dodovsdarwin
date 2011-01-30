@@ -6,11 +6,12 @@
     {
         [Embed(source = "img/dodo_walk.png")] private var ImgPlayer:Class;
 		
-		[Embed(source = "snd/eat.mp3")] public var EatSound:Class;
-		[Embed(source = "snd/playerhurt.mp3")] public var HurtSound:Class;
-		[Embed(source = "snd/playerdie.mp3")] public var DeathSound:Class;
+		[Embed(source = "snd/eat.mp3")] private var EatSound:Class;
+		[Embed(source = "snd/playerhurt.mp3")] private var HurtSound:Class;
+		[Embed(source = "snd/playerdie.mp3")] private var DeathSound:Class;
+		[Embed(source = "snd/poop.mp3")] private var PoopSound:Class;
 		
-		
+				
 		private var _MaxVelocity_walking:int = 200;
 		private var _playstate:PlayState;
 		private var _looking_angle: Number = 0;
@@ -244,6 +245,7 @@
 			_playstate.addSprite(seed, _playstate._seeds);
 			
 			_sinceLastPooped = 0;
+			FlxG.play(PoopSound);
 		}
 		
 		public function launchEgg() : void
@@ -266,6 +268,7 @@
 			_playstate.addSprite(egg, _playstate._eggs);
 			
 			_sinceLastPooped = 0;
+			FlxG.play(PoopSound);
 		}
 		
 		// Mating

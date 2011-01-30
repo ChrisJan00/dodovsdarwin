@@ -7,6 +7,8 @@
     public class Human extends FlxSprite
     {
         [Embed(source = "img/conqui_anim.png")] private var ImgPlayer:Class;
+		[Embed(source = "snd/angryhuman.mp3")] private var AngrySound:Class;
+		
 		private var _MaxVelocity_walking:int = 200;
 		private var _playstate:PlayState;
 		
@@ -50,6 +52,8 @@
         }
         override public function update():void
         {
+			var oldState:String = _aiState;
+			
 			_aiUpdateTimer -= FlxG.elapsed;
 			
 			var _loc_toVector:Vector3D = getSteering();
@@ -77,15 +81,20 @@
 			
 			if ( _aiState == HUMAN_STATE_ATTACK ) {
 				play("attacking");
-			}
+			} else
 			if ( _aiState == HUMAN_STATE_WANDER ) {
 				play("normal");
-			}
+			} else
 			if ( _aiState == HUMAN_STATE_CHASE ) {
 				play("chasing");
 			}
 			
 			if (health <= 0) { _playstate.reload(); }
+			
+			if (_aiState != oldState) {
+				//if (_aiState == HUMAN_STATE_CHASE)
+					//FlxG.play(AngrySound);
+			}
 			
             super.update();
             

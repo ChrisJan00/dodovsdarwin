@@ -9,6 +9,11 @@ package
         [Embed(source = "img/tree_02_anim.png")] private var ImgTree02:Class;
         [Embed(source = "img/tree_03_anim.png")] private var ImgTree03:Class;
 		
+		[Embed(source = "snd/treegrow.mp3")] private var GrowSound:Class;
+		[Embed(source = "snd/treeage.mp3")] private var AgeSound:Class;
+		[Embed(source = "snd/treechop.mp3")] private var ChopSound:Class;
+		
+		
 		private var imgWidth:Number;
 		private var imgHeight:Number;
 		private var imgX:Number;
@@ -64,6 +69,7 @@ package
 			if (adult)
 				growthTimer = 0;
 			else {
+				FlxG.play(GrowSound);
 				scale.x = childSize;
 				scale.y = childSize;
 			}
@@ -191,6 +197,7 @@ package
 		public function markForDeath() : void
 		{
 			startDecay = true;
+			FlxG.play(AgeSound);
 		}
 		
 		public function killedByEnemy():void {
@@ -203,6 +210,7 @@ package
 		public function takeHumanDamage():void
 		{
 			if ( _invincibleTimer <= 0 ) {
+				FlxG.play(ChopSound);
 				health -= 0.2;
 				if ( health <= 0 ) {
 					killedByEnemy();

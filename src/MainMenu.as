@@ -26,7 +26,7 @@ package
 			this.add(txt);
 			
 			
-			txt = new FlxText(0, FlxG.height  -48, FlxG.width, "PRESS X TO START")
+			txt = new FlxText(0, FlxG.height  -48, FlxG.width, "PRESS ACTION KEY (X) TO START")
 			txt.setFormat("NES", 16, 0xFFFFFFFF, "center");
 			this.add(txt);
 			

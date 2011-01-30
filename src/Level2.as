@@ -46,7 +46,7 @@ package
 			addSprite( new Rat(520, 320, this), _rats );
 			addSprite( new Rat(420, 255, this), _rats );
 			addSprite( new Rat(720, 301, this), _rats );
-			addSprite( new Human(871, 712, this), _humans );
+			addSprite( new Human(871, 692, this), _humans );
 			
 			
 			displayGoal( _Level2_GoalPNG );

@@ -14,6 +14,7 @@
 		private const RAT_CHASE_DODO_DISTANCE:Number = 200;
 		private const RAT_FLEE_HUMAN_DISTANCE:Number = 130;
 		private const RAT_APPROACH_EGG_DISTANCE:Number = 250;
+		private const RAT_EAT_EGG_DISTANCE:Number = 25;
 		
 		private var _aiState:String;
 		private var _aiUpdateTimer:Number = 0;
@@ -23,6 +24,7 @@
 		private const RAT_STATE_FLEE:String = "RatStateFlee";
 		private const RAT_STATE_APPROACH:String = "RatStateApproach";
 		private const RAT_STATE_ATTACK:String = "RatStateAttack";
+		private const RAT_STATE_EAT:String = "RatStateEat";
 		
 		private const RAT_WANDER_AIUPDATE_DELAY_MIN:Number = 0.5;
 		private const RAT_WANDER_AIUPDATE_DELAY_RANGE:Number = 2.5;
@@ -57,7 +59,7 @@
             addAnimation("normal", [0, 1, 2, 3], 5);
             addAnimation("approaching", [7,8,9,10], 2);
             addAnimation("dead", [4]);
-            addAnimation("eating", [5,6], 10);
+            addAnimation("eating", [5,6], 4);
             addAnimation("chasing", [7,8,9,10], 8);
             addAnimation("fleeing", [0,1,2,3], 10);
             addAnimation("attacking", [5,6], 8);
@@ -124,6 +126,9 @@
 			if ( _aiState == RAT_STATE_FLEE ) {
 				play("fleeing");
 			}
+			if ( _aiState == RAT_STATE_EAT ) {
+				play("eating");
+			}
 			
             super.update();
         }
@@ -141,6 +146,11 @@
 					return ( _loc_toVector );
 				} else {
 					_loc_toVector = _playstate.getClosestEggVector( this );
+					if ( _loc_toVector && _loc_toVector.length < RAT_EAT_EGG_DISTANCE ) {
+						_aiState = RAT_STATE_EAT;
+						(_playstate.getClosestEgg( this ) as Egg).takeRatDamage();
+						return ( new Vector3D() );
+					}
 					if ( _loc_toVector && _loc_toVector.length < RAT_APPROACH_EGG_DISTANCE ) {
 						_aiState = RAT_STATE_APPROACH;
 						return ( _loc_toVector );

@@ -94,12 +94,12 @@
 			
 			if (isFlying()) {
 				_loc_toVector = new Vector3D( destination.x - cX, destination.y - cY );
-					if (_aiState == DODO_STATE_FLYING_IN && _loc_toVector.length < DODO_APPROACH_DODO_DISTANCE_STOP)
-						_aiState = DODO_STATE_WANDER;
-					else if (_aiState == DODO_STATE_FLYING_OUT && (x<0 || x>=FlxG.width || y<0 || y>=FlxG.height) ) {
-						_playstate.removeEntity(this, _playstate._dodos);
-						return;
-					}
+				if (_aiState == DODO_STATE_FLYING_IN && _loc_toVector.length < DODO_APPROACH_DODO_DISTANCE_STOP)
+					_aiState = DODO_STATE_WANDER;
+				else if (_aiState == DODO_STATE_FLYING_OUT && _loc_toVector.length < DODO_APPROACH_DODO_DISTANCE_STOP ) {
+					_playstate.removeEntity(this, _playstate._dodos);
+					return;
+				}
 				_loc_toVector.normalize();
 				_loc_toVector.scaleBy(3);
 				velocity.x = _loc_toVector.x * DODO_MOVEMENT_SPEED;
@@ -246,38 +246,40 @@
 		public function flyIn():void 
 		{
 			_aiState = DODO_STATE_FLYING_IN;
+			
 			if (Math.random() < 0.5) {
 				if (Math.random() < 0.5)
-					y = FlxG.height;
+					y = 960;
 				else
-					y = -height;
-				x = Math.floor(Math.random() * FlxG.width);
+					y = -1 * height;
+				x = Math.floor(Math.random() * 1280);
 			} else {
 				if (Math.random() < 0.5)
-					x = FlxG.width;
+					x = 1280;
 				else
-					x = -width;
-				y = Math.floor(Math.random() * FlxG.height);
+					x = -1 * width;
+				y = Math.floor(Math.random() * 960);
 			}
 			
 			destination = new Point( (Math.random() * 0.4 + 0.3) * 1280, (Math.random() * 0.4 + 0.3) * 960 );
 		}
 		
 		public function flyAway():void {
+			var _loc_buffer:Number = 100;
 			_aiState = DODO_STATE_FLYING_OUT;
 			destination = new Point();
 			if (Math.random() < 0.5) {
 				if (Math.random() < 0.5)
-					destination.y = FlxG.height;
+					destination.y = 960 + _loc_buffer;
 				else
-					destination.y = -height;
-				destination.x = Math.floor(Math.random() * FlxG.width);
+					destination.y = -height - _loc_buffer;
+				destination.x = Math.floor(Math.random() * 1280);
 			} else {
 				if (Math.random() < 0.5)
-					destination.x = FlxG.width;
+					destination.x = 1280 + _loc_buffer;
 				else
-					destination.x = -width;
-				destination.y = Math.floor(Math.random() * FlxG.height);
+					destination.x = -width - _loc_buffer;
+				destination.y = Math.floor(Math.random() * 960);
 			}
 		}
 

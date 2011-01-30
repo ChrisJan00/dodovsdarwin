@@ -7,6 +7,11 @@
     public class Pig extends FlxSprite
     {
         [Embed(source = "img/pig_anim.png")] private var ImgPlayer:Class;
+		
+		
+        [Embed(source = "snd/pigeat.mp3")] private var EatSound:Class;
+		[Embed(source = "snd/pigescape.mp3")] private var RunSound:Class;
+		
 		private var _MaxVelocity_walking:int = 200;
 		private var _playstate:PlayState;
 		
@@ -56,6 +61,8 @@
         }
         override public function update():void
         {
+			var oldState:String = _aiState;
+			
 			_aiUpdateTimer -= FlxG.elapsed;
 			
 			var _loc_toVector:Vector3D = getSteering();
@@ -90,20 +97,28 @@
 			
 			if ( _aiState == PIG_STATE_EAT ) {
 				play("eating");
-			}
+			} else
 			if ( _aiState == PIG_STATE_WANDER ) {
 				play("normal");
-			}
+			} else
 			if ( _aiState == PIG_STATE_FLEE ) {
 				play("fleeing");
-			}
+			} else
 			if ( _aiState == PIG_STATE_APPROACH ) {
 				play("normal");
-			}
+			} else
 			
 			
 			
 			if (health <= 0) { _playstate.reload(); }
+			
+			if (_aiState != oldState) {
+				if (_aiState == PIG_STATE_FLEE)
+					FlxG.play(RunSound);
+				else
+				if (_aiState == PIG_STATE_EAT)
+					FlxG.play(EatSound);
+			}
 			
             super.update();
             

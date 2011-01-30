@@ -10,6 +10,9 @@ package
         [Embed(source = "img/fruit_02.png")] private var ImgFruit02:Class;
         [Embed(source = "img/fruit_03.png")] private var ImgFruit03:Class;
 		
+		[Embed(source = "snd/fruitfall.mp3")] public var FallSound:Class;
+		[Embed(source = "snd/bounce.mp3")] public var BounceSound:Class;
+		
 		private var projectionVector: Point;
 		private var launchVector: Point;
 		private var launchSpeed : Point;
@@ -71,6 +74,7 @@ package
 				launchVector.y = launchVector.y + launchSpeed.y * FlxG.elapsed;
 				
 				if (launchVector.y > 0) {
+					FlxG.play(BounceSound);
 					if (launchState == 1)
 						launchState = 2;
 					else if (launchState == 2)
@@ -104,6 +108,7 @@ package
 			launchVector = new Point( 0, originalY - feetY);
 			
 			launchState = 1;
+			FlxG.play(FallSound, 1.0, false);
 		}
     }
     

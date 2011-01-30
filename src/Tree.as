@@ -5,9 +5,9 @@ package
 
     public class Tree extends FlxSprite
     {
-        [Embed(source = "img/tree_01.png")] private var ImgTree01:Class;
-        [Embed(source = "img/tree_02.png")] private var ImgTree02:Class;
-        [Embed(source = "img/tree_03.png")] private var ImgTree03:Class;
+        [Embed(source = "img/tree_01_anim.png")] private var ImgTree01:Class;
+        [Embed(source = "img/tree_02_anim.png")] private var ImgTree02:Class;
+        [Embed(source = "img/tree_03_anim.png")] private var ImgTree03:Class;
 		
 		private var imgWidth:Number;
 		private var imgHeight:Number;
@@ -18,6 +18,10 @@ package
 		private const growthLimit:Number = 6;
 		private var growthTimer:Number = growthLimit;
 		private const childSize:Number = 0.3;
+		
+		private var ageTimer:Number = 0;
+		private const retirementTime:Number = 140;
+		private const dyingTime:Number = 20;
 		
 		private var _playstate:PlayState;
 		
@@ -46,7 +50,7 @@ package
 				break;
 			}
 			
-			imgWidth = (ImgData as Bitmap).width;
+			imgWidth = (ImgData as Bitmap).width/4;
 			imgHeight = (ImgData as Bitmap).height;
 			imgX = x;
 			imgY = y;
@@ -64,26 +68,29 @@ package
 			fixed = true;
 			
 			
-			loadGraphic(Img, false, false, imgWidth, imgHeight);
+			loadGraphic(Img, true, false, imgWidth, imgHeight);
+			addAnimation("normal", [0], 10);
+			addAnimation("decay", [0, 1, 2, 3], 0.2);
+			addAnimation("dead", [3], 10);
 			
 			switch(index) {
 				case 0: 
 					width = 48;
 					height = 19;
-					offset.x = 58;
-					offset.y = 176;
+					offset.x = 61;
+					offset.y = 179;
 				break;
 				case 1:
 					width = 53;
 					height = 18;
-					offset.x = 51;
-					offset.y = 192;
+					offset.x = 54;
+					offset.y = 198;
 				break;
 				case 2:
 					width = 47;
 					height = 22;
-					offset.x = 54;
-					offset.y = 161;
+					offset.x = 62;
+					offset.y = 166;
 				break;
 			}
 			
@@ -99,11 +106,22 @@ package
 					newScale = 1;
 				scale.x = newScale;
 				scale.y = newScale;
+			} else {
+				ageTimer += FlxG.elapsed;
+				if (ageTimer < retirementTime) {
+					if (fruitTimer > 0)
+						fruitTimer -= FlxG.elapsed;
+					play("normal");
+				}
+				else if (ageTimer < retirementTime + dyingTime) {
+					play("decay");
+				} else {
+					_playstate.removeEntity(this, _playstate._trees);
+					play("dead");
+				}
+				
 			}
-				
-			if (growthTimer <= 0 && fruitTimer > 0)
-				fruitTimer -= FlxG.elapsed;
-				
+			
 			if (scale.y <= 1) {
 				y = imgY + imgHeight * (1 - scale.y) * 0.45;
 			}

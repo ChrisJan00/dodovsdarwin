@@ -35,7 +35,7 @@
             super(X, Y);
 			
 			_playstate = p;
-            loadGraphic(ImgPlayer, true, true, 56, 28);
+            loadGraphic(ImgPlayer, true, true, 56, 42);
 			
 			_MaxVelocity_walking = 200;
             maxVelocity.x = 100;
@@ -44,12 +44,15 @@
             drag.x = 40;
             drag.y = 40;
 			
-            width = 37;
-            height = 7;
-            offset.x = 9;
-            offset.y = 17;
+            width = 47;
+            height = 11;
+            offset.x = 5;
+            offset.y = 28;
 			
             addAnimation("normal", [0, 1, 2, 3], 5);
+            addAnimation("dead", [4]);
+            addAnimation("eating", [5, 6], 5);
+            addAnimation("chasing", [7, 8,9.10], 20);
             addAnimation("stopped", [1]);
             facing = RIGHT;
         }
@@ -76,13 +79,18 @@
 			} else {
 				_facing = RIGHT;
 			}
-			
-			if (velocity.x == 0 && velocity.y == 0) {
-				play("stopped");
-			} else {
+			if ( _aiState == RAT_STATE_WANDER ) {
 				play("normal");
 			}
-			if (health <= 0) { _playstate.reload(); }
+			if ( _aiState == RAT_STATE_APPROACH ) {
+				play("normal");
+			}
+			if ( _aiState == RAT_STATE_CHASE ) {
+				play("chasing");
+			}
+			if ( _aiState == RAT_STATE_FLEE ) {
+				play("chasing");
+			}
 			
             super.update();
         }

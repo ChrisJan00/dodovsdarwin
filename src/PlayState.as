@@ -147,13 +147,14 @@ package
 					}
 				}
 			}
-			for each(var pig:FlxSprite in _pigs) {
+			for each(var pig:Pig in _pigs) {
 				_block_map.collide(pig);
 				pig.collideArray(_stones);
 				pig.collideArray(_trees);
 				
 				for each(var _loc_fruit:FlxSprite in _fruits) {
 					if ( pig.overlaps(_loc_fruit) ) {
+						pig.eat();
 						removeEntity(_loc_fruit, _fruits);
 					}
 				}

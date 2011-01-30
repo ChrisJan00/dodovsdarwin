@@ -23,7 +23,7 @@ package
 			_playerStartPos = new Point( 500, 440 );
 			super.Init();
 			
-			var _loc_flxSprite:FlxSprite
+			var _loc_flxSprite:FlxSprite;
 			addSprite( new Pig(670, 250, this), _pigs );
 			addSprite( new Rat(360, 200, this), _rats );
 			addSprite( new Rat(400, 600, this), _rats );

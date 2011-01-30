@@ -18,7 +18,7 @@
 		public var eatenFruitCount:Number = 0;
 		public const SHIT_THRESHOLD:Number = 0;
 		
-		private var pregnant:Boolean = true;
+		private var pregnant:Boolean = false;
 		public var matingProgress:Number = 0;
 		protected var matingSpeed:Number = 0.2; // 5 seconds of sex
 		protected var lover:Dodo = null;

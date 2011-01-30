@@ -12,9 +12,9 @@
 		private var _playstate:PlayState;
 		
 		private const DODO_MOVEMENT_SPEED:Number = 80;
-		private const DODO_FLEE_HUMAN_DISTANCE:Number = 100;
-		private const DODO_FLEE_RAT_DISTANCE:Number = 100;
-		private const DODO_APPROACH_DODO_DISTANCE:Number = 200;
+		private const DODO_FLEE_HUMAN_DISTANCE:Number = 150;
+		private const DODO_FLEE_RAT_DISTANCE:Number = 150;
+		private const DODO_APPROACH_DODO_DISTANCE:Number = 150;
 		private const DODO_APPROACH_DODO_DISTANCE_STOP:Number = 30;
 		private const DODO_APPROACH_PIG_DISTANCE:Number = 100;
 		private const DODO_APPROACH_FRUIT_DISTANCE:Number = 400;
@@ -25,7 +25,6 @@
 		private const DODO_STATE_WANDER:String = "DodoStateWander";
 		private const DODO_STATE_FLEE:String = "DodoStateFlee";
 		private const DODO_STATE_MATE:String = "DodoStateMate";
-		private const DODO_STATE_CHASE:String = "DodoStateChase";
 		private const DODO_STATE_APPROACH:String = "DodoStateApproach";
 		private const DODO_STATE_FLYING_IN:String = "DodoStateFlyingIn";
 		private const DODO_STATE_FLYING_OUT:String = "DodoStateFlyingOut";
@@ -63,8 +62,10 @@
             offset.y = 49;
 			
             addAnimation("normal", [0, 1, 2, 3], 5);
-            addAnimation("stopped", [1]);
 			addAnimation("flying", [2, 5], 10);
+			addAnimation("mating", [4, 5], 10);
+			addAnimation("fleeing", [0, 1, 2, 3], 8);
+			// TODO Need dead state image
             addAnimation("dead", [5]);
             facing = RIGHT;
         }
@@ -111,6 +112,9 @@
 					if ( _aiState == DODO_STATE_APPROACH ) {
 						_loc_toVector.scaleBy(0.7);
 					}
+					if ( _aiState == DODO_STATE_MATE ) {
+						_loc_toVector.scaleBy(0.2);
+					}
 					velocity.x = _loc_toVector.x * DODO_MOVEMENT_SPEED;
 					velocity.y = _loc_toVector.y * DODO_MOVEMENT_SPEED;
 				} else if ( _aiUpdateTimer <= 0 ) {
@@ -128,12 +132,20 @@
 				_facing = RIGHT;
 			}
 			
-			if (velocity.x == 0 && velocity.y == 0) {
-				play("stopped");
-			} else if (isFlying()) {
+			if (isFlying()) {
 				play("flying");
-			} else {
+			}
+			if ( _aiState == DODO_STATE_WANDER ) {
 				play("normal");
+			}
+			if ( _aiState == DODO_STATE_APPROACH ) {
+				play("normal");
+			}
+			if ( _aiState == DODO_STATE_FLEE ) {
+				play("fleeing");
+			}
+			if ( _aiState == DODO_STATE_MATE ) {
+				play("mating");
 			}
 			
 			if ( _keepFlashingRedTimer > 0 ) {
@@ -166,6 +178,7 @@
 			if (health <= 0) { _playstate.reload(); }
 			
 			if (_aiState == DODO_STATE_MATE) {
+				velocity.x = velocity.y = 0;
 				_playstate._player.makeLove( this );
 			} else { 
 				_playstate._player.dontMakeLove( this );

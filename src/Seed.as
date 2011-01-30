@@ -22,7 +22,7 @@ package
 		
 		private var _playstate:PlayState;
 		
-        public function Seed(X:Number,Y:Number, p:PlayState):void
+        public function Seed(X:Number,Y:Number, p:PlayState, germinate:Boolean = false):void
         {
 			super(X, Y);
 			
@@ -53,7 +53,10 @@ package
 			fixed = true;
 			loadGraphic(Img);
 			
-			launchState = 0;
+			if (germinate)
+				launchState = 3;
+			else
+				launchState = 0;
 			gravity = 200; // pixels per second
      
         }

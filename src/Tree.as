@@ -25,7 +25,7 @@ package
 		private const childSize:Number = 0.3;
 		
 		private var ageTimer:Number = 0;
-		private const dyingTime:Number = 20;
+		private const dyingTime:Number = 15;
 		private var startDecay:Boolean = false;
 		
 		private var _playstate:PlayState;
@@ -81,7 +81,7 @@ package
 			
 			loadGraphic(Img, true, false, imgWidth, imgHeight);
 			addAnimation("normal", [0], 10);
-			addAnimation("decay", [0, 1, 2, 3], 0.2);
+			addAnimation("decay", [1, 2, 3], 0.2);
 			addAnimation("dead", [3], 10);
 			
 			switch(index) {

@@ -40,6 +40,9 @@
 		private var _sinceLastMadeLove:Number = Number.MAX_VALUE;
 		private var _sinceLastPooped:Number = Number.MAX_VALUE;
 		
+		private var _PLAYER_GAIN_HEALTH_TIME:int = 5;
+		private var _gainHealthTimer:Number = _PLAYER_GAIN_HEALTH_TIME;
+		
         public function  Player(X:Number,Y:Number, p:PlayState):void
         {
             super(X, Y);
@@ -176,6 +179,14 @@
 			
 			if (health <= 0) { 
 				_playstate.reload(); 
+			}
+			
+			if (health < 1 && health > 0) {
+				_gainHealthTimer -= FlxG.elapsed;
+				if (_gainHealthTimer < 0) {
+					health = Math.min( 1, health + 0.01);
+					_gainHealthTimer = _PLAYER_GAIN_HEALTH_TIME;
+				}
 			}
 			
 			super.update();

@@ -146,13 +146,10 @@ package {
 				trace(e);
 			}
 			
-			_readyText.text = "CLICK TO PLAY";
-			
-			stage.addEventListener(MouseEvent.CLICK, startup, false, 0, true);
+			startup();
 		}
 		
-		private function startup( e:Event ):void {
-			stage.removeEventListener(MouseEvent.CLICK, startup);
+		private function startup(  ):void {
 			removeEventListener(Event.ENTER_FRAME, checkFrame);
 			removeChild(_bitmap);
 			removeChild(_versionText);

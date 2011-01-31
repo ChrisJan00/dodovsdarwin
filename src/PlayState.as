@@ -276,7 +276,8 @@ package
 				resetLevel();
 			}
 			
-			if (FlxG.keys.justPressed("N")) {
+			// For debugging
+			if (FlxG.keys.justPressed("N") && FlxState.isInDebugMode ) {
 				FlxG.switchState(nextLevel());
 			}
 			

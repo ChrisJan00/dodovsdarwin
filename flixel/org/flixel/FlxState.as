@@ -99,5 +99,7 @@ package org.flixel
 		{
 			_layer.destroy();
 		}
+		
+		public static var isInDebugMode:Boolean = true;
 	}
 }

@@ -51,19 +51,9 @@ package
 			displayGoal( _Level1_GoalPNG );
 		}
 	    
-		private var _victoryCounter:Number = 0;
 		override public function isVictoryAchieved() : Boolean
 		{
-			if ( _trees.length > 3 && _victoryCounter==0 ) {
-				_victoryCounter  = 8; 
-			}
-			if (_victoryCounter > 0) {
-				_victoryCounter -= FlxG.elapsed;
-				if (_victoryCounter <= 0)
-					return true;
-			}
-			
-			return false;
+			return ( _trees.length > 3 );
 		}
 		
 		override public function nextLevel() : Class

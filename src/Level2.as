@@ -52,14 +52,9 @@ package
 			displayGoal( _Level2_GoalPNG );
 		}
 	    
-		private var _victoryCounter:Number = 0;
 		override public function isVictoryAchieved() : Boolean
 		{
-			if ( _dodos.length > 1 ) {
-				_victoryCounter += FlxG.elapsed;
-			}
-			
-			return ( _victoryCounter > 8 );
+			return ( _dodos.length > 1 );
 		}
 		
 		override public function nextLevel() : Class

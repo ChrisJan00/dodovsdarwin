@@ -52,6 +52,8 @@ package
 		private var dodoArrivingTimer:Number = 0;
 		
 		private const TREE_MIN_CHOPPING:Number = 5;
+		
+		private var endOfLevelTimer:Number = -1;
         
         override public function PlayState():void
         {
@@ -450,8 +452,14 @@ package
 		
 		public function checkLevelAndChange() : void
 		{
-			if (isVictoryAchieved()) {
-				FlxG.switchState( nextLevel() );
+			if (endOfLevelTimer == -1 && isVictoryAchieved()) {
+				endOfLevelTimer = 8;
+			}
+			
+			if (endOfLevelTimer > 0) {
+				endOfLevelTimer -= FlxG.elapsed;
+				if (endOfLevelTimer <= 0)
+					FlxG.switchState( nextLevel() );
 			}
 		}
 		

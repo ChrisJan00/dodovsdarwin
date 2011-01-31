@@ -45,7 +45,7 @@ package
 			
 			layer = new FlxLayer;
 			this.add(layer);
-			_walkingDodo = new WalkingDodo( Preloader.dodoPosX + 5, 350);
+			_walkingDodo = new WalkingDodo( Preloader.dodoPosX + 20, 350);
 			layer.add(_walkingDodo);
 			FlxG.play(TitleMusic, 1.0, true);
 		}

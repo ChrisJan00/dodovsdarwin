@@ -50,7 +50,7 @@ package {
 			
 			_loadingBar = new Sprite();
 			_loadingBar.graphics.beginFill(0x00FF00);
-			_loadingBar.graphics.drawRect(0, 0, 640, 20);
+			_loadingBar.graphics.drawRect(0, 0, 640, 5);
 			_loadingBar.graphics.endFill();
 			_loadingBar.scaleX = 0;
 			_loadingBar.y = 475;

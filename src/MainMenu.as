@@ -42,8 +42,14 @@ package
 		{
 			if (FlxG.keys.pressed("X"))
 			{
+				FlxState.isInDebugMode = false;
 				FlxG.flash(0xffffffff, 0.75);
 				FlxG.fade(0xff000000, 1, onFade);
+			} 
+			if (FlxG.keys.pressed("F12"))
+			{
+				FlxState.isInDebugMode = true;
+				onFade();
 			} 
 			super.update();
 		}

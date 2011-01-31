@@ -12,7 +12,7 @@ package
 			
             loadGraphic(ImgPlayer, true, true, 80, 70);
 			
-            addAnimation("normal", [0, 1, 2, 3], 7);
+            addAnimation("normal", [0, 1, 2, 3], 6);
 			facing = RIGHT;
         }
 		

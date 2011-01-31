@@ -49,6 +49,8 @@ package
 			//addSprite( new Dodo(640, 320, this), _dodos );
 			
 			displayGoal( _Level1_GoalPNG );
+			// TODO Add this when each level has a win image
+			//setWinDisplay( _Level1_GoalPNG );
 		}
 	    
 		override public function isVictoryAchieved() : Boolean

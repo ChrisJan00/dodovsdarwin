@@ -289,7 +289,6 @@ package
 				_displayGoalTimer -= FlxG.elapsed;
 				if ( _displayGoalTimer <= 0 ) {
 					if ( _displayGoalImage ) {
-						_displayGoalImage.visible = false;
 						removeChild( _displayGoalImage );
 						_displayGoalImage = null;
 					}
@@ -451,16 +450,24 @@ package
 			FlxG.switchState(Class(getDefinitionByName(getQualifiedClassName(this))));
 		}
 		
+		private const PAUSE_WIN_LEVEL_CHANGE:Number = 6;
 		public function checkLevelAndChange() : void
 		{
 			if (endOfLevelTimer == -1 && isVictoryAchieved()) {
-				endOfLevelTimer = 8;
+				endOfLevelTimer = PAUSE_WIN_LEVEL_CHANGE;
+				if ( _displayWinImage )
+					addChild( _displayWinImage );
 			}
 			
 			if (endOfLevelTimer > 0) {
 				endOfLevelTimer -= FlxG.elapsed;
-				if (endOfLevelTimer <= 0)
+				if (endOfLevelTimer <= 0) {
+					if ( _displayWinImage ) {
+						removeChild( _displayWinImage );
+						_displayWinImage = null;
+					}
 					FlxG.switchState( nextLevel() );
+				}
 			}
 		}
 		
@@ -473,6 +480,14 @@ package
 			_displayGoalImage.y = FlxG.height / 2.7 - _displayGoalImage.height / 2;
 			addChild( _displayGoalImage );
 			_displayGoalTimer = a_time;
+		}
+		
+		private var _displayWinImage:Bitmap;
+		public function setWinDisplay( a_ImageClass:Class ) : void 
+		{
+			_displayWinImage = new a_ImageClass();
+			_displayWinImage.x = FlxG.width / 1.7 - _displayWinImage.width / 2;
+			_displayWinImage.y = FlxG.height / 2.7 - _displayWinImage.height / 2;
 		}
     }    
 } 

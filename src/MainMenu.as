@@ -53,7 +53,7 @@ package
 		
 		override public function update():void
 		{
-			_walkingDodo.x += 2.5;
+			_walkingDodo.x += 1.8;
 			if ( _walkingDodo.x > FlxG.width ) _walkingDodo.x = -90;
 			
 			if (FlxG.keys.pressed("X"))

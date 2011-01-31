@@ -23,7 +23,7 @@
 		
 		private var shitBlocked:Boolean = false;
 		public var eatenFruitCount:Number = 0;
-		public const SHIT_THRESHOLD:Number = 5;
+		public const SHIT_THRESHOLD:Number = 4;
 		
 		private var pregnant:Boolean = false;
 		public var matingProgress:Number = 0;
@@ -223,7 +223,7 @@
 		
 		public function eat() : void
 		{
-			eatenFruitCount += 1;
+			eatenFruitCount = Math.min( eatenFruitCount + 1, SHIT_THRESHOLD);
 			_eatAnimationTimer = PLAYER_EAT_ANIMATION_DURATION;
 			FlxG.play(EatSound);
 		}

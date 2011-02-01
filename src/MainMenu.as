@@ -13,6 +13,10 @@ package
 		protected static var layer:FlxLayer;
 		private var _walkingDodo:WalkingDodo;
 		
+		//This const allows you to switch between allowing debug mode or not
+		//Don't forget to set to false before creating a release build!
+		private static const DEBUG_VERSION:Boolean = false;
+		
 		override public function MainMenu() 
 		{
 			super();
@@ -21,6 +25,12 @@ package
 			txt = new FlxText(0, 0, FlxG.width, "v0.26")
 			txt.setFormat("NES", 16, 0xFFFFFFFF, "right");
 			this.add(txt);
+			
+			if ( DEBUG_VERSION ) {
+				txt = new FlxText(0, 22, FlxG.width, "DEBUG VERSION")
+				txt.setFormat("NES", 16, 0xFFFFFFFF, "right");
+				this.add(txt);
+			}
 			
 			txt = new FlxText(0, 48, FlxG.width, "DarwinVsDodo")
 			txt.setFormat("NES", 32, 0xFFFFFFFF, "center");
@@ -62,12 +72,12 @@ package
 				FlxG.flash(0xffffffff, 0.75);
 				FlxG.fade(0xff000000, 1, onFade);
 			} 
-			if (FlxG.keys.pressed("F11"))
+			if (FlxG.keys.pressed("F11") && DEBUG_VERSION)
 			{
 				FlxState.isInDebugMode = true;
 				FlxG.switchState(LevelTest);
 			} 
-			if (FlxG.keys.pressed("F12"))
+			if (FlxG.keys.pressed("F12") && DEBUG_VERSION)
 			{
 				FlxState.isInDebugMode = true;
 				onFade();

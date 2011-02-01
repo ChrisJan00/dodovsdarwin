@@ -68,5 +68,10 @@ package
 			// should return class of the next level, E.G. "Level2" or "MainMenu"
 			return MainMenu;
 		}
+		
+		override public function resetLevel() : void 
+		{
+			FlxG.switchState( StoryLevel3 );
+		}
     }    
 } 

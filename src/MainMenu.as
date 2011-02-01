@@ -77,7 +77,7 @@ package
 		
 		private function onFade():void
 		{
-			FlxG.switchState(Level1);
+			FlxG.switchState( StoryLevel1 );
 		}
 	}
 	

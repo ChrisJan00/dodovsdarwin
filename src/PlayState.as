@@ -232,8 +232,8 @@ package
 					_player.eat();
 					removeEntity(fruit, _fruits);
 				}
-				dodo.collideArray(_stones);
-				dodo.collideArray(_trees);
+				fruit.collideArray(_stones);
+				fruit.collideArray(_trees);
 				for each (var dodoChild:DodoChild in _dodoChildren ) {
 					if ( dodoChild.overlaps(fruit) ) {
 						dodoChild.eat();
@@ -475,7 +475,7 @@ package
 			FlxG.switchState(Class(getDefinitionByName(getQualifiedClassName(this))));
 		}
 		
-		private const PAUSE_WIN_LEVEL_CHANGE:Number = 6;
+		private const PAUSE_WIN_LEVEL_CHANGE:Number = 7;
 		public function checkLevelAndChange() : void
 		{
 			if (endOfLevelTimer == -1 && isVictoryAchieved()) {

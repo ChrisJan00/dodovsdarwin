@@ -419,7 +419,7 @@
 		public function takeHumanDamage():void
 		{
 			if ( _invincibleTimer <= 0 ) {
-				health -= 1;
+				health -= 0.6;
 				FlxG.play(HurtSound);
 				if ( health <= 0 ) {
 					killedByEnemy();
@@ -434,7 +434,7 @@
 		{
 			if ( _invincibleTimer <= 0 ) {
 				FlxG.play(HurtSound);
-				health -= 0.4;
+				health -= 0.3;
 				if ( health <= 0 ) {
 					killedByEnemy();
 				} else {

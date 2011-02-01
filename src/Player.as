@@ -223,6 +223,7 @@
 		
 		public function eat() : void
 		{
+			health = Math.min( 1, health + 0.1 );
 			eatenFruitCount = Math.min( eatenFruitCount + 1, SHIT_THRESHOLD);
 			_eatAnimationTimer = PLAYER_EAT_ANIMATION_DURATION;
 			FlxG.play(EatSound);

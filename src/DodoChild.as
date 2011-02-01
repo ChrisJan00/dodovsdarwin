@@ -402,6 +402,7 @@
 		
 		public function eat() : void
 		{
+			health = Math.min( 1, health + 0.1 );
 			_eatAnimationTimer = PLAYER_EAT_ANIMATION_DURATION;
 			FlxG.play(EatSound);
 		}

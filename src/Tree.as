@@ -13,6 +13,8 @@ package
 		[Embed(source = "snd/treeage.mp3")] private var AgeSound:Class;
 		[Embed(source = "snd/treechop.mp3")] private var ChopSound:Class;
 		
+		private static const TREE_FRUIT_TIME_MIN:Number = 5;
+		private static const TREE_FRUIT_TIME_RANGE:Number = 10;
 		
 		private var imgWidth:Number;
 		private var imgHeight:Number;
@@ -65,7 +67,7 @@ package
 			imgX = x;
 			imgY = y;
 			
-			fruitTimer = Math.random() * 10 + 5;
+			fruitTimer = TREE_FRUIT_TIME_MIN + Math.random() * TREE_FRUIT_TIME_RANGE;
 			if (adult)
 				growthTimer = 0;
 			else {
@@ -176,7 +178,7 @@ package
 		
 		public function getFruit():Fruit
 		{
-			fruitTimer = Math.random() * 10 + 5;
+			fruitTimer = TREE_FRUIT_TIME_MIN + Math.random() * TREE_FRUIT_TIME_RANGE;
 			
 			
 			// originalPos

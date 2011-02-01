@@ -51,7 +51,7 @@ package
 			width = (ImgData as Bitmap).width;
 			height = (ImgData as Bitmap).height;
 			
-			fixed = true;
+			fixed = false;
 			loadGraphic(Img);
 			
 			launchState = 0;

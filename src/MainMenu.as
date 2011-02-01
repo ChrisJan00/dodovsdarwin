@@ -22,7 +22,7 @@ package
 			super();
 			var txt:FlxText
 			
-			txt = new FlxText(0, 0, FlxG.width, "v0.26")
+			txt = new FlxText(0, 0, FlxG.width, "v0.27")
 			txt.setFormat("NES", 16, 0xFFFFFFFF, "right");
 			this.add(txt);
 			

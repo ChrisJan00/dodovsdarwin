@@ -54,6 +54,7 @@ package
 		private var dodoArrivingTimer:Number = 0;
 		
 		private const TREE_MIN_CHOPPING:Number = 5;
+		private const TREE_MIN_DECAY:Number = 1;
 		
 		private var endOfLevelTimer:Number = -1;
         
@@ -247,7 +248,7 @@ package
 			}
 			
 			var newTreeKillerTimer:Number = treeKillerTimer;
-			if (_trees.length > 1)
+			if (_trees.length > TREE_MIN_DECAY)
 				newTreeKillerTimer = 180 / _trees.length;
 			if (newTreeKillerTimer < treeKillerTimer || (newTreeKillerTimer>0 && treeKillerTimer<=0))
 				treeKillerTimer = newTreeKillerTimer;

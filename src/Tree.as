@@ -148,7 +148,7 @@ package
 					if (ageTimer < dyingTime) {
 						play("decay");
 					} else {
-						_playstate.removeEntity(this, _playstate._trees);
+						kill();
 						play("dead");
 					}
 				}

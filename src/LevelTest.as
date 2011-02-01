@@ -34,14 +34,14 @@ package
 			addSprite( new Stone(759, 712), _stones );
 			
 			addSprite( new Tree(683, 222, this), _trees );
-			//addSprite( new Tree(590, 245, this), _trees );
+			addSprite( new Tree(590, 245, this), _trees );
 			addSprite( new Tree(561, 282, this), _trees );
 			
 			addSprite( new Tree(985, 361, this), _trees );
-			//addSprite( new Tree(900, 550, this), _trees );
+			addSprite( new Tree(900, 550, this), _trees );
 			addSprite( new Tree(950, 550, this), _trees );
 			
-			//addSprite( new Tree(590, 670, this), _trees );
+			addSprite( new Tree(590, 670, this), _trees );
 			
 			addSprite( new Rat(520, 320, this), _rats );
 			addSprite( new Rat(420, 255, this), _rats );

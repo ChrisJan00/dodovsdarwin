@@ -232,6 +232,7 @@ package
 				if ( _player.overlaps(fruit) ) {
 					_player.eat();
 					removeEntity(fruit, _fruits);
+					continue;
 				}
 				fruit.collideArray(_stones);
 				fruit.collideArray(_trees);

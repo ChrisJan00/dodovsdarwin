@@ -93,10 +93,6 @@
         }
         override public function update():void
         {
-			trace("_aiUpdateTimer: " + _aiUpdateTimer);
-			trace("_aistate: " + _aiState);
-			trace("");
-			
 			if ( velocity.x && velocity.y ) {
 				_lastVelocity.x = velocity.x;
 				_lastVelocity.y = velocity.y;

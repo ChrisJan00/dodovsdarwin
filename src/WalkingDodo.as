@@ -4,7 +4,7 @@ package
 
     public class WalkingDodo extends FlxSprite
     {
-        [Embed(source = "img/dodo_male_walk.png")] private var ImgPlayer:Class;
+        [Embed(source = "img/dodo_walk.png")] private var ImgPlayer:Class;
 		
        public function  WalkingDodo(X:Number,Y:Number):void
         {

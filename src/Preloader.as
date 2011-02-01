@@ -23,7 +23,7 @@ package {
 	 */
 	public class Preloader extends MovieClip {
 		
-		[Embed(source = "img/dodo_male_walk.png")] private var ImgPlayer:Class;
+		[Embed(source = "img/dodo_walk.png")] private var ImgPlayer:Class;
 		[Embed(source = "img/PreloaderScreenBackground.jpg")] private var ImgBackground:Class;
 		[Embed(source="img/nokiafc22.ttf",fontFamily="system")] protected var junk:String;
 		

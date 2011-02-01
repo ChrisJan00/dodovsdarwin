@@ -11,21 +11,22 @@
 		[Embed(source = "snd/playerhurt.mp3")] private var HurtSound:Class;
 		[Embed(source = "snd/playerdie.mp3")] private var DeathSound:Class;
 		
-		[Embed(source = "snd/mating.mp3")] private var MateSound:Class;		
+		[Embed(source = "snd/dodochildpeep.mp3")] private var ChildPeepSound:Class;		
 		[Embed(source = "snd/birdcome.mp3")] private var FlySound:Class;
 		[Embed(source = "snd/eat.mp3")] private var EatSound:Class;
 		
 		private var _MaxVelocity_walking:int = 200;
 		private var _playstate:PlayState;
 		
-		private const DODO_MOVEMENT_SPEED:Number = 120;
+		private const DODO_MOVEMENT_SPEED:Number = 80;
 		//private const DODO_ACCELERATION:Number = 20;
-		private const DODO_FLEE_HUMAN_DISTANCE:Number = 90;
-		private const DODO_FLEE_RAT_DISTANCE:Number = 80;
-		private const DODO_APPROACH_DODO_DISTANCE:Number = 200;
+		private const DODO_FLEE_HUMAN_DISTANCE:Number = 60;
+		private const DODO_FLEE_RAT_DISTANCE:Number = 50;
+		private const DODO_KEEP_FLEEING_DISTANCE:Number = 100;
+		private const DODO_APPROACH_DODO_DISTANCE:Number = 200; //200
 		private const DODO_APPROACH_DODO_DISTANCE_STOP:Number = 40;
-		private const DODO_APPROACH_PIG_DISTANCE:Number = 100;
-		private const DODO_APPROACH_FRUIT_DISTANCE:Number = 60;
+		private const DODO_APPROACH_PIG_DISTANCE:Number = 50;
+		private const DODO_APPROACH_FRUIT_DISTANCE:Number = 70;
 		
 		private var _aiState:String;
 		private var _aiUpdateTimer:Number = 0;
@@ -38,8 +39,10 @@
 		private const DODO_STATE_FLYING_OUT:String = "DodoStateFlyingOut";
 		private const DODO_STATE_MATE:String = "DodoStateMate";
 		
-		private const DODO_WANDER_AIUPDATE_DELAY_MIN:Number = 0.5;
-		private const DODO_WANDER_AIUPDATE_DELAY_RANGE:Number = 2.5;
+		private const DODO_WANDER_AIUPDATE_DELAY_MIN:Number = 1;
+		private const DODO_WANDER_AIUPDATE_DELAY_RANGE:Number = 1.5;
+		private const DODO_WANDER_STAYCLOSE_DELAY_MIN:Number = 0.5;
+		private const DODO_WANDER_STAYCLOSE_DELAY_RANGE:Number = 1;
 		
 		private const PLAYER_EAT_ANIMATION_DURATION:Number = 1;
 		private var _eatAnimationTimer:Number = 0;
@@ -51,6 +54,9 @@
 		
 		private var destination: Point;
 		private var _remainDeadTimer:Number = 0;
+		
+		private var _justBornTimer:Number = 2;
+		private var _lastVelocity:Point;
 
 		
         public function  DodoChild(X:Number,Y:Number, p:PlayState):void
@@ -64,8 +70,8 @@
             maxVelocity.x = 200;
             maxVelocity.y = 200;
             health = 1;
-            drag.x = 200;
-            drag.y = 200;
+            drag.x = 70;
+            drag.y = 70;
 			
             width = 25;
             height = 12;
@@ -78,12 +84,23 @@
 			//addAnimation("mating", [4, 5], 10);
 			addAnimation("fleeing", [0, 1, 2, 3], 8);
 			addAnimation("stayingClose", [0, 1, 2, 3], 5);
+			addAnimation("stopped", [1]);
 			// TODO Need dead state image
             addAnimation("dead", [5]);
             facing = RIGHT;
+			
+			_lastVelocity = new Point();
         }
         override public function update():void
         {
+			trace("_aiUpdateTimer: " + _aiUpdateTimer);
+			trace("_aistate: " + _aiState);
+			trace("");
+			
+			if ( velocity.x && velocity.y ) {
+				_lastVelocity.x = velocity.x;
+				_lastVelocity.y = velocity.y;
+			}
 			var oldState: String = _aiState;
 			
 			var _loc_toVector:Vector3D;
@@ -121,20 +138,26 @@
 				velocity.y = _loc_toVector.y * DODO_MOVEMENT_SPEED;
 				
 			} else {
-				_loc_toVector = getSteering();
+				_loc_toVector = null;
+				if ( _justBornTimer < 0 ) {
+					_loc_toVector = getSteering();
+				}
 				if ( _loc_toVector ) {
 					_loc_toVector.normalize();
 					if ( _aiState == DODO_STATE_APPROACH ) {
-						_loc_toVector.scaleBy(0.7);
+						_loc_toVector.scaleBy(0.8);
 					}
 					if ( _aiState == DODO_STATE_STAY_CLOSE ) {
 						if ( _aiUpdateTimer <= 0 ) {
+							if (Math.random() < 0.3) {
+								FlxG.play(ChildPeepSound);
+							}
 							addWander( _loc_toVector, 0.5 );
 							_loc_toVector.normalize();
 							_loc_toVector.scaleBy( 0.25 + Math.random() * 0.5 );
 							velocity.x = _loc_toVector.x * DODO_MOVEMENT_SPEED;
 							velocity.y = _loc_toVector.y * DODO_MOVEMENT_SPEED;
-							_aiUpdateTimer = 0.25 + Math.random() * 0.75;
+							_aiUpdateTimer = ( DODO_WANDER_STAYCLOSE_DELAY_MIN + Math.random() * DODO_WANDER_STAYCLOSE_DELAY_RANGE );
 						}
 					} else {
 						velocity.x = _loc_toVector.x * DODO_MOVEMENT_SPEED;
@@ -143,18 +166,24 @@
 					//if ( _aiState == DODO_STATE_MATE ) {
 						//_loc_toVector.scaleBy(0.2);
 					//}
-				} else if ( _aiUpdateTimer <= 0 ) {
+				} else if ( _aiUpdateTimer <= 0) {
+					if (Math.random() < 0.9) {
+						FlxG.play(ChildPeepSound);
+					}
 					_loc_toVector = getWander();
 					_loc_toVector.normalize();
-					_loc_toVector.scaleBy(0.5);
+					_loc_toVector.scaleBy( 0.25 + Math.random() * 0.5 );
 					velocity.x = _loc_toVector.x * DODO_MOVEMENT_SPEED;
 					velocity.y = _loc_toVector.y * DODO_MOVEMENT_SPEED;
 				}
 			}
 			
+			_justBornTimer -= FlxG.elapsed;
+			_fleePeepTimer -= FlxG.elapsed;
+			
 			if (velocity.x < 0) {
 				_facing = LEFT;
-			} else {
+			} else if (velocity.x > 0) {
 				_facing = RIGHT;
 			}
 			
@@ -163,7 +192,11 @@
 				play("eating");
 			} else {
 				if ( _aiState == DODO_STATE_WANDER ) {
-					play("normal");
+					if ( velocity.length > 0 ) {
+						play("normal");
+					} else {
+						play("stopped");
+					}
 				}
 				if ( _aiState == DODO_STATE_APPROACH ) {
 					play("normal");
@@ -172,7 +205,11 @@
 					play("fleeing");
 				}
 				if ( _aiState == DODO_STATE_STAY_CLOSE ) {
-					play("stayingClose");
+					if ( velocity.length > 0 ) {
+						play("stayingClose");
+					} else {
+						play("stopped");
+					}
 				}
 			}
 			//if ( _aiState == DODO_STATE_APPROACH ) {
@@ -232,21 +269,51 @@
             
         }
 		
+		private var _fleePeepTimer:Number = 0;
+		
 		private function getSteering():Vector3D {
+			
 			var _loc_toVector:Vector3D = _playstate.getClosestHumanVector( this );
+			if ( _loc_toVector && _aiState == DODO_STATE_FLEE && _loc_toVector.length < DODO_KEEP_FLEEING_DISTANCE ) {
+				if ( _fleePeepTimer <= 0 ) {
+					FlxG.play(ChildPeepSound);
+					_fleePeepTimer = 0.4 + Math.random() * 0.2;
+				}
+				_loc_toVector.scaleBy( -1 );
+				return( _loc_toVector );
+			} else {
+			
 			if ( _loc_toVector && _loc_toVector.length < DODO_FLEE_HUMAN_DISTANCE ) {
+				if ( _fleePeepTimer <= 0 ) {
+					FlxG.play(ChildPeepSound);
+					_fleePeepTimer = 0.4 + Math.random() * 0.2;
+				}
 				_aiState = DODO_STATE_FLEE;
 				_loc_toVector.scaleBy( -1 );
 				return( _loc_toVector );
 			} else {
 				_loc_toVector = _playstate.getClosestRatVector( this );
+				if ( _loc_toVector && _aiState == DODO_STATE_FLEE && _loc_toVector.length < DODO_KEEP_FLEEING_DISTANCE ) {
+					if ( _fleePeepTimer <= 0 ) {
+						FlxG.play(ChildPeepSound);
+						_fleePeepTimer = 0.4 + Math.random() * 0.2;
+					}
+					_aiState = DODO_STATE_FLEE;
+					_loc_toVector.scaleBy( -1 );
+					return ( _loc_toVector );
+				} else {
+				
 				if ( _loc_toVector && _loc_toVector.length < DODO_FLEE_RAT_DISTANCE ) {
+					if ( _fleePeepTimer <= 0 ) {
+						FlxG.play(ChildPeepSound);
+						_fleePeepTimer = 0.4 + Math.random() * 0.2;
+					}
 					_aiState = DODO_STATE_FLEE;
 					_loc_toVector.scaleBy( -1 );
 					return ( _loc_toVector );
 				} else {
 					_loc_toVector = _playstate.getClosestFruitVector( this );
-					if ( _loc_toVector && _loc_toVector.length < DODO_APPROACH_FRUIT_DISTANCE ) {
+					if ( _aiState == DODO_STATE_STAY_CLOSE && _loc_toVector && _loc_toVector.length < DODO_APPROACH_FRUIT_DISTANCE ) {
 						_aiState = DODO_STATE_APPROACH;
 						return ( _loc_toVector );
 					} else {
@@ -259,6 +326,8 @@
 							return ( _loc_toVector );
 						}
 					}
+					}
+					}
 				}
 			}
 			return ( null );
@@ -268,7 +337,7 @@
 			var _loc_toVector:Vector3D;
 			if (_aiState == DODO_STATE_WANDER ) {
 				_aiUpdateTimer = ( DODO_WANDER_AIUPDATE_DELAY_MIN + Math.random() * DODO_WANDER_AIUPDATE_DELAY_RANGE );
-				_loc_toVector = new Vector3D( velocity.x, velocity.y );
+				_loc_toVector = new Vector3D( _lastVelocity.x, _lastVelocity.y );
 				_loc_toVector.normalize();
 				_loc_toVector = new Vector3D( _loc_toVector.x + 1 - (Math.random() * 2), _loc_toVector.y + 1 - (Math.random() * 2) );
 				return _loc_toVector;
@@ -285,20 +354,6 @@
 			a_vector.y += _loc_vector.y;
 			//var _loc_vectorBack:Vector3D = new Vector3D( a_vector.x + _loc_vector.x, a_vector.y + _loc_vector.y );
 			//return _loc_vectorBack;
-		}
-		
-		private function getMatingWander():Vector3D {
-			var _loc_toVector:Vector3D;
-			if ( _aiUpdateTimer <= 0 )  {
-				_aiUpdateTimer = ( DODO_WANDER_AIUPDATE_DELAY_MIN + Math.random() * DODO_WANDER_AIUPDATE_DELAY_RANGE );
-				_loc_toVector = new Vector3D( velocity.x, velocity.y );
-				_loc_toVector.normalize();
-				_loc_toVector = new Vector3D( _loc_toVector.x + 1 - (Math.random() * 2), _loc_toVector.y + 1 - (Math.random() * 2) );
-				return _loc_toVector;
-			}
-			
-			_loc_toVector = new Vector3D( velocity.x, velocity.y );
-			return _loc_toVector;
 		}
 		
 		public function flyIn():void 

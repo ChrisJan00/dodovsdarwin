@@ -18,14 +18,14 @@
 		
 		private const PLAYER_MOVEMENT_SPEED:Number = 500;
 		
-		private const PLAYER_EAT_ANIMATION_DURATION:Number = 2;
+		private const PLAYER_EAT_ANIMATION_DURATION:Number = 1.8;
 		private var _eatAnimationTimer:Number = 0;
 		
 		private var shitBlocked:Boolean = false;
 		public var eatenFruitCount:Number = 0;
 		public const SHIT_THRESHOLD:Number = 4;
 		
-		private var pregnant:Boolean = false;
+		public var pregnant:Boolean = false;
 		public var matingProgress:Number = 0;
 		protected var matingSpeed:Number = 0.2; // 5 seconds of sex
 		protected var lover:Dodo = null;
@@ -40,7 +40,7 @@
 		private var _sinceLastMadeLove:Number = Number.MAX_VALUE;
 		private var _sinceLastPooped:Number = Number.MAX_VALUE;
 		
-		private var _PLAYER_GAIN_HEALTH_TIME:int = 5;
+		private var _PLAYER_GAIN_HEALTH_TIME:int = 3;
 		private var _gainHealthTimer:Number = _PLAYER_GAIN_HEALTH_TIME;
 		
         public function  Player(X:Number,Y:Number, p:PlayState):void
@@ -63,7 +63,7 @@
             offset.y = 48;
 						
             addAnimation("normal", [0, 1, 2, 3], 5);
-            addAnimation("eating", [4,5.6,7], 7);
+            addAnimation("eating", [4,5,6,7], 6);
             addAnimation("stopped", [1]);
             addAnimation("dead", [5]);
             addAnimation("pooping", [8, 9], 4);

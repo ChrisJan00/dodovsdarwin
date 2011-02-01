@@ -16,8 +16,8 @@
 		private var _playstate:PlayState;
 		
 		private const PIG_MOVEMENT_SPEED:Number = 50;
-		private const PIG_FLEE_DODO_DISTANCE:Number = 100;
-		private const PIG_KEEP_FLEEING_DODO_DISTANCE:Number = 150;
+		private const PIG_FLEE_DODO_DISTANCE:Number = 120;
+		private const PIG_KEEP_FLEEING_DODO_DISTANCE:Number = 180;
 		private const PIG_APPROACH_FRUIT_DISTANCE:Number = 300;
 		
 		private var _aiState:String;

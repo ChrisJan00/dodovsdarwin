@@ -341,6 +341,12 @@ package
 		public function getClosestDodoVector( a_target:FlxSprite ):Vector3D {
 			return ( getClosestVectorFrom(a_target, _dodos ) );
 		}
+		public function getClosestDodoChildVector( a_target:FlxSprite ):Vector3D {
+			return ( getClosestVectorFrom(a_target, _dodoChildren ) );
+		}
+		public function getClosestDodoAdultVector( a_target:FlxSprite ):Vector3D {
+			return ( getClosestVectorFrom(a_target, _dodoAdults ) );
+		}
 		public function getClosestHumanVector( a_target:FlxSprite ):Vector3D {
 			return ( getClosestVectorFrom(a_target, _humans ) );
 		}

@@ -147,26 +147,32 @@
         }
 		
 		private function getSteering():Vector3D {
-			var _loc_toVector:Vector3D = _playstate.getClosestDodoVector( this );
+			var _loc_toVector:Vector3D = _playstate.getClosestDodoAdultVector( this );
 			if ( _loc_toVector && _loc_toVector.length < RAT_CHASE_DODO_DISTANCE ) {
 				_aiState = RAT_STATE_CHASE;
 				return( _loc_toVector );
 			} else {
-				_loc_toVector = _playstate.getClosestHumanVector( this );
-				if ( _loc_toVector && _loc_toVector.length < RAT_FLEE_HUMAN_DISTANCE ) {
-					_aiState = RAT_STATE_FLEE;
-					_loc_toVector.scaleBy( -1 );
-					return ( _loc_toVector );
+				_loc_toVector = _playstate.getClosestDodoChildVector( this );
+				if ( _loc_toVector && _loc_toVector.length < RAT_CHASE_DODO_DISTANCE ) {
+					_aiState = RAT_STATE_CHASE;
+					return( _loc_toVector );
 				} else {
-					_loc_toVector = _playstate.getClosestEggVector( this );
-					if ( _loc_toVector && _loc_toVector.length < RAT_EAT_EGG_DISTANCE ) {
-						_aiState = RAT_STATE_EAT;
-						(_playstate.getClosestEgg( this ) as Egg).takeRatDamage();
-						return ( new Vector3D() );
-					}
-					if ( _loc_toVector && _loc_toVector.length < RAT_APPROACH_EGG_DISTANCE ) {
-						_aiState = RAT_STATE_APPROACH;
+					_loc_toVector = _playstate.getClosestHumanVector( this );
+					if ( _loc_toVector && _loc_toVector.length < RAT_FLEE_HUMAN_DISTANCE ) {
+						_aiState = RAT_STATE_FLEE;
+						_loc_toVector.scaleBy( -1 );
 						return ( _loc_toVector );
+					} else {
+						_loc_toVector = _playstate.getClosestEggVector( this );
+						if ( _loc_toVector && _loc_toVector.length < RAT_EAT_EGG_DISTANCE ) {
+							_aiState = RAT_STATE_EAT;
+							(_playstate.getClosestEgg( this ) as Egg).takeRatDamage();
+							return ( new Vector3D() );
+						}
+						if ( _loc_toVector && _loc_toVector.length < RAT_APPROACH_EGG_DISTANCE ) {
+							_aiState = RAT_STATE_APPROACH;
+							return ( _loc_toVector );
+						}
 					}
 				}
 			}

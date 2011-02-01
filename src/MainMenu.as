@@ -62,6 +62,11 @@ package
 				FlxG.flash(0xffffffff, 0.75);
 				FlxG.fade(0xff000000, 1, onFade);
 			} 
+			if (FlxG.keys.pressed("F11"))
+			{
+				FlxState.isInDebugMode = true;
+				FlxG.switchState(LevelTest);
+			} 
 			if (FlxG.keys.pressed("F12"))
 			{
 				FlxState.isInDebugMode = true;

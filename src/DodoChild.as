@@ -141,7 +141,7 @@
 				if ( _loc_toVector ) {
 					_loc_toVector.normalize();
 					if ( _aiState == DODO_STATE_APPROACH ) {
-						_loc_toVector.scaleBy(0.8);
+						_loc_toVector.scaleBy(0.9);
 					}
 					if ( _aiState == DODO_STATE_STAY_CLOSE ) {
 						if ( _aiUpdateTimer <= 0 ) {
@@ -408,6 +408,7 @@
 			_remainDeadTimer = 5;
 			_keepFlashingRedTimer = 0.2;
 			_playstate.removeEntityFromArrayOnly(this, _playstate._dodos);
+			_playstate.removeEntityFromArrayOnly(this, _playstate._dodoChildren);
 		}
 		
 		/* INTERFACE IDodo */

@@ -47,6 +47,8 @@ package
 			addSprite( new Rat(420, 255, this), _rats );
 			addSprite( new Rat(720, 301, this), _rats );
 			addSprite( new Human(871, 692, this), _humans );
+			addSprite( new Human(871, 692, this), _humans );
+			addSprite( new Human(871, 692, this), _humans );
 			
 			_player.pregnant = true;
 			_player.eatenFruitCount = _player.SHIT_THRESHOLD - 1;

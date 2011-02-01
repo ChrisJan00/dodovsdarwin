@@ -314,6 +314,7 @@
 			_remainDeadTimer = 5;
 			_keepFlashingRedTimer = 0.2;
 			_playstate.removeEntityFromArrayOnly(this, _playstate._dodos);
+			_playstate.removeEntityFromArrayOnly(this, _playstate._dodoAdults);
 		}
 		
 		/* INTERFACE IDodo */

@@ -35,6 +35,8 @@ package
 		protected var _transparent_tile:String
 		public var _rats:Array;
 		public var _dodos:Array;
+		public var _dodoAdults:Array;
+		public var _dodoChildren:Array;
 		public var _humans:Array;
 		public var _stones:Array;
 		public var _trees:Array;
@@ -68,6 +70,8 @@ package
            
 			_rats = new Array();
 			_dodos = new Array();
+			_dodoAdults = new Array();
+			_dodoChildren = new Array();
 			_humans = new Array();
 			_pigs = new Array();
 
@@ -80,6 +84,7 @@ package
 				_player = new Player(648, 240, this);
 			}
 			_dodos.push( _player );
+			_dodoAdults.push( _player );
             lyrSprites.add(_player);
 			
 			_stones = new Array();
@@ -227,6 +232,14 @@ package
 					_player.eat();
 					removeEntity(fruit, _fruits);
 				}
+				dodo.collideArray(_stones);
+				dodo.collideArray(_trees);
+				for each (var dodoChild:DodoChild in _dodoChildren ) {
+					if ( dodoChild.overlaps(fruit) ) {
+						dodoChild.eat();
+						removeEntity(fruit, _fruits);
+					}
+				}
 			}
 			
 			if ( _trees.length > TREE_MIN_CHOPPING ) {
@@ -250,7 +263,7 @@ package
 			}
 			
 			// New Dodos
-			if (_dodos.length == 1) {
+			if (_dodoAdults.length == 1) {
 				dodoArrivingTimer -= FlxG.elapsed;
 				if (dodoArrivingTimer <= 0) {
 					var probability: Number = Math.max(0, Math.min(1.0, ( _trees.length - TREE_MIN_CHOPPING + 1) * 0.04));
@@ -259,6 +272,7 @@ package
 						var newDodo:Dodo = new Dodo( -100, -100, this);
 						newDodo.flyIn();
 						addSprite( newDodo, _dodos );
+						addToArrayOnly( newDodo, _dodoAdults );
 					} else {
 						// 1 second until the next candidate
 						dodoArrivingTimer = 2;
@@ -410,6 +424,10 @@ package
 			destArray.push(sprite);
 			lyrSprites.add(sprite);
 		}
+		public function addToArrayOnly(sprite:FlxSprite, destArray:Array) : void
+		{
+			destArray.push(sprite);
+		}
 		
 		public function removeEntity(entity:FlxSprite, array:Array) : void
 		{
@@ -428,8 +446,9 @@ package
 		
 		public function spawnDodo(dodoX:Number, dodoY:Number) : void
 		{
-			// until the new dodos are ready, spawn rats instead
-			addSprite( new Dodo(dodoX, dodoY, this), _dodos );
+			var _loc_dodoChild:DodoChild = new DodoChild(dodoX, dodoY, this);
+			addSprite( _loc_dodoChild, _dodos );
+			addToArrayOnly( _loc_dodoChild, _dodoChildren );
 		}
 		
 		//////////////////// multi level: override this

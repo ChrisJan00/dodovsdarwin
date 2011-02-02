@@ -127,9 +127,9 @@ package
 			
 			
 			//FlxG.play(EndLevelSound);
-			if ( !FlxState.isInDebugMode ) {
+			//if ( !FlxState.isInDebugMode ) {
 				FlxG.play(BackgroundMusic, 1.0, true);
-			}
+			//}
         }
 		
 		public function parseMap(map:String):void

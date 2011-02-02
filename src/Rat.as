@@ -139,7 +139,7 @@
 			
 			if (_aiState != oldState) {
 				if (_aiState == RAT_STATE_CHASE)
-					FlxG.play(AngrySound);
+					FlxG.play(AngrySound, _playstate._player.distance2Volume(this) );
 				
 			}
 			
@@ -206,7 +206,7 @@
 		}
 		
 		public function killedByHuman():void {
-			FlxG.play(DeathSound);
+			FlxG.play(DeathSound, _playstate._player.distance2Volume(this) );
 			_remainDeadTimer = 5;
 			_keepFlashingRedTimer = 0.2;
 		}

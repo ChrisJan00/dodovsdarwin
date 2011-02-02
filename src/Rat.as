@@ -57,9 +57,9 @@
             drag.y = 40;
 			
             width = 47;
-            height = 11;
+            height = 16;
             offset.x = 5;
-            offset.y = 28;
+            offset.y = 24;
 			
             addAnimation("normal", [0, 1, 2, 3], 5);
             addAnimation("approaching", [7,8,9,10], 2);

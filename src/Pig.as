@@ -49,9 +49,9 @@
             drag.y = 5;
 			
             width = 31;
-            height = 15;
+            height = 22;
             offset.x = 20;
-            offset.y = 30;
+            offset.y = 24;
 			
             addAnimation("normal", [0, 2], 5);
             addAnimation("fleeing", [4, 5, 6, 7], 7);

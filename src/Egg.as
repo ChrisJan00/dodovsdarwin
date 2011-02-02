@@ -30,11 +30,14 @@ package
 		private var _invincibleTimer:Number = 0;
 		private var _remainDeadTimer:Number = 0;
 		
-        public function Egg(X:Number,Y:Number, p:PlayState, hatch:Boolean = false):void
+		private var _family:int;
+		
+        public function Egg(X:Number,Y:Number, p:PlayState, hatch:Boolean = false, a_family:int = 1):void
         {
 			super(X, Y);
 			
 			_playstate = p;
+			_family = a_family;
 			
 			var index:Number = Math.floor(Math.random() * 2);
 			var ImgData:Bitmap;
@@ -69,8 +72,6 @@ package
 			else
 				launchState = 0;
 			gravity = 200; // pixels per second
-			
-     
         }
         override public function update():void
         {		
@@ -134,7 +135,7 @@ package
 				if (hatchTimer <= 0) {
 					// grow dodo
 					FlxG.play(HatchSound);
-					_playstate.spawnDodo( x, y );
+					_playstate.spawnDodo( x, y ,_family);
 					launchState = 4;
 					_playstate.removeEntity( this, _playstate._eggs );
 				}

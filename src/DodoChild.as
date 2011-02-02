@@ -28,6 +28,12 @@
 		private const DODO_APPROACH_PIG_DISTANCE:Number = 50;
 		private const DODO_APPROACH_FRUIT_DISTANCE:Number = 70;
 		
+		private const DODO_CHILD_GROWUP_TIMER:Number = 1;
+		private const DODO_CHILD_GROWUP_FOOD:Number = 1;
+		
+		private var _growupTimer:Number = 0;
+		private var _growupFood:Number = 0;
+		
 		private var _aiState:String;
 		private var _aiUpdateTimer:Number = 0;
 		
@@ -57,9 +63,10 @@
 		
 		private var _justBornTimer:Number = 2;
 		private var _lastVelocity:Point;
-
 		
-        public function  DodoChild(X:Number,Y:Number, p:PlayState):void
+		private var _family:int = 1;
+		
+        public function  DodoChild(X:Number,Y:Number, p:PlayState, a_family:int = 1):void
         {
             super(X, Y);
 			
@@ -90,9 +97,21 @@
             facing = RIGHT;
 			
 			_lastVelocity = new Point();
+			_growupTimer = DODO_CHILD_GROWUP_TIMER;
+			_growupFood = DODO_CHILD_GROWUP_FOOD;
         }
         override public function update():void
         {
+			if ( _growupFood <= 0 && _growupTimer <= 0) {
+				_playstate.removeEntityFromArrayOnly(this, _playstate._dodos);
+				_playstate.removeEntityFromArrayOnly(this, _playstate._dodoChildren);
+				kill();
+				
+				var newDodo:Dodo = new Dodo( x, y, _playstate, _family );
+				_playstate.addSprite( newDodo, _playstate._dodos );
+				_playstate.addToArrayOnly( newDodo, _playstate._dodoAdults );
+			}
+			
 			if ( velocity.x && velocity.y ) {
 				_lastVelocity.x = velocity.x;
 				_lastVelocity.y = velocity.y;
@@ -176,6 +195,7 @@
 			
 			_justBornTimer -= FlxG.elapsed;
 			_fleePeepTimer -= FlxG.elapsed;
+			_growupTimer -= FlxG.elapsed;
 			
 			if (velocity.x < 0) {
 				_facing = LEFT;
@@ -398,6 +418,7 @@
 		
 		public function eat() : void
 		{
+			_growupFood--;
 			health = Math.min( 1, health + 0.1 );
 			_eatAnimationTimer = PLAYER_EAT_ANIMATION_DURATION;
 			FlxG.play(EatSound);
@@ -440,6 +461,8 @@
 				}
 			}
 		}
+		
+		public function get family():int { return _family; }
     }
 } 
 

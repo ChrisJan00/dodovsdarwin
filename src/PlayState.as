@@ -34,6 +34,7 @@ package
 		
 		protected var _transparent_tile:String
 		public var _rats:Array;
+		public var _players:Array;
 		public var _dodos:Array;
 		public var _dodoAdults:Array;
 		public var _dodoChildren:Array;
@@ -70,6 +71,7 @@ package
             lyrHUD = new FlxLayer;
            
 			_rats = new Array();
+			_players = new Array();
 			_dodos = new Array();
 			_dodoAdults = new Array();
 			_dodoChildren = new Array();
@@ -84,6 +86,7 @@ package
 			} else {
 				_player = new Player(648, 240, this);
 			}
+			_players.push( _player );
 			_dodos.push( _player );
 			_dodoAdults.push( _player );
             lyrSprites.add(_player);
@@ -345,6 +348,9 @@ package
 			_player.reload();
 		}
 		
+		public function getClosestPlayerVector( a_target:FlxSprite ):Vector3D {
+			return ( getClosestVectorFrom(a_target, _players ) );
+		}
 		public function getClosestRatVector( a_target:FlxSprite ):Vector3D {
 			return ( getClosestVectorFrom(a_target, _rats ) );
 		}
@@ -460,9 +466,9 @@ package
 			addSprite( new Tree(treeX, treeY, this, false), _trees );
 		}
 		
-		public function spawnDodo(dodoX:Number, dodoY:Number) : void
+		public function spawnDodo(dodoX:Number, dodoY:Number, a_family:int) : void
 		{
-			var _loc_dodoChild:DodoChild = new DodoChild(dodoX, dodoY, this);
+			var _loc_dodoChild:DodoChild = new DodoChild(dodoX, dodoY, this, a_family);
 			addSprite( _loc_dodoChild, _dodos );
 			addToArrayOnly( _loc_dodoChild, _dodoChildren );
 		}

@@ -43,6 +43,8 @@
 		private var _PLAYER_GAIN_HEALTH_TIME:int = 3;
 		private var _gainHealthTimer:Number = _PLAYER_GAIN_HEALTH_TIME;
 		
+		private var _family:int = 1;
+		
         public function  Player(X:Number,Y:Number, p:PlayState):void
         {
             super(X, Y);
@@ -274,7 +276,7 @@
 			var feetX : Number = x + width / 2;
 			var feetY : Number = y + height;
 			
-			var egg:Egg = new Egg(oX, oY, _playstate);
+			var egg:Egg = new Egg(oX, oY, _playstate, true, _family);
 			egg.launch( oX, oY, feetX, feetY, dirX, dirY );
 			
 			_playstate.addSprite(egg, _playstate._eggs);
@@ -350,5 +352,7 @@
 		public function isFlying():Boolean {
 			return (false);
 		}
+		
+		public function get family():int { return _family; }
     }
 }

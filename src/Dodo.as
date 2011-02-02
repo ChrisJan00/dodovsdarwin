@@ -18,8 +18,8 @@
 		private var _playstate:PlayState;
 		
 		private const DODO_MOVEMENT_SPEED:Number = 80;
-		private const DODO_FLEE_HUMAN_DISTANCE:Number = 150;
-		private const DODO_FLEE_RAT_DISTANCE:Number = 150;
+		private const DODO_FLEE_HUMAN_DISTANCE:Number = 100;
+		private const DODO_FLEE_RAT_DISTANCE:Number = 80;
 		private const DODO_APPROACH_DODO_DISTANCE:Number = 140;
 		private const DODO_APPROACH_DODO_DISTANCE_STOP:Number = 30;
 		private const DODO_APPROACH_PIG_DISTANCE:Number = 100;
@@ -46,13 +46,16 @@
 		
 		private var destination: Point;
 		private var _remainDeadTimer:Number = 0;
+		
+		private var _family:int;
 
 		
-        public function  Dodo(X:Number,Y:Number, p:PlayState):void
+        public function  Dodo(X:Number,Y:Number, p:PlayState, a_family:int = 2):void
         {
             super(X, Y);
 			
 			_playstate = p;
+			_family = a_family;
             loadGraphic(ImgPlayer, true, true, 80, 70);
 			
 			_MaxVelocity_walking = 200;
@@ -106,6 +109,7 @@
 					_aiState = DODO_STATE_WANDER;
 				else if (_aiState == DODO_STATE_FLYING_OUT && _loc_toVector.length < DODO_APPROACH_DODO_DISTANCE_STOP ) {
 					_playstate.removeEntity(this, _playstate._dodos);
+					_playstate.removeEntityFromArrayOnly(this, _playstate._dodoAdults);
 					return;
 				}
 				_loc_toVector.normalize();
@@ -216,13 +220,17 @@
 					_loc_toVector.scaleBy( -1 );
 					return ( _loc_toVector );
 				} else {
-					_loc_toVector = _playstate.getClosestDodoVector( this );
+					_loc_toVector = _playstate.getClosestPlayerVector( this );
 					if ( _loc_toVector && _loc_toVector.length < DODO_APPROACH_DODO_DISTANCE && _loc_toVector.length > DODO_APPROACH_DODO_DISTANCE_STOP ) {
 						_aiState = DODO_STATE_APPROACH;
 						return ( _loc_toVector );
 					} else if ( _loc_toVector && _loc_toVector.length < DODO_APPROACH_DODO_DISTANCE_STOP) {
-						_aiState = DODO_STATE_MATE;
-						return ( _loc_toVector );
+						if ( _family == _playstate._player.family ) {
+							_aiState = DODO_STATE_WANDER;
+						} else {
+							_aiState = DODO_STATE_MATE;
+							return ( new Vector3D( _loc_toVector.x + 1 - (Math.random() * 2), _loc_toVector.y + 1 - (Math.random() * 2) ) );
+						}
 					}
 				}
 			}
@@ -339,6 +347,8 @@
 				}
 			}
 		}
+		
+		public function get family():int { return _family; }
     }
 } 
 

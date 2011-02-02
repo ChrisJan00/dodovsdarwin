@@ -81,7 +81,7 @@
             offset.y = 35;
 			
             addAnimation("normal", [0, 1, 2, 3], 5);
-            addAnimation("eating", [4,5.6,7], 7);
+            addAnimation("eating", [4,5,6,7], 7);
 			addAnimation("fleeing", [0, 1, 2, 3], 8);
 			addAnimation("stayingClose", [0, 1, 2, 3], 5);
 			addAnimation("stopped", [1]);

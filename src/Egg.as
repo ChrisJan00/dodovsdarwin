@@ -135,7 +135,7 @@ package
 				if (hatchTimer <= 0) {
 					// grow dodo
 					FlxG.play(HatchSound);
-					_playstate.spawnDodo( x, y ,_family);
+					_playstate.spawnDodoChild( x, y ,_family);
 					launchState = 4;
 					_playstate.removeEntity( this, _playstate._eggs );
 				}

@@ -13,6 +13,7 @@
 		
 		[Embed(source = "snd/mating.mp3")] private var MateSound:Class;		
 		[Embed(source = "snd/birdcome.mp3")] private var FlySound:Class;
+		[Embed(source = "snd/eat.mp3")] private var EatSound:Class;
 		
 		private var _MaxVelocity_walking:int = 200;
 		private var _playstate:PlayState;
@@ -20,6 +21,7 @@
 		private const DODO_MOVEMENT_SPEED:Number = 80;
 		private const DODO_FLEE_HUMAN_DISTANCE:Number = 100;
 		private const DODO_FLEE_RAT_DISTANCE:Number = 80;
+		private const DODO_KEEP_FLEEING_DODO_DISTANCE:Number = 120;
 		private const DODO_APPROACH_DODO_DISTANCE:Number = 140;
 		private const DODO_APPROACH_DODO_DISTANCE_STOP:Number = 30;
 		private const DODO_APPROACH_PIG_DISTANCE:Number = 100;
@@ -48,6 +50,13 @@
 		private var _remainDeadTimer:Number = 0;
 		
 		private var _family:int;
+		
+		private const PLAYER_EAT_ANIMATION_DURATION:Number = 1;
+		private var _eatAnimationTimer:Number = 0;
+		private var _poopCountdown:Number = 0;
+		public var eatenFruitCount:Number = 0;
+		public const SHIT_THRESHOLD:Number = 3;
+		public const POOP_COUNTDOWN_TIME:Number = 3;
 
 		
         public function  Dodo(X:Number,Y:Number, p:PlayState, a_family:int = 2):void
@@ -74,6 +83,7 @@
 			addAnimation("flying", [2, 5], 10);
 			addAnimation("mating", [4, 5], 10);
 			addAnimation("fleeing", [0, 1, 2, 3], 8);
+			addAnimation("eating", [0, 5], 7);
 			// TODO Need dead state image
             addAnimation("dead", [5]);
             facing = RIGHT;
@@ -102,6 +112,7 @@
 			}
 			
 			_aiUpdateTimer -= FlxG.elapsed;
+			_poopCountdown -= FlxG.elapsed;
 			
 			if (isFlying()) {
 				_loc_toVector = new Vector3D( destination.x - cX, destination.y - cY );
@@ -144,20 +155,32 @@
 				_facing = RIGHT;
 			}
 			
-			if (isFlying()) {
-				play("flying");
+			if ( eatenFruitCount == SHIT_THRESHOLD && _poopCountdown <= 0) {
+				eatenFruitCount = 0;
+				var seed:Seed = new Seed(cX, cY, _playstate);
+				seed.launch( cX, cY, cX, cY + 5, Math.random(), Math.random());
+				_playstate.addSprite(seed, _playstate._seeds);
 			}
-			if ( _aiState == DODO_STATE_WANDER ) {
-				play("normal");
-			}
-			if ( _aiState == DODO_STATE_APPROACH ) {
-				play("normal");
-			}
-			if ( _aiState == DODO_STATE_FLEE ) {
-				play("fleeing");
-			}
-			if ( _aiState == DODO_STATE_MATE ) {
-				play("mating");
+			
+			if ( _eatAnimationTimer > 0 ) {
+				_eatAnimationTimer -= FlxG.elapsed;
+				play("eating");
+			} else {
+				if (isFlying()) {
+					play("flying");
+				}
+				if ( _aiState == DODO_STATE_WANDER ) {
+					play("normal");
+				}
+				if ( _aiState == DODO_STATE_APPROACH ) {
+					play("normal");
+				}
+				if ( _aiState == DODO_STATE_FLEE ) {
+					play("fleeing");
+				}
+				if ( _aiState == DODO_STATE_MATE ) {
+					play("mating");
+				}
 			}
 			
 			if ( _keepFlashingRedTimer > 0 ) {
@@ -208,13 +231,26 @@
         }
 		
 		private function getSteering():Vector3D {
+			
 			var _loc_toVector:Vector3D = _playstate.getClosestHumanVector( this );
+			if ( _loc_toVector && _aiState == DODO_STATE_FLEE && _loc_toVector.length < DODO_KEEP_FLEEING_DODO_DISTANCE ) {
+				_loc_toVector.scaleBy( -1 );
+				return( _loc_toVector );
+			} else {
+			
 			if ( _loc_toVector && _loc_toVector.length < DODO_FLEE_HUMAN_DISTANCE ) {
 				_aiState = DODO_STATE_FLEE;
 				_loc_toVector.scaleBy( -1 );
 				return( _loc_toVector );
 			} else {
 				_loc_toVector = _playstate.getClosestRatVector( this );
+				
+				
+				if ( _loc_toVector && _aiState == DODO_STATE_FLEE && _loc_toVector.length < DODO_KEEP_FLEEING_DODO_DISTANCE ) {
+					_loc_toVector.scaleBy( -1 );
+					return( _loc_toVector );
+				} else {
+				
 				if ( _loc_toVector && _loc_toVector.length < DODO_FLEE_RAT_DISTANCE ) {
 					_aiState = DODO_STATE_FLEE;
 					_loc_toVector.scaleBy( -1 );
@@ -231,8 +267,16 @@
 							_aiState = DODO_STATE_MATE;
 							return ( new Vector3D( _loc_toVector.x + 1 - (Math.random() * 2), _loc_toVector.y + 1 - (Math.random() * 2) ) );
 						}
+					} else {
+						_loc_toVector = _playstate.getClosestFruitVector( this );
+						if ( _loc_toVector && _loc_toVector.length < DODO_APPROACH_FRUIT_DISTANCE && eatenFruitCount != SHIT_THRESHOLD) {
+							_aiState = DODO_STATE_APPROACH;
+							return( _loc_toVector );
+						}
 					}
 				}
+			}
+			}
 			}
 			return ( null );
 		}
@@ -308,6 +352,17 @@
 
 		public function isFlying():Boolean {
 			return _aiState == DODO_STATE_FLYING_IN || _aiState == DODO_STATE_FLYING_OUT;
+		}
+		
+		public function eat() : void
+		{
+			eatenFruitCount = Math.min( SHIT_THRESHOLD, eatenFruitCount + 1 );
+			if (eatenFruitCount >= SHIT_THRESHOLD ) {
+				_poopCountdown = POOP_COUNTDOWN_TIME;
+			}
+			health = Math.min( 1, health + 0.1 );
+			_eatAnimationTimer = PLAYER_EAT_ANIMATION_DURATION;
+			FlxG.play(EatSound);
 		}
 		
 		public function killedByEnemy():void {

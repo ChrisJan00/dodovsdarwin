@@ -24,7 +24,12 @@ package
 			super();
 			
 			var so:SharedObject = SharedObject.getLocal("userData");
-			_lastLevel = so.data.lastLevel;
+			if ( so.data.lastLevel == undefined ) {
+				_lastLevel = so.data.lastLevel = 1;
+				so.flush();
+			} else {
+				_lastLevel = so.data.lastLevel;
+			}
 			
 			var txt:FlxText
 			

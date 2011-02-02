@@ -37,7 +37,7 @@ package
 			//addSprite( new Tree(590, 245, this), _trees );
 			addSprite( new Tree(561, 282, this), _trees );
 			
-			addSprite( new Tree(985, 361, this), _trees );
+			addSprite( new Tree(965, 361, this), _trees );
 			//addSprite( new Tree(900, 550, this), _trees );
 			addSprite( new Tree(950, 550, this), _trees );
 			

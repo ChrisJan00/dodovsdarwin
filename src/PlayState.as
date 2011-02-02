@@ -130,6 +130,8 @@ package
 			//if ( !FlxState.isInDebugMode ) {
 				FlxG.play(BackgroundMusic, 1.0, true);
 			//}
+			
+			_dodoGenerationWaitAtStart = DODO_GENERATION_PAUSE_MIN + Math.random() * DODO_GENERATION_PAUSE_RANGE;
         }
 		
 		public function parseMap(map:String):void
@@ -276,26 +278,6 @@ package
 				}
 			}
 			
-			// New Dodos
-			if (_dodoAdults.length == 1) {
-				dodoArrivingTimer -= FlxG.elapsed;
-				if (dodoArrivingTimer <= 0) {
-					var probability: Number = Math.max(0, Math.min(1.0, ( _trees.length - TREE_MIN_CHOPPING + 1) * 0.04));
-					var num:Number = Math.random();
-					if ( num < probability ) {
-						var newDodo:Dodo = new Dodo( -100, -100, this);
-						newDodo.flyIn();
-						addSprite( newDodo, _dodos );
-						addToArrayOnly( newDodo, _dodoAdults );
-					} else {
-						// 1 second until the next candidate
-						dodoArrivingTimer = 2;
-					}
-				}
-			} else {
-				dodoArrivingTimer = 10;
-			}
-			
 			lyrSprites.sortByY();
 			_poopDisplay.update();
 			_eggDisplay.update();
@@ -324,13 +306,13 @@ package
 			}
 			
 			generateRats();
+			generateDodos();
 			
 			checkLevelAndChange();
         }
 		
 		private var _ratGenerationCounter:Number = 0;
 		private function generateRats():void {
-			
 			_ratGenerationCounter -= FlxG.elapsed;
 			if ( _ratGenerationCounter <= 0 && _stones.length > 0 && _humans.length > 0 ) {
 				var _loc_probRat:Number = 0.1 + Math.min( 0.9, Math.max( 0, ( _humans.length * 3 ) - _rats.length ) * 0.1 );
@@ -341,7 +323,42 @@ package
 				}
 				_ratGenerationCounter = 4 + Math.random() * 2;
 			}
-			
+		}
+		;
+		private const DODO_GENERATION_PAUSE_MIN:Number = 3;
+		private const DODO_GENERATION_PAUSE_RANGE:Number = 5;
+		private var _dodoGenerationTimer:Number = 0;
+		private var _dodoGenerationWaitAtStart:Number = 0;
+		private function generateDodos():void {
+			_dodoGenerationWaitAtStart -= FlxG.elapsed;
+			if ( _dodoGenerationWaitAtStart > 0 ) {
+				return;
+			}
+			var shouldBeDodos:int = Math.floor( Number(_trees.length) / 5 );
+			if ( _dodoGenerationTimer == 0 && getAmountOfMatableDodos() < shouldBeDodos ) {
+				_dodoGenerationTimer = DODO_GENERATION_PAUSE_MIN + Math.random() * DODO_GENERATION_PAUSE_RANGE;
+			}
+			if ( _dodoGenerationTimer > 0 ) {
+				_dodoGenerationTimer -= FlxG.elapsed;
+				if ( _dodoGenerationTimer <= 0 ) {
+					_dodoGenerationTimer = 0;
+					var newDodo:Dodo = new Dodo( -100, -100, this);
+					newDodo.flyIn();
+					addSprite( newDodo, _dodos );
+					addToArrayOnly( newDodo, _dodoAdults );
+				}
+			}
+		}
+		
+		private function getAmountOfMatableDodos():int {
+			var counter:int = 0;
+			for each (var dodo:IDodo in _dodoAdults) 
+			{
+				if ( dodo.family != _player.family ) {
+					counter++;
+				}
+			}
+			return counter;
 		}
 		
 		public function reload():void

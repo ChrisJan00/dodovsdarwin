@@ -74,7 +74,7 @@
             facing = RIGHT;
 			
 			// initialize with silent sound
-			FlxEatSound = FlxG.play(EatSound,0,0);
+			FlxEatSound = FlxG.play(EatSound,0,false);
         }
         override public function update():void
         {

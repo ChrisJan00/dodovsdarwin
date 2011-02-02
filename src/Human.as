@@ -92,8 +92,8 @@
 			if (health <= 0) { _playstate.reload(); }
 			
 			if (_aiState != oldState) {
-				//if (_aiState == HUMAN_STATE_CHASE)
-					//FlxG.play(AngrySound);
+				if (_aiState == HUMAN_STATE_CHASE)
+					FlxG.play(AngrySound);
 			}
 			
             super.update();

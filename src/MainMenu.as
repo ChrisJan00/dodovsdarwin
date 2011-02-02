@@ -89,7 +89,6 @@ package
 			if (FlxG.keys.pressed("X"))
 			{
 				FlxState.isInDebugMode = false;
-				trace(_lastLevel);
 				FlxG.fade(0xff000000, 1, onFade);
 			} 
 			if (FlxG.keys.pressed("R") && _lastLevel != 1)

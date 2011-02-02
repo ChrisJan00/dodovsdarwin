@@ -15,6 +15,8 @@
 		[Embed(source = "snd/birdcome.mp3")] private var FlySound:Class;
 		[Embed(source = "snd/eat.mp3")] private var EatSound:Class;
 		
+		private var FlxMateSound:FlxSound;
+		
 		private var _MaxVelocity_walking:int = 200;
 		private var _playstate:PlayState;
 		
@@ -87,6 +89,9 @@
 			// TODO Need dead state image
             addAnimation("dead", [5]);
             facing = RIGHT;
+			
+			// Initialize with silent sound
+			FlxMateSound = FlxG.play(MateSound, 0);
         }
         override public function update():void
         {
@@ -220,8 +225,10 @@
 			}
 			
 			if (oldState != _aiState) {
-				if (_aiState == DODO_STATE_MATE)
-					FlxG.play(MateSound, _playstate._player.distance2Volume(this));
+				if (_aiState == DODO_STATE_MATE) {
+					FlxMateSound.stop();
+					FlxMateSound = FlxG.play(MateSound, _playstate._player.distance2Volume(this));
+				}
 				if (isFlying())
 					FlxG.play(FlySound, _playstate._player.distance2Volume(this));
 			}

@@ -1,5 +1,6 @@
 package  
 {
+	import flash.net.SharedObject;
 	import org.flixel.FlxG;
 	import org.flixel.FlxState;
 	import org.flixel.FlxText;
@@ -15,6 +16,10 @@ package
 		
 		public function StoryLevel3() 
 		{
+			var so:SharedObject = SharedObject.getLocal("userData");
+			so.data.lastLevel = 3;
+			so.flush();
+			
 			var txt:FlxText;
 			
 			txt = new FlxText(0, 100, FlxG.width, "More and more humans arrived")

@@ -1,6 +1,7 @@
 package  
 {
 
+	import flash.net.SharedObject;
 	import org.flixel.*;
 	
 	public class MainMenu extends FlxState
@@ -12,6 +13,7 @@ package
 		
 		protected static var layer:FlxLayer;
 		private var _walkingDodo:WalkingDodo;
+		private var _lastLevel:int = 1;
 		
 		//This const allows you to switch between allowing debug mode or not
 		//Don't forget to set to false before creating a release build!
@@ -20,6 +22,10 @@ package
 		override public function MainMenu() 
 		{
 			super();
+			
+			var so:SharedObject = SharedObject.getLocal("userData");
+			_lastLevel = so.data.lastLevel;
+			
 			var txt:FlxText
 			
 			txt = new FlxText(0, 0, FlxG.width, "v0.28")
@@ -87,7 +93,29 @@ package
 		
 		private function onFade():void
 		{
-			FlxG.switchState( StoryLevel1 );
+			switch (_lastLevel) 
+			{
+				case 1:
+					FlxG.switchState( StoryLevel1 );
+				break;
+				case 2:
+					FlxG.switchState( StoryLevel2 );
+				break;
+				case 3:
+					FlxG.switchState( StoryLevel3 );
+				break;
+				case 4:
+					//TODO needs to be level 4
+					FlxG.switchState( StoryLevel3 );
+				break;
+				case 5:
+					//TODO needs to be level 5
+					FlxG.switchState( StoryLevel3 );
+				break;
+				default:
+					FlxG.switchState( StoryLevel1 );
+				break;
+			}
 		}
 	}
 	

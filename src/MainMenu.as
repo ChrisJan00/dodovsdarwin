@@ -89,7 +89,7 @@ package
 			if (FlxG.keys.pressed("X"))
 			{
 				FlxState.isInDebugMode = false;
-				FlxG.flash(0xffffffff, 0.75);
+				trace(_lastLevel);
 				FlxG.fade(0xff000000, 1, onFade);
 			} 
 			if (FlxG.keys.pressed("R") && _lastLevel != 1)
@@ -98,7 +98,6 @@ package
 				so.data.lastLevel = 1;
 				so.flush();
 				_lastLevel = 0;
-				FlxG.flash(0xffffffff, 0.5);
 				FlxG.fade(0xff000000, 0.75, onFade);
 			} 
 			if (FlxG.keys.pressed("T") && DEBUG_VERSION)
@@ -107,7 +106,6 @@ package
 				so2.data.lastLevel = 2;
 				so2.flush();
 				_lastLevel = 0;
-				FlxG.flash(0xffffffff, 0.5);
 				FlxG.fade(0xff000000, 0.5, onFade);
 			}
 			if (FlxG.keys.pressed("F11") && DEBUG_VERSION)

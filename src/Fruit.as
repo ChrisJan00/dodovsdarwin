@@ -18,7 +18,7 @@ package
 		private var launchSpeed : Point;
 		private var launchFeet : Point;
 		private var launchDistance : Number;
-		private var launchState: Number = 0;
+		public var launchState: Number = 0;
 		private var gravity: Number;
 		
 		private var _playstate:PlayState;

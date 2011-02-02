@@ -124,7 +124,9 @@ package
 			
 			
 			//FlxG.play(EndLevelSound);
-			FlxG.play(BackgroundMusic, 1.0, true);
+			if ( !FlxState.isInDebugMode ) {
+				FlxG.play(BackgroundMusic, 1.0, true);
+			}
         }
 		
 		public function parseMap(map:String):void
@@ -215,7 +217,10 @@ package
 				pig.collideArray(_stones);
 				pig.collideArray(_trees);
 				
-				for each(var _loc_fruit:FlxSprite in _fruits) {
+				for each(var _loc_fruit:Fruit in _fruits) {
+					if ( _loc_fruit.launchState ) {
+						continue;
+					}
 					if ( pig.overlaps(_loc_fruit) ) {
 						pig.eat();
 						removeEntity(_loc_fruit, _fruits);
@@ -228,7 +233,10 @@ package
 					addSprite(tree.getFruit(), _fruits);
 			}
 			
-			for each(var fruit:FlxSprite in _fruits) {
+			for each(var fruit:Fruit in _fruits) {
+				if ( fruit.launchState ) {
+					continue;
+				}
 				if ( _player.overlaps(fruit) ) {
 					_player.eat();
 					removeEntity(fruit, _fruits);

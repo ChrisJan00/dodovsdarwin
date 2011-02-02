@@ -26,7 +26,7 @@ package
 			
 			//addSprite( new Stone(312, 349), _stones );
 			
-			addSprite( new Pig(450, 300, this), _stones );
+			addSprite( new Pig(450, 300, this), _pigs );
 			
 			addSprite( new Stone(800, 235), _stones );
 			addSprite( new Stone(880, 270), _stones );

@@ -360,9 +360,9 @@
 		
 		public function get family():int { return _family; }
 		
-		public function distance2To( sprite:FlxSprite ) : Number
+		public function distance2Volume( sprite:FlxSprite ) : Number
 		{
-			return (sprite.x - x) * (sprite.x - x) + (sprite.y - y) * (sprite.y - y);
+			return Math.min(100*100/(1 + (sprite.x - x) * (sprite.x - x) + (sprite.y - y) * (sprite.y - y)), 1.0);
 		}
     }
 }

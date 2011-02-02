@@ -134,8 +134,9 @@ package
 						play("birth");
 				if (hatchTimer <= 0) {
 					// grow dodo
-					FlxG.play(HatchSound);
+					FlxG.play(HatchSound, _playstate._player.distance2Volume(this) );
 					_playstate.spawnDodoChild( x, y ,_family);
+
 					launchState = 4;
 					_playstate.removeEntity( this, _playstate._eggs );
 				}
@@ -180,7 +181,7 @@ package
 		{
 			if ( _invincibleTimer <= 0 ) {
 				health -= 0.2;
-				FlxG.play( EatSound );
+				FlxG.play( EatSound, _playstate._player.distance2Volume(this)  );
 				if ( health <= 0 ) {
 					killedByEnemy();
 				} else {

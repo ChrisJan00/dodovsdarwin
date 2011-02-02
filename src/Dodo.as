@@ -221,9 +221,9 @@
 			
 			if (oldState != _aiState) {
 				if (_aiState == DODO_STATE_MATE)
-					FlxG.play(MateSound);
+					FlxG.play(MateSound, _playstate._player.distance2Volume(this));
 				if (isFlying())
-					FlxG.play(FlySound);
+					FlxG.play(FlySound, _playstate._player.distance2Volume(this));
 			}
 			
             super.update();
@@ -366,7 +366,7 @@
 		}
 		
 		public function killedByEnemy():void {
-			FlxG.play(DeathSound);
+			FlxG.play(DeathSound, _playstate._player.distance2Volume(this) );
 			_remainDeadTimer = 5;
 			_keepFlashingRedTimer = 0.2;
 			_playstate.removeEntityFromArrayOnly(this, _playstate._dodos);
@@ -379,7 +379,7 @@
 		{
 			if ( _invincibleTimer <= 0 ) {
 				health -= 1;
-				FlxG.play(HurtSound);
+				FlxG.play(HurtSound, _playstate._player.distance2Volume(this) );
 				if ( health <= 0 ) {
 					killedByEnemy();
 				} else {
@@ -392,7 +392,7 @@
 		public function takeRatDamage():void
 		{
 			if ( _invincibleTimer <= 0 ) {
-				FlxG.play(HurtSound);
+				FlxG.play(HurtSound, _playstate._player.distance2Volume(this) );
 				health -= 0.3;
 				if ( health <= 0 ) {
 					killedByEnemy();

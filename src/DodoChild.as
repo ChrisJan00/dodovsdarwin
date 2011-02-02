@@ -144,7 +144,7 @@
 				if ( _aiState == DODO_STATE_STAY_CLOSE ) {
 					if ( _aiUpdateTimer <= 0 ) {
 						if (Math.random() < 0.3) {
-							FlxG.play(ChildPeepSound);
+							FlxG.play(ChildPeepSound, _playstate._player.distance2Volume(this) );
 						}
 						addWander( _loc_toVector, 0.5 );
 						_loc_toVector.normalize();
@@ -159,7 +159,7 @@
 				}
 			} else if ( _aiUpdateTimer <= 0) {
 				if (Math.random() < 0.9) {
-					FlxG.play(ChildPeepSound);
+					FlxG.play(ChildPeepSound, _playstate._player.distance2Volume(this) );
 				}
 				_loc_toVector = getWander();
 				_loc_toVector.normalize();
@@ -244,7 +244,7 @@
 			var _loc_toVector:Vector3D = _playstate.getClosestHumanVector( this );
 			if ( _loc_toVector && _aiState == DODO_STATE_FLEE && _loc_toVector.length < DODO_KEEP_FLEEING_DISTANCE ) {
 				if ( _fleePeepTimer <= 0 ) {
-					FlxG.play(ChildPeepSound);
+					FlxG.play(ChildPeepSound, _playstate._player.distance2Volume(this) );
 					_fleePeepTimer = 0.4 + Math.random() * 0.2;
 				}
 				_loc_toVector.scaleBy( -1 );
@@ -253,7 +253,7 @@
 			
 			if ( _loc_toVector && _loc_toVector.length < DODO_FLEE_HUMAN_DISTANCE ) {
 				if ( _fleePeepTimer <= 0 ) {
-					FlxG.play(ChildPeepSound);
+					FlxG.play(ChildPeepSound, _playstate._player.distance2Volume(this) );
 					_fleePeepTimer = 0.4 + Math.random() * 0.2;
 				}
 				_aiState = DODO_STATE_FLEE;
@@ -263,7 +263,7 @@
 				_loc_toVector = _playstate.getClosestRatVector( this );
 				if ( _loc_toVector && _aiState == DODO_STATE_FLEE && _loc_toVector.length < DODO_KEEP_FLEEING_DISTANCE ) {
 					if ( _fleePeepTimer <= 0 ) {
-						FlxG.play(ChildPeepSound);
+						FlxG.play(ChildPeepSound, _playstate._player.distance2Volume(this) );
 						_fleePeepTimer = 0.4 + Math.random() * 0.2;
 					}
 					_aiState = DODO_STATE_FLEE;
@@ -273,7 +273,7 @@
 				
 				if ( _loc_toVector && _loc_toVector.length < DODO_FLEE_RAT_DISTANCE ) {
 					if ( _fleePeepTimer <= 0 ) {
-						FlxG.play(ChildPeepSound);
+						FlxG.play(ChildPeepSound, _playstate._player.distance2Volume(this) );
 						_fleePeepTimer = 0.4 + Math.random() * 0.2;
 					}
 					_aiState = DODO_STATE_FLEE;
@@ -331,11 +331,11 @@
 			_growupFood--;
 			health = Math.min( 1, health + 0.1 );
 			_eatAnimationTimer = PLAYER_EAT_ANIMATION_DURATION;
-			FlxG.play(EatSound);
+			FlxG.play(EatSound, _playstate._player.distance2Volume(this) );
 		}
 		
 		public function killedByEnemy():void {
-			FlxG.play(DeathSound);
+			FlxG.play(DeathSound, _playstate._player.distance2Volume(this) );
 			_remainDeadTimer = 5;
 			_keepFlashingRedTimer = 0.2;
 			_playstate.removeEntityFromArrayOnly(this, _playstate._dodos);
@@ -348,7 +348,7 @@
 		{
 			if ( _invincibleTimer <= 0 ) {
 				health -= 0.6;
-				FlxG.play(HurtSound);
+				FlxG.play(HurtSound, _playstate._player.distance2Volume(this) );
 				if ( health <= 0 ) {
 					killedByEnemy();
 				} else {
@@ -361,7 +361,7 @@
 		public function takeRatDamage():void
 		{
 			if ( _invincibleTimer <= 0 ) {
-				FlxG.play(HurtSound);
+				FlxG.play(HurtSound, _playstate._player.distance2Volume(this) );
 				health -= 0.3;
 				if ( health <= 0 ) {
 					killedByEnemy();

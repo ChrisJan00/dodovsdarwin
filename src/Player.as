@@ -11,7 +11,8 @@
 		[Embed(source = "snd/playerdie.mp3")] private var DeathSound:Class;
 		[Embed(source = "snd/poop.mp3")] private var PoopSound:Class;
 		
-				
+		private var FlxEatSound:FlxSound;
+		
 		private var _MaxVelocity_walking:int = 200;
 		private var _playstate:PlayState;
 		private var _looking_angle: Number = 0;
@@ -71,6 +72,9 @@
             addAnimation("pooping", [8, 9], 4);
             addAnimation("mating", [10, 11], 5);
             facing = RIGHT;
+			
+			// initialize with silent sound
+			FlxEatSound = FlxG.play(EatSound,0,0);
         }
         override public function update():void
         {
@@ -228,7 +232,8 @@
 			health = Math.min( 1, health + 0.1 );
 			eatenFruitCount = Math.min( eatenFruitCount + 1, SHIT_THRESHOLD);
 			_eatAnimationTimer = PLAYER_EAT_ANIMATION_DURATION;
-			FlxG.play(EatSound);
+			FlxEatSound.stop();
+			FlxEatSound = FlxG.play(EatSound);
 		}
 		
 		public function unleashShit() : void
@@ -354,5 +359,10 @@
 		}
 		
 		public function get family():int { return _family; }
+		
+		public function distance2To( sprite:FlxSprite ) : Number
+		{
+			return (sprite.x - x) * (sprite.x - x) + (sprite.y - y) * (sprite.y - y);
+		}
     }
 }

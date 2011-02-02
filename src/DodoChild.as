@@ -7,29 +7,27 @@
 
     public class DodoChild extends FlxSprite implements IDodo
     {
-        [Embed(source = "img/dodoChildFemale.png")] private var ImgPlayer:Class;
+        [Embed(source = "img/dodoChildFemale.png")] private var ImgChild:Class;
 		[Embed(source = "snd/playerhurt.mp3")] private var HurtSound:Class;
 		[Embed(source = "snd/playerdie.mp3")] private var DeathSound:Class;
 		
 		[Embed(source = "snd/dodochildpeep.mp3")] private var ChildPeepSound:Class;		
-		[Embed(source = "snd/birdcome.mp3")] private var FlySound:Class;
 		[Embed(source = "snd/eat.mp3")] private var EatSound:Class;
 		
 		private var _MaxVelocity_walking:int = 200;
 		private var _playstate:PlayState;
 		
 		private const DODO_MOVEMENT_SPEED:Number = 80;
-		//private const DODO_ACCELERATION:Number = 20;
 		private const DODO_FLEE_HUMAN_DISTANCE:Number = 60;
 		private const DODO_FLEE_RAT_DISTANCE:Number = 50;
 		private const DODO_KEEP_FLEEING_DISTANCE:Number = 100;
-		private const DODO_APPROACH_DODO_DISTANCE:Number = 200; //200
+		private const DODO_APPROACH_DODO_DISTANCE:Number = 200;
 		private const DODO_APPROACH_DODO_DISTANCE_STOP:Number = 40;
 		private const DODO_APPROACH_PIG_DISTANCE:Number = 50;
 		private const DODO_APPROACH_FRUIT_DISTANCE:Number = 70;
 		
-		private const DODO_CHILD_GROWUP_TIMER:Number = 1;
-		private const DODO_CHILD_GROWUP_FOOD:Number = 1;
+		private const DODO_CHILD_GROWUP_TIMER:Number = 5;
+		private const DODO_CHILD_GROWUP_FOOD:Number = 5;
 		
 		private var _growupTimer:Number = 0;
 		private var _growupFood:Number = 0;
@@ -41,9 +39,6 @@
 		private const DODO_STATE_FLEE:String = "DodoStateFlee";
 		private const DODO_STATE_APPROACH:String = "DodoStateApproach";
 		private const DODO_STATE_STAY_CLOSE:String = "DodoStateStayClose";
-		private const DODO_STATE_FLYING_IN:String = "DodoStateFlyingIn";
-		private const DODO_STATE_FLYING_OUT:String = "DodoStateFlyingOut";
-		private const DODO_STATE_MATE:String = "DodoStateMate";
 		
 		private const DODO_WANDER_AIUPDATE_DELAY_MIN:Number = 1;
 		private const DODO_WANDER_AIUPDATE_DELAY_RANGE:Number = 1.5;
@@ -71,7 +66,7 @@
             super(X, Y);
 			
 			_playstate = p;
-            loadGraphic(ImgPlayer, true, true, 56, 49);
+            loadGraphic(ImgChild, true, true, 56, 49);
 			
 			_MaxVelocity_walking = 200;
             maxVelocity.x = 200;
@@ -87,8 +82,6 @@
 			
             addAnimation("normal", [0, 1, 2, 3], 5);
             addAnimation("eating", [4,5.6,7], 7);
-			//addAnimation("flying", [2, 5], 10);
-			//addAnimation("mating", [4, 5], 10);
 			addAnimation("fleeing", [0, 1, 2, 3], 8);
 			addAnimation("stayingClose", [0, 1, 2, 3], 5);
 			addAnimation("stopped", [1]);
@@ -139,58 +132,40 @@
 			
 			_aiUpdateTimer -= FlxG.elapsed;
 			
-			if (isFlying()) {
-				_loc_toVector = new Vector3D( destination.x - cX, destination.y - cY );
-				if (_aiState == DODO_STATE_FLYING_IN && _loc_toVector.length < DODO_APPROACH_DODO_DISTANCE_STOP)
-					_aiState = DODO_STATE_WANDER;
-				else if (_aiState == DODO_STATE_FLYING_OUT && _loc_toVector.length < DODO_APPROACH_DODO_DISTANCE_STOP ) {
-					_playstate.removeEntity(this, _playstate._dodos);
-					return;
-				}
+			_loc_toVector = null;
+			if ( _justBornTimer < 0 ) {
+				_loc_toVector = getSteering();
+			}
+			if ( _loc_toVector ) {
 				_loc_toVector.normalize();
-				_loc_toVector.scaleBy(3);
-				velocity.x = _loc_toVector.x * DODO_MOVEMENT_SPEED;
-				velocity.y = _loc_toVector.y * DODO_MOVEMENT_SPEED;
-				
-			} else {
-				_loc_toVector = null;
-				if ( _justBornTimer < 0 ) {
-					_loc_toVector = getSteering();
+				if ( _aiState == DODO_STATE_APPROACH ) {
+					_loc_toVector.scaleBy(0.9);
 				}
-				if ( _loc_toVector ) {
-					_loc_toVector.normalize();
-					if ( _aiState == DODO_STATE_APPROACH ) {
-						_loc_toVector.scaleBy(0.9);
-					}
-					if ( _aiState == DODO_STATE_STAY_CLOSE ) {
-						if ( _aiUpdateTimer <= 0 ) {
-							if (Math.random() < 0.3) {
-								FlxG.play(ChildPeepSound);
-							}
-							addWander( _loc_toVector, 0.5 );
-							_loc_toVector.normalize();
-							_loc_toVector.scaleBy( 0.25 + Math.random() * 0.5 );
-							velocity.x = _loc_toVector.x * DODO_MOVEMENT_SPEED;
-							velocity.y = _loc_toVector.y * DODO_MOVEMENT_SPEED;
-							_aiUpdateTimer = ( DODO_WANDER_STAYCLOSE_DELAY_MIN + Math.random() * DODO_WANDER_STAYCLOSE_DELAY_RANGE );
+				if ( _aiState == DODO_STATE_STAY_CLOSE ) {
+					if ( _aiUpdateTimer <= 0 ) {
+						if (Math.random() < 0.3) {
+							FlxG.play(ChildPeepSound);
 						}
-					} else {
+						addWander( _loc_toVector, 0.5 );
+						_loc_toVector.normalize();
+						_loc_toVector.scaleBy( 0.25 + Math.random() * 0.5 );
 						velocity.x = _loc_toVector.x * DODO_MOVEMENT_SPEED;
 						velocity.y = _loc_toVector.y * DODO_MOVEMENT_SPEED;
+						_aiUpdateTimer = ( DODO_WANDER_STAYCLOSE_DELAY_MIN + Math.random() * DODO_WANDER_STAYCLOSE_DELAY_RANGE );
 					}
-					//if ( _aiState == DODO_STATE_MATE ) {
-						//_loc_toVector.scaleBy(0.2);
-					//}
-				} else if ( _aiUpdateTimer <= 0) {
-					if (Math.random() < 0.9) {
-						FlxG.play(ChildPeepSound);
-					}
-					_loc_toVector = getWander();
-					_loc_toVector.normalize();
-					_loc_toVector.scaleBy( 0.25 + Math.random() * 0.5 );
+				} else {
 					velocity.x = _loc_toVector.x * DODO_MOVEMENT_SPEED;
 					velocity.y = _loc_toVector.y * DODO_MOVEMENT_SPEED;
 				}
+			} else if ( _aiUpdateTimer <= 0) {
+				if (Math.random() < 0.9) {
+					FlxG.play(ChildPeepSound);
+				}
+				_loc_toVector = getWander();
+				_loc_toVector.normalize();
+				_loc_toVector.scaleBy( 0.25 + Math.random() * 0.5 );
+				velocity.x = _loc_toVector.x * DODO_MOVEMENT_SPEED;
+				velocity.y = _loc_toVector.y * DODO_MOVEMENT_SPEED;
 			}
 			
 			_justBornTimer -= FlxG.elapsed;
@@ -228,15 +203,6 @@
 					}
 				}
 			}
-			//if ( _aiState == DODO_STATE_APPROACH ) {
-				//play("normal");
-			//}
-			//if (isFlying()) {
-				//play("flying");
-			//}
-			//if ( _aiState == DODO_STATE_MATE ) {
-				//play("mating");
-			//}
 			
 			if ( _keepFlashingRedTimer > 0 ) {
 				_keepFlashingRedTimer -= FlxG.elapsed;
@@ -266,20 +232,6 @@
 			}
 			
 			if (health <= 0) { _playstate.reload(); }
-			
-			//if (_aiState == DODO_STATE_MATE) {
-				//velocity.x = velocity.y = 0;
-				//_playstate._player.makeLove( this );
-			//} else { 
-				//_playstate._player.dontMakeLove( this );
-			//}
-			
-			//if (oldState != _aiState) {
-				//if (_aiState == DODO_STATE_MATE)
-					//FlxG.play(MateSound);
-				//if (isFlying())
-					//FlxG.play(FlySound);
-			//}
 			
             super.update();
             
@@ -333,7 +285,7 @@
 						_aiState = DODO_STATE_APPROACH;
 						return ( _loc_toVector );
 					} else {
-						_loc_toVector = _playstate.getClosestDodoVector( this );
+						_loc_toVector = _playstate.getClosestDodoAdultVector( this );
 						if ( _loc_toVector && _loc_toVector.length < DODO_APPROACH_DODO_DISTANCE && _loc_toVector.length > DODO_APPROACH_DODO_DISTANCE_STOP ) {
 							_aiState = DODO_STATE_APPROACH;
 							return ( _loc_toVector );
@@ -368,52 +320,10 @@
 			var _loc_vector:Vector3D = new Vector3D( a_amount - (Math.random() * 2 * a_amount), a_amount - (Math.random() * 2 * a_amount) );
 			a_vector.x += _loc_vector.x;
 			a_vector.y += _loc_vector.y;
-			//var _loc_vectorBack:Vector3D = new Vector3D( a_vector.x + _loc_vector.x, a_vector.y + _loc_vector.y );
-			//return _loc_vectorBack;
 		}
 		
-		public function flyIn():void 
-		{
-			_aiState = DODO_STATE_FLYING_IN;
-			
-			if (Math.random() < 0.5) {
-				if (Math.random() < 0.5)
-					y = 960;
-				else
-					y = -1 * height;
-				x = Math.floor(Math.random() * 1280);
-			} else {
-				if (Math.random() < 0.5)
-					x = 1280;
-				else
-					x = -1 * width;
-				y = Math.floor(Math.random() * 960);
-			}
-			
-			destination = new Point( (Math.random() * 0.4 + 0.3) * 1280, (Math.random() * 0.4 + 0.3) * 960 );
-		}
-		
-		public function flyAway():void {
-			var _loc_buffer:Number = 100;
-			_aiState = DODO_STATE_FLYING_OUT;
-			destination = new Point();
-			if (Math.random() < 0.5) {
-				if (Math.random() < 0.5)
-					destination.y = 960 + _loc_buffer;
-				else
-					destination.y = -height - _loc_buffer;
-				destination.x = Math.floor(Math.random() * 1280);
-			} else {
-				if (Math.random() < 0.5)
-					destination.x = 1280 + _loc_buffer;
-				else
-					destination.x = -width - _loc_buffer;
-				destination.y = Math.floor(Math.random() * 960);
-			}
-		}
-
 		public function isFlying():Boolean {
-			return _aiState == DODO_STATE_FLYING_IN || _aiState == DODO_STATE_FLYING_OUT;
+			return false;
 		}
 		
 		public function eat() : void

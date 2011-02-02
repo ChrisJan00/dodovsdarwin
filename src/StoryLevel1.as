@@ -21,15 +21,15 @@ package
 			//txt.setFormat("NES", 16, 0xFFFFFFFF, "center");
 			//this.add(txt);
 			
-			txt = new FlxText(0, 150, FlxG.width, "Not too long ago, not too far away")
+			txt = new FlxText(0, 150, FlxG.width, "Not too long ago")
 			txt.setFormat("NES", 16, 0xFFFFFFFF, "center");
 			this.add(txt);
 			
-			txt = new FlxText(0, 200, FlxG.width, "there lived on an island in the Indian Ocean")
+			txt = new FlxText(0, 200, FlxG.width, "on an island in the Indian Ocean")
 			txt.setFormat("NES", 16, 0xFFFFFFFF, "center");
 			this.add(txt);
 			
-			txt = new FlxText(0, 250, FlxG.width, "the peaceful Dodo bird...")
+			txt = new FlxText(0, 250, FlxG.width, "lived the peaceful Dodo bird...")
 			txt.setFormat("NES", 16, 0xFFFFFFFF, "center");
 			this.add(txt);
 			

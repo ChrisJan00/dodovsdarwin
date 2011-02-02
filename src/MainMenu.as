@@ -54,10 +54,19 @@ package
 			txt.setFormat("NES", 16, 0xFFFFFFFF, "center");
 			this.add(txt);
 			
-			txt = new FlxText(0, 432, FlxG.width, "PRESS X TO START")
-			txt.setFormat("NES", 16, 0xFFFFFFFF, "center");
-			this.add(txt);
-			
+			if ( _lastLevel == 1 ) {
+				txt = new FlxText(0, 432, FlxG.width, "PRESS X - NEW GAME")
+				txt.setFormat("NES", 16, 0xFFFFFFFF, "center");
+				this.add(txt);
+			} else {
+				txt = new FlxText(0, 425, FlxG.width, "PRESS X TO CONTINUE")
+				txt.setFormat("NES", 16, 0xFFFFFFFF, "center");
+				this.add(txt);
+				
+				txt = new FlxText(0, 450, FlxG.width, "R TO RESET")
+				txt.setFormat("NES", 16, 0xFFFFFFFF, "center");
+				this.add(txt);
+			}
 			
 			layer = new FlxLayer;
 			this.add(layer);
@@ -78,6 +87,24 @@ package
 				FlxG.flash(0xffffffff, 0.75);
 				FlxG.fade(0xff000000, 1, onFade);
 			} 
+			if (FlxG.keys.pressed("R") && _lastLevel != 1)
+			{
+				var so:SharedObject = SharedObject.getLocal("userData");
+				so.data.lastLevel = 1;
+				so.flush();
+				_lastLevel = 0;
+				FlxG.flash(0xffffffff, 0.5);
+				FlxG.fade(0xff000000, 0.75, onFade);
+			} 
+			if (FlxG.keys.pressed("T") && DEBUG_VERSION)
+			{
+				var so2:SharedObject = SharedObject.getLocal("userData");
+				so2.data.lastLevel = 2;
+				so2.flush();
+				_lastLevel = 0;
+				FlxG.flash(0xffffffff, 0.5);
+				FlxG.fade(0xff000000, 0.5, onFade);
+			}
 			if (FlxG.keys.pressed("F11") && DEBUG_VERSION)
 			{
 				FlxState.isInDebugMode = true;
@@ -95,6 +122,9 @@ package
 		{
 			switch (_lastLevel) 
 			{
+				case 0:
+					FlxG.switchState( MainMenu );
+				break;
 				case 1:
 					FlxG.switchState( StoryLevel1 );
 				break;

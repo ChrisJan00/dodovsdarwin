@@ -33,7 +33,7 @@ package
 			txt.setFormat("NES", 16, 0xFFFFFFFF, "center");
 			this.add(txt);
 			
-			txt = new FlxText(0, 432, FlxG.width, "PRESS X TO SKIP")
+			txt = new FlxText(0, 432, FlxG.width, "PRESS X TO START")
 			txt.setFormat("NES", 16, 0xFFFFFFFF, "center");
 			this.add(txt);
 		}

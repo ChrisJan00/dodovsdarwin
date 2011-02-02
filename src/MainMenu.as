@@ -1,6 +1,7 @@
 package  
 {
 
+	import flash.net.SharedObject;
 	import org.flixel.*;
 	
 	public class MainMenu extends FlxState
@@ -12,6 +13,7 @@ package
 		
 		protected static var layer:FlxLayer;
 		private var _walkingDodo:WalkingDodo;
+		private var _lastLevel:int = 1;
 		
 		//This const allows you to switch between allowing debug mode or not
 		//Don't forget to set to false before creating a release build!
@@ -20,6 +22,10 @@ package
 		override public function MainMenu() 
 		{
 			super();
+			
+			var so:SharedObject = SharedObject.getLocal("userData");
+			_lastLevel = so.data.lastLevel;
+			
 			var txt:FlxText
 			
 			txt = new FlxText(0, 0, FlxG.width, "v0.28")
@@ -48,10 +54,19 @@ package
 			txt.setFormat("NES", 16, 0xFFFFFFFF, "center");
 			this.add(txt);
 			
-			txt = new FlxText(0, 432, FlxG.width, "PRESS X TO START")
-			txt.setFormat("NES", 16, 0xFFFFFFFF, "center");
-			this.add(txt);
-			
+			if ( _lastLevel == 1 ) {
+				txt = new FlxText(0, 432, FlxG.width, "PRESS X - NEW GAME")
+				txt.setFormat("NES", 16, 0xFFFFFFFF, "center");
+				this.add(txt);
+			} else {
+				txt = new FlxText(0, 425, FlxG.width, "PRESS X TO CONTINUE")
+				txt.setFormat("NES", 16, 0xFFFFFFFF, "center");
+				this.add(txt);
+				
+				txt = new FlxText(0, 450, FlxG.width, "R TO RESET")
+				txt.setFormat("NES", 16, 0xFFFFFFFF, "center");
+				this.add(txt);
+			}
 			
 			layer = new FlxLayer;
 			this.add(layer);
@@ -72,6 +87,24 @@ package
 				FlxG.flash(0xffffffff, 0.75);
 				FlxG.fade(0xff000000, 1, onFade);
 			} 
+			if (FlxG.keys.pressed("R") && _lastLevel != 1)
+			{
+				var so:SharedObject = SharedObject.getLocal("userData");
+				so.data.lastLevel = 1;
+				so.flush();
+				_lastLevel = 0;
+				FlxG.flash(0xffffffff, 0.5);
+				FlxG.fade(0xff000000, 0.75, onFade);
+			} 
+			if (FlxG.keys.pressed("T") && DEBUG_VERSION)
+			{
+				var so2:SharedObject = SharedObject.getLocal("userData");
+				so2.data.lastLevel = 2;
+				so2.flush();
+				_lastLevel = 0;
+				FlxG.flash(0xffffffff, 0.5);
+				FlxG.fade(0xff000000, 0.5, onFade);
+			}
 			if (FlxG.keys.pressed("F11") && DEBUG_VERSION)
 			{
 				FlxState.isInDebugMode = true;
@@ -87,7 +120,32 @@ package
 		
 		private function onFade():void
 		{
-			FlxG.switchState( StoryLevel1 );
+			switch (_lastLevel) 
+			{
+				case 0:
+					FlxG.switchState( MainMenu );
+				break;
+				case 1:
+					FlxG.switchState( StoryLevel1 );
+				break;
+				case 2:
+					FlxG.switchState( StoryLevel2 );
+				break;
+				case 3:
+					FlxG.switchState( StoryLevel3 );
+				break;
+				case 4:
+					//TODO needs to be level 4
+					FlxG.switchState( StoryLevel3 );
+				break;
+				case 5:
+					//TODO needs to be level 5
+					FlxG.switchState( StoryLevel3 );
+				break;
+				default:
+					FlxG.switchState( StoryLevel1 );
+				break;
+			}
 		}
 	}
 	

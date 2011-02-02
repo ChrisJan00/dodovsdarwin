@@ -1,5 +1,6 @@
 package  
 {
+	import org.flixel.FlxCore;
 	
 	/**
 	 * ...
@@ -11,6 +12,8 @@ package
 		function takeRatDamage():void
 		function isFlying():Boolean
 		function get family():int
+		function overlaps(Core:FlxCore):Boolean
+		function eat():void
 	}
 	
 }

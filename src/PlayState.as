@@ -240,17 +240,18 @@ package
 				if ( fruit.launchState ) {
 					continue;
 				}
-				if ( _player.overlaps(fruit) ) {
-					_player.eat();
-					removeEntity(fruit, _fruits);
-					continue;
-				}
+				//if ( _player.overlaps(fruit) ) {
+					//_player.eat();
+					//removeEntity(fruit, _fruits);
+					//continue;
+				//}
 				fruit.collideArray(_stones);
 				fruit.collideArray(_trees);
-				for each (var dodoChild:DodoChild in _dodoChildren ) {
-					if ( dodoChild.overlaps(fruit) ) {
-						dodoChild.eat();
+				for each (var dodoDude:IDodo in _dodos ) {
+					if ( dodoDude.overlaps(fruit) ) {
+						dodoDude.eat();
 						removeEntity(fruit, _fruits);
+						continue;
 					}
 				}
 			}
@@ -466,7 +467,14 @@ package
 			addSprite( new Tree(treeX, treeY, this, false), _trees );
 		}
 		
-		public function spawnDodo(dodoX:Number, dodoY:Number, a_family:int) : void
+		public function spawnDodo(dodoX:Number, dodoY:Number, a_family:int = 2) : void
+		{
+			var _loc_dodo:Dodo = new Dodo(dodoX, dodoY, this, a_family);
+			addSprite( _loc_dodo, _dodos );
+			addToArrayOnly( _loc_dodo, _dodoAdults );
+		}
+		
+		public function spawnDodoChild(dodoX:Number, dodoY:Number, a_family:int = 1) : void
 		{
 			var _loc_dodoChild:DodoChild = new DodoChild(dodoX, dodoY, this, a_family);
 			addSprite( _loc_dodoChild, _dodos );

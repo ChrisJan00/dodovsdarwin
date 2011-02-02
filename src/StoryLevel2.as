@@ -1,5 +1,6 @@
 package  
 {
+	import flash.net.SharedObject;
 	import org.flixel.FlxG;
 	import org.flixel.FlxState;
 	import org.flixel.FlxText;
@@ -15,6 +16,10 @@ package
 		
 		public function StoryLevel2() 
 		{
+			var so:SharedObject = SharedObject.getLocal("userData");
+			so.data.lastLevel = 2;
+			so.flush();
+			
 			var txt:FlxText;
 			
 			//txt = new FlxText(0, 100, FlxG.width, "The Dodo had no natural enemies.")
@@ -33,7 +38,7 @@ package
 			txt.setFormat("NES", 16, 0xFFFFFFFF, "center");
 			this.add(txt);
 			
-			txt = new FlxText(0, 432, FlxG.width, "PRESS X TO SKIP")
+			txt = new FlxText(0, 432, FlxG.width, "PRESS X TO START")
 			txt.setFormat("NES", 16, 0xFFFFFFFF, "center");
 			this.add(txt);
 		}

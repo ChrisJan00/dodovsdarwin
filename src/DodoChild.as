@@ -262,51 +262,58 @@
 				_loc_toVector.scaleBy( -1 );
 				return( _loc_toVector );
 			} else {
-			
-			if ( _loc_toVector && _loc_toVector.length < DODO_FLEE_HUMAN_DISTANCE ) {
-				if ( _fleePeepTimer <= 0 ) {
-					FlxG.play(ChildPeepSound, _playstate._player.distance2Volume(this) );
-					_fleePeepTimer = 0.4 + Math.random() * 0.2;
-				}
-				_aiState = DODO_STATE_FLEE;
-				_loc_toVector.scaleBy( -1 );
-				return( _loc_toVector );
-			} else {
-				_loc_toVector = _playstate.getClosestRatVector( this );
-				if ( _loc_toVector && _aiState == DODO_STATE_FLEE && _loc_toVector.length < DODO_KEEP_FLEEING_DISTANCE ) {
+				if ( _loc_toVector && _loc_toVector.length < DODO_FLEE_HUMAN_DISTANCE ) {
 					if ( _fleePeepTimer <= 0 ) {
 						FlxG.play(ChildPeepSound, _playstate._player.distance2Volume(this) );
 						_fleePeepTimer = 0.4 + Math.random() * 0.2;
 					}
 					_aiState = DODO_STATE_FLEE;
 					_loc_toVector.scaleBy( -1 );
-					return ( _loc_toVector );
+					return( _loc_toVector );
 				} else {
-				
-				if ( _loc_toVector && _loc_toVector.length < DODO_FLEE_RAT_DISTANCE ) {
-					if ( _fleePeepTimer <= 0 ) {
-						FlxG.play(ChildPeepSound, _playstate._player.distance2Volume(this) );
-						_fleePeepTimer = 0.4 + Math.random() * 0.2;
-					}
-					_aiState = DODO_STATE_FLEE;
-					_loc_toVector.scaleBy( -1 );
-					return ( _loc_toVector );
-				} else {
-					_loc_toVector = _playstate.getClosestFruitVector( this );
-					if ( _aiState == DODO_STATE_STAY_CLOSE && _loc_toVector && _loc_toVector.length < DODO_APPROACH_FRUIT_DISTANCE ) {
-						_aiState = DODO_STATE_APPROACH;
+					_loc_toVector = _playstate.getClosestRatVector( this );
+					if ( _loc_toVector && _aiState == DODO_STATE_FLEE && _loc_toVector.length < DODO_KEEP_FLEEING_DISTANCE ) {
+						if ( _fleePeepTimer <= 0 ) {
+							FlxG.play(ChildPeepSound, _playstate._player.distance2Volume(this) );
+							_fleePeepTimer = 0.4 + Math.random() * 0.2;
+						}
+						_aiState = DODO_STATE_FLEE;
+						_loc_toVector.scaleBy( -1 );
 						return ( _loc_toVector );
 					} else {
-						_loc_toVector = _playstate.getClosestDodoAdultVector( this );
-						if ( _loc_toVector && _loc_toVector.length < DODO_APPROACH_DODO_DISTANCE && _loc_toVector.length > DODO_APPROACH_DODO_DISTANCE_STOP ) {
-							_aiState = DODO_STATE_APPROACH;
+						if ( _loc_toVector && _loc_toVector.length < DODO_FLEE_RAT_DISTANCE ) {
+							if ( _fleePeepTimer <= 0 ) {
+								FlxG.play(ChildPeepSound, _playstate._player.distance2Volume(this) );
+								_fleePeepTimer = 0.4 + Math.random() * 0.2;
+							}
+							_aiState = DODO_STATE_FLEE;
+							_loc_toVector.scaleBy( -1 );
 							return ( _loc_toVector );
-						} else if ( _loc_toVector && _loc_toVector.length < DODO_APPROACH_DODO_DISTANCE_STOP) {
-							_aiState = DODO_STATE_STAY_CLOSE;
-							return ( _loc_toVector );
+						} else {
+							_loc_toVector = _playstate.getClosestFruitVector( this );
+							if ( _aiState == DODO_STATE_STAY_CLOSE && _loc_toVector && _loc_toVector.length < DODO_APPROACH_FRUIT_DISTANCE ) {
+								_aiState = DODO_STATE_APPROACH;
+								return ( _loc_toVector );
+							} else {
+								_loc_toVector = _playstate.getClosestPlayerVector( this );
+								if ( _loc_toVector && _loc_toVector.length < DODO_APPROACH_DODO_DISTANCE && _loc_toVector.length > DODO_APPROACH_DODO_DISTANCE_STOP ) {
+									_aiState = DODO_STATE_APPROACH;
+									return ( _loc_toVector );
+								} else if ( _loc_toVector && _loc_toVector.length < DODO_APPROACH_DODO_DISTANCE_STOP) {
+									_aiState = DODO_STATE_STAY_CLOSE;
+									return ( _loc_toVector );
+								} else {
+									_loc_toVector = _playstate.getClosestDodoAdultVector( this );
+									if ( _loc_toVector && _loc_toVector.length < DODO_APPROACH_DODO_DISTANCE && _loc_toVector.length > DODO_APPROACH_DODO_DISTANCE_STOP ) {
+										_aiState = DODO_STATE_APPROACH;
+										return ( _loc_toVector );
+									} else if ( _loc_toVector && _loc_toVector.length < DODO_APPROACH_DODO_DISTANCE_STOP) {
+										_aiState = DODO_STATE_STAY_CLOSE;
+										return ( _loc_toVector );
+									}
+								}
+							}
 						}
-					}
-					}
 					}
 				}
 			}

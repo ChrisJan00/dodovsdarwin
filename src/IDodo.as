@@ -14,6 +14,7 @@ package
 		function get family():int
 		function overlaps(Core:FlxCore):Boolean
 		function eat():void
+		function resetScaredPigTimer():void
 	}
 	
 }

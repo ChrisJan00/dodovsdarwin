@@ -436,14 +436,14 @@ package
 			return ( new Vector3D( _loc_closestFlxSprite.cX - a_target.cX, _loc_closestFlxSprite.cY - a_target.cY ) );
 		}
 		
-		public function getClosestEgg( a_target:FlxSprite ):FlxSprite {
-			if ( _eggs.length == 0 ) return null;
-			if ( _eggs.length == 1 && _eggs[0] == a_target ) return null;
+		public function getClosestFrom( a_target:FlxSprite, a_flxSprites:Array ):FlxSprite {
+			if ( a_flxSprites.length == 0 ) return null;
+			if ( a_flxSprites.length == 1 && a_flxSprites[0] == a_target ) return null;
 			
 			var _loc_closestFlxSprite:FlxSprite;
 			var _loc_closestDistanceSquare:Number = Number.MAX_VALUE;
 			
-			for each (var flxSprite:FlxSprite in _eggs) {
+			for each (var flxSprite:FlxSprite in a_flxSprites) {
 				if ( flxSprite == a_target ) {
 					continue;
 				}

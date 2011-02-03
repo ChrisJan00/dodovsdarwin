@@ -166,7 +166,7 @@
 						_loc_toVector = _playstate.getClosestEggVector( this );
 						if ( _loc_toVector && _loc_toVector.length < RAT_EAT_EGG_DISTANCE ) {
 							_aiState = RAT_STATE_EAT;
-							(_playstate.getClosestEgg( this ) as Egg).takeRatDamage();
+							(_playstate.getClosestFrom( this, _playstate._eggs ) as Egg).takeRatDamage();
 							return ( new Vector3D() );
 						}
 						if ( _loc_toVector && _loc_toVector.length < RAT_APPROACH_EGG_DISTANCE ) {

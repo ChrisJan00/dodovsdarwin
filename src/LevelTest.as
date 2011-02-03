@@ -22,7 +22,7 @@ package
 			super.Init();
 			
 			var _loc_flxSprite:FlxSprite;
-			addSprite( new Pig(720, 500, this), _pigs );
+			addSprite( new Pig(620, 420, this), _pigs );
 			
 			addSprite( new Stone(312, 349), _stones );
 			

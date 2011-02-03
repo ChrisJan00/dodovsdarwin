@@ -50,7 +50,6 @@
 		public var birthReadyCountdown:Number = 0;
 		private const PLAYER_PREGNANCY_DURATION:Number = 30;
 		
-		
         public function  Player(X:Number,Y:Number, p:PlayState):void
         {
             super(X, Y);
@@ -383,6 +382,10 @@
 		public function distance2Volume( sprite:FlxSprite ) : Number
 		{
 			return Math.min(100*100/(1 + (sprite.x - x) * (sprite.x - x) + (sprite.y - y) * (sprite.y - y)), 1.0);
+		}
+		
+		public function resetScaredPigTimer():void {
+			// Empty implementation for player
 		}
     }
 }

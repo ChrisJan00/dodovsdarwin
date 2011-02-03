@@ -392,6 +392,10 @@
 		}
 		
 		public function get family():int { return _family; }
+		
+		public function resetScaredPigTimer():void {
+			// Empty for DodoChild, it's Ai doesn't "want" to scare pigs
+		}
     }
 } 
 

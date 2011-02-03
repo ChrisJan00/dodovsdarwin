@@ -131,6 +131,7 @@
 				return( _loc_toVector );
 			} else {
 				if ( _loc_toVector && _loc_toVector.length < PIG_FLEE_DODO_DISTANCE ) {
+					(_playstate.getClosestFrom( this, _playstate._dodos ) as IDodo).resetScaredPigTimer();
 					_aiState = PIG_STATE_FLEE;
 					_loc_toVector.scaleBy( -1 );
 					return( _loc_toVector );

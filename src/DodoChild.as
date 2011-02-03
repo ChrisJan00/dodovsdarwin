@@ -25,7 +25,7 @@
 		private const DODO_APPROACH_DODO_DISTANCE:Number = 200;
 		private const DODO_APPROACH_DODO_DISTANCE_STOP:Number = 40;
 		private const DODO_APPROACH_PIG_DISTANCE:Number = 50;
-		private const DODO_APPROACH_FRUIT_DISTANCE:Number = 70;
+		private const DODO_APPROACH_FRUIT_DISTANCE:Number = 60;
 		
 		private const DODO_CHILD_GROWUP_TIMER:Number = 20;
 		private const DODO_CHILD_GROWUP_FOOD:Number = 5;
@@ -61,6 +61,10 @@
 		private var _lastVelocity:Point;
 		
 		private var _family:int = 1;
+		
+		private var _facingChangeTimer:Number = 0;
+		private const CHANGE_FACING_PAUSE:Number = 1;
+		private var _lastFacing:uint = RIGHT;
 		
         public function  DodoChild(X:Number,Y:Number, p:PlayState, a_family:int = 1):void
         {
@@ -172,11 +176,18 @@
 			_justBornTimer -= FlxG.elapsed;
 			_fleePeepTimer -= FlxG.elapsed;
 			_growupTimer -= FlxG.elapsed;
+			_facingChangeTimer -= FlxG.elapsed;
 			
-			if (velocity.x < 0) {
-				_facing = LEFT;
-			} else if (velocity.x > 0) {
-				_facing = RIGHT;
+			if ( _facingChangeTimer < 0 ) {
+				if (velocity.x < 0) {
+					_facing = LEFT;
+				} else if (velocity.x > 0) {
+					_facing = RIGHT;
+				}
+				if ( _facing != _lastFacing ) {
+					_facingChangeTimer = CHANGE_FACING_PAUSE;
+					_lastFacing = _facing;
+				}
 			}
 			
 			if ( _eatAnimationTimer > 0 ) {

@@ -7,7 +7,8 @@
 
     public class DodoChild extends FlxSprite implements IDodo
     {
-        [Embed(source = "img/dodoChildFemale.png")] private var ImgChild:Class;
+        [Embed(source = "img/dodoChildFemale.png")] private var ImgChildFemale:Class;
+        [Embed(source = "img/dodoChildMale.png")] private var ImgChild:Class;
 		[Embed(source = "snd/playerhurt.mp3")] private var HurtSound:Class;
 		[Embed(source = "snd/playerdie.mp3")] private var DeathSound:Class;
 		
@@ -26,7 +27,7 @@
 		private const DODO_APPROACH_PIG_DISTANCE:Number = 50;
 		private const DODO_APPROACH_FRUIT_DISTANCE:Number = 70;
 		
-		private const DODO_CHILD_GROWUP_TIMER:Number = 5;
+		private const DODO_CHILD_GROWUP_TIMER:Number = 20;
 		private const DODO_CHILD_GROWUP_FOOD:Number = 5;
 		
 		private var _growupTimer:Number = 0;

@@ -41,14 +41,13 @@ package
 		}
 		
 		public function update():void {
-			var _loc_poopPercentage:Number;
-			if ( _playState._player.SHIT_THRESHOLD == 0 ) {
-				_loc_poopPercentage = 1;
-			} else {
-				_loc_poopPercentage = _playState._player.eatenFruitCount / _playState._player.SHIT_THRESHOLD;
-			}
-			
 			if (_playState._player) {
+				var _loc_poopPercentage:Number;
+				if ( _playState._player.SHIT_THRESHOLD == 0 ) {
+					_loc_poopPercentage = 1;
+				} else {
+					_loc_poopPercentage = _playState._player.eatenFruitCount / _playState._player.SHIT_THRESHOLD;
+				}
 				_iconMask.y = Math.max ( 0, _iconFilling.height - ( _loc_poopPercentage * _iconFilling.height));
 				// Blinking display
 				if ( _loc_poopPercentage >= 1 ) {

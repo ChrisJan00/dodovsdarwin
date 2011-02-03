@@ -48,7 +48,7 @@
 		private var _family:int = 1;
 		
 		public var birthReadyCountdown:Number = 0;
-		private const PLAYER_PREGNANCY_DURATION:Number = 60;
+		private const PLAYER_PREGNANCY_DURATION:Number = 30;
 		
 		
         public function  Player(X:Number,Y:Number, p:PlayState):void

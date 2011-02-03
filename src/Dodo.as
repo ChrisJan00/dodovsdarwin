@@ -23,8 +23,8 @@
 		private const DODO_MOVEMENT_SPEED:Number = 80;
 		private const DODO_FLEE_HUMAN_DISTANCE:Number = 100;
 		private const DODO_FLEE_RAT_DISTANCE:Number = 80;
-		private const DODO_KEEP_FLEEING_DODO_DISTANCE:Number = 120;
-		private const DODO_APPROACH_DODO_DISTANCE:Number = 140;
+		private const DODO_KEEP_FLEEING_ENEMY_DISTANCE:Number = 120;
+		private const DODO_APPROACH_DODO_DISTANCE:Number = 120;
 		private const DODO_APPROACH_DODO_DISTANCE_STOP:Number = 30;
 		private const DODO_APPROACH_PIG_DISTANCE:Number = 100;
 		private const DODO_APPROACH_FRUIT_DISTANCE:Number = 200;
@@ -240,7 +240,7 @@
 		private function getSteering():Vector3D {
 			
 			var _loc_toVector:Vector3D = _playstate.getClosestHumanVector( this );
-			if ( _loc_toVector && _aiState == DODO_STATE_FLEE && _loc_toVector.length < DODO_KEEP_FLEEING_DODO_DISTANCE ) {
+			if ( _loc_toVector && _aiState == DODO_STATE_FLEE && _loc_toVector.length < DODO_KEEP_FLEEING_ENEMY_DISTANCE ) {
 				_loc_toVector.scaleBy( -1 );
 				return( _loc_toVector );
 			} else {
@@ -253,7 +253,7 @@
 				_loc_toVector = _playstate.getClosestRatVector( this );
 				
 				
-				if ( _loc_toVector && _aiState == DODO_STATE_FLEE && _loc_toVector.length < DODO_KEEP_FLEEING_DODO_DISTANCE ) {
+				if ( _loc_toVector && _aiState == DODO_STATE_FLEE && _loc_toVector.length < DODO_KEEP_FLEEING_ENEMY_DISTANCE ) {
 					_loc_toVector.scaleBy( -1 );
 					return( _loc_toVector );
 				} else {
@@ -264,15 +264,17 @@
 					return ( _loc_toVector );
 				} else {
 					_loc_toVector = _playstate.getClosestPlayerVector( this );
-					if ( _loc_toVector && _loc_toVector.length < DODO_APPROACH_DODO_DISTANCE && _loc_toVector.length > DODO_APPROACH_DODO_DISTANCE_STOP ) {
-						_aiState = DODO_STATE_APPROACH;
-						return ( _loc_toVector );
-					} else if ( _loc_toVector && _loc_toVector.length < DODO_APPROACH_DODO_DISTANCE_STOP) {
-						if ( _family == _playstate._player.family ) {
-							_aiState = DODO_STATE_WANDER;
-						} else {
-							_aiState = DODO_STATE_MATE;
-							return ( new Vector3D( _loc_toVector.x + 1 - (Math.random() * 2), _loc_toVector.y + 1 - (Math.random() * 2) ) );
+					if ( _playstate._player.family != _family && !_playstate._player.isPregnant ) {
+						if ( _loc_toVector && _loc_toVector.length < DODO_APPROACH_DODO_DISTANCE && _loc_toVector.length > DODO_APPROACH_DODO_DISTANCE_STOP ) {
+							_aiState = DODO_STATE_APPROACH;
+							return ( _loc_toVector );
+						} else if ( _loc_toVector && _loc_toVector.length < DODO_APPROACH_DODO_DISTANCE_STOP) {
+							if ( _family == _playstate._player.family ) {
+								_aiState = DODO_STATE_WANDER;
+							} else {
+								_aiState = DODO_STATE_MATE;
+								return ( new Vector3D( _loc_toVector.x + 1 - (Math.random() * 2), _loc_toVector.y + 1 - (Math.random() * 2) ) );
+							}
 						}
 					} else {
 						_loc_toVector = _playstate.getClosestFruitVector( this );

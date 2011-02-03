@@ -61,7 +61,7 @@
 		public const POOP_COUNTDOWN_TIME:Number = 3;
 		
 		private var _scaredPigTimer:Number = 0;
-		private const DODO_SCARE_PIG_PAUSE:Number = 5;
+		private const DODO_SCARE_PIG_PAUSE:Number = 8;
 		
         public function  Dodo(X:Number,Y:Number, p:PlayState, a_family:int = 2):void
         {
@@ -235,10 +235,10 @@
 			if (oldState != _aiState) {
 				if (_aiState == DODO_STATE_MATE) {
 					FlxMateSound.stop();
-					FlxMateSound = FlxG.play(MateSound, _playstate._player.distance2Volume(this));
+					FlxMateSound = FlxG.play(MateSound, _playstate.distance2Volume(this));
 				}
 				if (isFlying())
-					FlxG.play(FlySound, _playstate._player.distance2Volume(this));
+					FlxG.play(FlySound, _playstate.distance2Volume(this));
 			}
 			
             super.update();
@@ -415,7 +415,7 @@
 		}
 		
 		public function killedByEnemy():void {
-			FlxG.play(DeathSound, _playstate._player.distance2Volume(this) );
+			FlxG.play(DeathSound, _playstate.distance2Volume(this) );
 			_remainDeadTimer = 5;
 			_keepFlashingRedTimer = 0.2;
 			_playstate.removeEntityFromArrayOnly(this, _playstate._dodos);
@@ -428,7 +428,7 @@
 		{
 			if ( _invincibleTimer <= 0 ) {
 				health -= 1;
-				FlxG.play(HurtSound, _playstate._player.distance2Volume(this) );
+				FlxG.play(HurtSound, _playstate.distance2Volume(this) );
 				if ( health <= 0 ) {
 					killedByEnemy();
 				} else {
@@ -441,7 +441,7 @@
 		public function takeRatDamage():void
 		{
 			if ( _invincibleTimer <= 0 ) {
-				FlxG.play(HurtSound, _playstate._player.distance2Volume(this) );
+				FlxG.play(HurtSound, _playstate.distance2Volume(this) );
 				health -= 0.3;
 				if ( health <= 0 ) {
 					killedByEnemy();

@@ -71,7 +71,7 @@ package
 			if (adult)
 				growthTimer = 0;
 			else {
-				FlxG.play(GrowSound, _playstate._player.distance2Volume(this) );
+				FlxG.play(GrowSound, _playstate.distance2Volume(this) );
 				scale.x = childSize;
 				scale.y = childSize;
 			}
@@ -199,7 +199,7 @@ package
 		public function markForDeath() : void
 		{
 			startDecay = true;
-			//FlxG.play(AgeSound, _playstate._player.distance2Volume(this) );
+			//FlxG.play(AgeSound, _playstate.distance2Volume(this) );
 		}
 		
 		public function killedByEnemy():void {
@@ -212,7 +212,7 @@ package
 		public function takeHumanDamage():void
 		{
 			if ( _invincibleTimer <= 0 ) {
-				FlxG.play(ChopSound, _playstate._player.distance2Volume(this) );
+				FlxG.play(ChopSound, _playstate.distance2Volume(this) );
 				health -= 0.2;
 				if ( health <= 0 ) {
 					killedByEnemy();

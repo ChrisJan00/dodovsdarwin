@@ -93,7 +93,7 @@
 			
 			if (_aiState != oldState) {
 				if (_aiState == HUMAN_STATE_CHASE)
-					FlxG.play(AngrySound, _playstate._player.distance2Volume(this) );
+					FlxG.play(AngrySound, _playstate.distance2Volume(this) );
 			}
 			
             super.update();

@@ -114,10 +114,10 @@
 			
 			if (_aiState != oldState) {
 				if (_aiState == PIG_STATE_FLEE)
-					FlxG.play(RunSound, _playstate._player.distance2Volume(this) );
+					FlxG.play(RunSound, _playstate.distance2Volume(this) );
 				//else
 				//if (_aiState == PIG_STATE_EAT)
-					//FlxG.play(EatSound, _playstate._player.distance2Volume(this) );
+					//FlxG.play(EatSound, _playstate.distance2Volume(this) );
 			}
 			
             super.update();

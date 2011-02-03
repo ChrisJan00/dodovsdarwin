@@ -167,7 +167,7 @@ package
 		
         override public function update():void
         {
-		   super.update();
+			super.update();
 		   
 			for each(var dodo:FlxSprite in _dodos) {
 				if (dodo != _player && (dodo as IDodo).isFlying())
@@ -574,5 +574,40 @@ package
 			_displayWinImage.x = FlxG.width / 1.7 - _displayWinImage.width / 2;
 			_displayWinImage.y = FlxG.height / 2.7 - _displayWinImage.height / 2;
 		}
-    }    
-} 
+		
+		/**
+		 * Determines how how far sounds can be and still have full volume.
+		 * Should probably be somewhere around the average distance from center
+		 * of screen to bounds of visible area.
+		 */
+		private const SOUND_FULL_VOLUME_RANGE:Number = 300;
+		/**
+		 * Determines how how far sounds can be from full volume and still barely be heard.
+		 * Should probably be quite low, as it is confusing to the player to 
+		 * hear quiet sounds and not be sure where they are coming from.
+		 */
+		private const SOUND_SILENT_RANGE:Number = 200;
+		
+		/**
+		 * This function returns the volume for a sprites position based on the two consts SOUND_FULL_VOLUME_RANGE
+		 * and SOUND_SILENT_RANGE. Everything within a distance of SOUND_FULL_VOLUME_RANGE has full volume,
+		 * everything outside falls at a linear rate until it is silent at distances above SOUND_SILENT_RANGE.
+		 * @param	sprite	The sound-emitting sprite for which the volume should be determined
+		 * @return	A Number that is 1 or larger for close sounds, and 0 or smaller for further away (FlxSound automatically limits volume range to 0-1)
+		 */
+		public function distance2Volume( sprite:FlxSprite ) : Number
+		{
+			var _loc_centerOfScreen:Point = new Point( (Math.abs( FlxG.scroll.x ) + FlxG.width / 2), (Math.abs( FlxG.scroll.y ) + FlxG.height / 2) + 40 );
+			var _loc_diffX:Number = (sprite.x - _loc_centerOfScreen.x);
+			var _loc_diffY:Number = (sprite.y - _loc_centerOfScreen.y);
+			var _distanceFromFullVolumeSquare:Number = Math.abs( Math.min( 0, Math.pow( SOUND_FULL_VOLUME_RANGE, 2 ) - (Math.pow(_loc_diffX, 2) + Math.pow(_loc_diffY, 2)) ));
+			//Test distances easily with a DodoChild
+			//if (sprite is DodoChild) {
+				//trace("_loc_diffX: " + _loc_diffX);
+				//trace("_loc_diffY: " + _loc_diffY);
+				//trace("_distanceFromCenter: " + _distanceFromFullVolumeSquare);
+			//}
+			return ( 1.0 - ( _distanceFromFullVolumeSquare / Math.pow(SOUND_SILENT_RANGE,2)) );
+		}
+    }
+}

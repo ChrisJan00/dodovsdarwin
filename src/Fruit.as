@@ -74,7 +74,7 @@ package
 				launchVector.y = launchVector.y + launchSpeed.y * FlxG.elapsed;
 				
 				if (launchVector.y > 0) {
-					FlxG.play(BounceSound, _playstate._player.distance2Volume(this) );
+					FlxG.play(BounceSound, _playstate.distance2Volume(this) );
 					if (launchState == 1)
 						launchState = 2;
 					else if (launchState == 2)
@@ -108,7 +108,7 @@ package
 			launchVector = new Point( 0, originalY - feetY);
 			
 			launchState = 1;
-			FlxG.play(FallSound, _playstate._player.distance2Volume(this) );
+			FlxG.play(FallSound, _playstate.distance2Volume(this) );
 		}
     }
     

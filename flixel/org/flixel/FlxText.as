@@ -35,7 +35,7 @@ package org.flixel
 			_tf.embedFonts = true;
 			_tf.selectable = false;
 			_tf.sharpness = 100;
-			_tf.defaultTextFormat = new TextFormat("system",8,0xffffff);
+			_tf.defaultTextFormat = new TextFormat("NES",8,0xffffff);
 			_tf.text = Text;
 			super(X,Y);
 			createGraphic(Width,1);

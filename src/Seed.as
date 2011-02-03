@@ -50,7 +50,7 @@ package
 			width = (ImgData as Bitmap).width;
 			height = (ImgData as Bitmap).height;
 			
-			fixed = true;
+			fixed = false;
 			loadGraphic(Img);
 			
 			if (germinate)
@@ -76,10 +76,10 @@ package
 					else if (launchState == 2)
 					{
 						launchState = 3;
-						if ( _playstate._block_map.overlaps( this ) ) {
-							_playstate.removeEntity( this, _playstate._seeds );
-							return;
-						}
+						//if ( _playstate._block_map.overlaps( this ) ) {
+							//_playstate.removeEntity( this, _playstate._seeds );
+							//return;
+						//}
 					}
 					launchVector.y = -launchVector.y;
 					launchSpeed.y = -launchSpeed.y / 2;

@@ -59,7 +59,7 @@ package
 			offset.x = 10
 			offset.y = 40
 			
-			fixed = true;
+			fixed = false;
 			loadGraphic(Img, true, false, 40, 80);
 			addAnimation("normal", [0], 5);
 			addAnimation("hatch", [0, 1, 2, 3, 4, 5], 10);
@@ -108,10 +108,10 @@ package
 					else if (launchState == 2)
 					{
 						launchState = 3;
-						if ( _playstate._block_map.overlaps( this ) ) {
-							_playstate.removeEntity( this, _playstate._eggs );
-							return;
-						}
+						//if ( _playstate._block_map.overlaps( this ) ) {
+							//_playstate.removeEntity( this, _playstate._eggs );
+							//return;
+						//}
 					}
 					launchVector.y = -launchVector.y;
 					launchSpeed.y = -launchSpeed.y / 2;

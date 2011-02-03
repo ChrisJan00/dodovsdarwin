@@ -258,6 +258,24 @@ package
 				}
 			}
 			
+			for each(var egg:Egg in _eggs) {
+				if ( egg.velocity.length == 0 ) {
+					continue;
+				}
+				_block_map.collide(egg);
+				egg.collideArray(_stones);
+				egg.collideArray(_trees);
+			}
+			
+			for each(var seed:Seed in _seeds) {
+				if ( seed.velocity.length == 0 ) {
+					continue;
+				}
+				_block_map.collide(seed);
+				seed.collideArray(_stones);
+				seed.collideArray(_trees);
+			}
+			
 			if ( _trees.length > TREE_MIN_CHOPPING ) {
 				isOkToChopTree = true;
 			}

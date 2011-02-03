@@ -250,7 +250,16 @@ package org.flixel
 						FlxG.mute = !FlxG.mute;
 						showSoundTray();
 						return;
+					case 77:
+						FlxG.mute = !FlxG.mute;
+						showSoundTray();
+						return;
 					case 189:
+						FlxG.mute = false;
+			    		FlxG.volume = FlxG.volume - 0.1;
+			    		showSoundTray();
+						return;
+					case 109:
 						FlxG.mute = false;
 			    		FlxG.volume = FlxG.volume - 0.1;
 			    		showSoundTray();
@@ -259,6 +268,14 @@ package org.flixel
 						FlxG.mute = false;
 			    		FlxG.volume = FlxG.volume + 0.1;
 			    		showSoundTray();
+						return;
+					case 107:
+						FlxG.mute = false;
+			    		FlxG.volume = FlxG.volume + 0.1;
+			    		showSoundTray();
+						return;
+					case 19:
+						FlxG.pause = !FlxG.pause;
 						return;
 					case 80:
 						FlxG.pause = !FlxG.pause;

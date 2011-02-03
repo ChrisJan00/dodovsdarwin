@@ -52,7 +52,7 @@ package
 			//addSprite( new Human(871, 692, this), _humans );
 			//addSprite( new Human(871, 692, this), _humans );
 			
-			_player.pregnant = true;
+			_player.isReadyToGiveBirth = true;
 			_player.eatenFruitCount = _player.SHIT_THRESHOLD - 1;
 			
 			displayGoal( _Level2_GoalPNG );

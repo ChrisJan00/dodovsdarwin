@@ -376,7 +376,6 @@
 				break;
 			}
 			
-			//destination = new Point( (Math.random() * 0.4 + 0.3) * 1280, (Math.random() * 0.4 + 0.3) * 960 );
 			destination = _loc_flyInTo;
 		}
 		
@@ -386,16 +385,16 @@
 			destination = new Point();
 			if (Math.random() < 0.5) {
 				if (Math.random() < 0.5)
-					destination.y = 960 + _loc_buffer;
+					destination.y = _playstate.mapSize.y + _loc_buffer;
 				else
 					destination.y = -height - _loc_buffer;
-				destination.x = Math.floor(Math.random() * 1280);
+				destination.x = Math.floor(Math.random() * _playstate.mapSize.x);
 			} else {
 				if (Math.random() < 0.5)
-					destination.x = 1280 + _loc_buffer;
+					destination.x = _playstate.mapSize.x + _loc_buffer;
 				else
 					destination.x = -width - _loc_buffer;
-				destination.y = Math.floor(Math.random() * 960);
+				destination.y = Math.floor(Math.random() * _playstate.mapSize.y);
 			}
 		}
 

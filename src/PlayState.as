@@ -54,13 +54,15 @@ package
 		private var treeKillerTimer:Number = 0;
 		private var dodoArrivingTimer:Number = 0;
 		private var endOfLevelTimer:Number = -1;
-		public var mapSize:Point = new Point( 1280, 960);
+		public var mapSize:Point = new Point(1920, 1440);
 		
 		private const TREE_MIN_CHOPPING:Number = 5;
 		private const TREE_MIN_DECAY:Number = 1;
 		private const TREES_PER_DODO:Number = 5;
 		private const DODO_GENERATION_PAUSE_MIN:Number = 3;
 		private const DODO_GENERATION_PAUSE_RANGE:Number = 5;
+		
+		public var mapTileSize:int = 8;
         
         override public function PlayState():void
         {
@@ -81,7 +83,7 @@ package
 			_humans = new Array();
 			_pigs = new Array();
 
-			_background = new Background(BackgroundImg);
+			_background = new Background(BackgroundImg, mapSize.x, mapSize.y);
 			lyrStage.add(_background);
 			
 			if ( _playerStartPos ) {
@@ -102,12 +104,12 @@ package
 	
             FlxG.follow(_player,2.5);
             FlxG.followAdjust(0.5, 0.5);
-            FlxG.followBounds(1,1,1280-1,960-1);
+            FlxG.followBounds(1,1,mapSize.x-1,mapSize.y-1);
             
 			parseMap(new LevelMap);
 			
             _block_map = new FlxTilemap;
-			_block_map.loadMap(BlockMap, ImgFruit01, 8);
+			_block_map.loadMap(BlockMap, ImgFruit01, mapTileSize, mapTileSize);
             _block_map.drawIndex = 1;
             _block_map.collideIndex = 1;
 			_block_map.visible = false;
@@ -162,7 +164,7 @@ package
 					BlockMap = BlockMap.substr(0, BlockMap.length - 1) + "\n";
 				}
 				row += 1;
-			}			
+			}
 		}
 		
         override public function update():void

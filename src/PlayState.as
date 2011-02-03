@@ -53,11 +53,14 @@ package
 		
 		private var treeKillerTimer:Number = 0;
 		private var dodoArrivingTimer:Number = 0;
+		private var endOfLevelTimer:Number = -1;
+		public var mapSize:Point = new Point( 1280, 960);
 		
 		private const TREE_MIN_CHOPPING:Number = 5;
 		private const TREE_MIN_DECAY:Number = 1;
-		
-		private var endOfLevelTimer:Number = -1;
+		private const TREES_PER_DODO:Number = 5;
+		private const DODO_GENERATION_PAUSE_MIN:Number = 3;
+		private const DODO_GENERATION_PAUSE_RANGE:Number = 5;
         
         override public function PlayState():void
         {
@@ -342,9 +345,7 @@ package
 				_ratGenerationCounter = 4 + Math.random() * 2;
 			}
 		}
-		;
-		private const DODO_GENERATION_PAUSE_MIN:Number = 3;
-		private const DODO_GENERATION_PAUSE_RANGE:Number = 5;
+		
 		private var _dodoGenerationTimer:Number = 0;
 		private var _dodoGenerationWaitAtStart:Number = 0;
 		private function generateDodos():void {
@@ -352,7 +353,7 @@ package
 			if ( _dodoGenerationWaitAtStart > 0 ) {
 				return;
 			}
-			var shouldBeDodos:int = Math.floor( Number(_trees.length) / 5 );
+			var shouldBeDodos:int = Math.floor( Number(_trees.length) / TREES_PER_DODO );
 			if ( _dodoGenerationTimer == 0 && getAmountOfMatableDodos() < shouldBeDodos ) {
 				_dodoGenerationTimer = DODO_GENERATION_PAUSE_MIN + Math.random() * DODO_GENERATION_PAUSE_RANGE;
 			}

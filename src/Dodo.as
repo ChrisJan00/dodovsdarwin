@@ -323,21 +323,51 @@
 		{
 			_aiState = DODO_STATE_FLYING_IN;
 			
+			var _loc_flyIn:uint;
+			var _loc_flyInTo:Point;
+			
 			if (Math.random() < 0.5) {
-				if (Math.random() < 0.5)
-					y = 960;
-				else
-					y = -1 * height;
-				x = Math.floor(Math.random() * 1280);
+				if (Math.random() < 0.5) {
+					_loc_flyIn = DOWN;
+				} else {
+					_loc_flyIn = UP;
+				}
 			} else {
-				if (Math.random() < 0.5)
-					x = 1280;
-				else
-					x = -1 * width;
-				y = Math.floor(Math.random() * 960);
+				if (Math.random() < 0.5) {
+					_loc_flyIn = RIGHT;
+				} else {
+					_loc_flyIn = LEFT;
+				}
 			}
 			
-			destination = new Point( (Math.random() * 0.4 + 0.3) * 1280, (Math.random() * 0.4 + 0.3) * 960 );
+			switch ( _loc_flyIn ) {
+				case DOWN:
+					y = _playstate.mapSize.y;
+					x = (Math.random() * 0.4 + 0.3) * _playstate.mapSize.x;
+					_loc_flyInTo = new Point( x, y - 400);
+				break;
+				case UP:
+					y = -1 * height;
+					x = (Math.random() * 0.4 + 0.3) * _playstate.mapSize.x;
+					_loc_flyInTo = new Point( x, y + 400);
+				break;
+				case RIGHT:
+					x = _playstate.mapSize.x;
+					y = (Math.random() * 0.4 + 0.3) * _playstate.mapSize.y;
+					_loc_flyInTo = new Point( x - 400, y);
+				break;
+				case LEFT:
+					x = -1 * width;
+					y = (Math.random() * 0.4 + 0.3) * _playstate.mapSize.y;
+					_loc_flyInTo = new Point( x + 400, y);
+				break;
+				default:
+					
+				break;
+			}
+			
+			//destination = new Point( (Math.random() * 0.4 + 0.3) * 1280, (Math.random() * 0.4 + 0.3) * 960 );
+			destination = _loc_flyInTo;
 		}
 		
 		public function flyAway():void {

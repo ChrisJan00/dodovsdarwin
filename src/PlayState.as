@@ -59,8 +59,8 @@ package
 		private const TREE_MIN_CHOPPING:Number = 5;
 		private const TREE_MIN_DECAY:Number = 1;
 		private const TREES_PER_DODO:Number = 5;
-		private const DODO_GENERATION_PAUSE_MIN:Number = 3;
-		private const DODO_GENERATION_PAUSE_RANGE:Number = 5;
+		private const DODO_GENERATION_PAUSE_MIN:Number = 4;
+		private const DODO_GENERATION_PAUSE_RANGE:Number = 2;
 		
 		public var mapTileSize:int = 8;
         
@@ -611,6 +611,11 @@ package
 				//trace("_distanceFromCenter: " + _distanceFromFullVolumeSquare);
 			//}
 			return ( 1.0 - ( _distanceFromFullVolumeSquare / Math.pow(SOUND_SILENT_RANGE,2)) );
+		}
+		
+		public function distanceFromPlayer( sprite:FlxSprite) : Number
+		{
+			return Math.sqrt( (sprite.x - _player.x) * (sprite.x - _player.x) + (sprite.y - _player.y) * (sprite.y - _player.y));
 		}
     }
 }

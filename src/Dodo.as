@@ -334,7 +334,7 @@
 			_aiState = DODO_STATE_FLYING_IN;
 			
 			var _loc_flyIn:uint;
-			var _loc_flyInTo:Point;
+			var _loc_flyInFrom:Point;
 			
 			if (Math.random() < 0.5) {
 				if (Math.random() < 0.5) {
@@ -350,33 +350,50 @@
 				}
 			}
 			
+			// origin
+			_loc_flyInFrom = new Point();
 			switch ( _loc_flyIn ) {
 				case DOWN:
-					y = _playstate.mapSize.y;
-					x = (Math.random() * 0.4 + 0.3) * _playstate.mapSize.x;
-					_loc_flyInTo = new Point( x, y - 400);
+					_loc_flyInFrom.y = _playstate.mapSize.y;
+					_loc_flyInFrom.x = (Math.random() * 0.4 + 0.3) * _playstate.mapSize.x;
 				break;
 				case UP:
-					y = -1 * height;
-					x = (Math.random() * 0.4 + 0.3) * _playstate.mapSize.x;
-					_loc_flyInTo = new Point( x, y + 400);
+					_loc_flyInFrom.y = -1 * height;
+					_loc_flyInFrom.x = (Math.random() * 0.4 + 0.3) * _playstate.mapSize.x;
 				break;
 				case RIGHT:
-					x = _playstate.mapSize.x;
-					y = (Math.random() * 0.4 + 0.3) * _playstate.mapSize.y;
-					_loc_flyInTo = new Point( x - 400, y);
+					_loc_flyInFrom.x = _playstate.mapSize.x;
+					_loc_flyInFrom.y = (Math.random() * 0.4 + 0.3) * _playstate.mapSize.y;
 				break;
 				case LEFT:
-					x = -1 * width;
-					y = (Math.random() * 0.4 + 0.3) * _playstate.mapSize.y;
-					_loc_flyInTo = new Point( x + 400, y);
+					_loc_flyInFrom.x = -1 * width;
+					_loc_flyInFrom.y = (Math.random() * 0.4 + 0.3) * _playstate.mapSize.y;
 				break;
 				default:
 					
 				break;
 			}
 			
-			destination = _loc_flyInTo;
+			// destination
+			
+			// a quarter of the distance to the screen limit
+			var spawnCenter:Point = new Point( _playstate._player.x + 0.25 * (_loc_flyInFrom.x - _playstate._player.x ) , 
+											   _playstate._player.y + 0.25 * (_loc_flyInFrom.y - _playstate._player.y) );
+			x = spawnCenter.x;
+			y = spawnCenter.y;
+			var distanceFromPlayer:Number = _playstate.distanceFromPlayer(this);
+			
+			// try random points until we find one valid (against the map, it could still be an obstacle
+			// but the collision detection will hopefully spit him towards a valid point nearby)
+			do {
+				x = spawnCenter.x + (Math.random() * 2 - 1) * distanceFromPlayer;
+				y = spawnCenter.y + (Math.random() * 2 - 1) * distanceFromPlayer;
+			} while ( _playstate._block_map.overlaps(this) );
+		
+			// store results
+			destination = new Point(x, y);
+			x = _loc_flyInFrom.x;
+			y = _loc_flyInFrom.y;
 		}
 		
 		public function flyAway():void {

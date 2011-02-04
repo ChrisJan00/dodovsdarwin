@@ -54,7 +54,7 @@ package
 		private var treeKillerTimer:Number = 0;
 		private var dodoArrivingTimer:Number = 0;
 		private var endOfLevelTimer:Number = -1;
-		public var mapSize:Point = new Point(1920, 1440);
+		public var mapSize:Point;
 		
 		private const TREE_MIN_CHOPPING:Number = 5;
 		private const TREE_MIN_DECAY:Number = 1;
@@ -83,7 +83,8 @@ package
 			_humans = new Array();
 			_pigs = new Array();
 
-			_background = new Background(BackgroundImg, mapSize.x, mapSize.y);
+			_background = new Background(BackgroundImg);
+			mapSize = _background.size;
 			lyrStage.add(_background);
 			
 			if ( _playerStartPos ) {

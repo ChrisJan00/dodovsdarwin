@@ -171,9 +171,10 @@
             return super.hitFloor();
         }
 		
-		public function eat() : void
+		public function eat() : Boolean
 		{
 			_eatAnimationTimer = PIG_EAT_ANIMATION_DURATION;
+			return true;
 		}
     }
 } 

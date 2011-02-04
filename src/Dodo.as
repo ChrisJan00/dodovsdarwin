@@ -419,7 +419,7 @@
 			return _aiState == DODO_STATE_FLYING_IN || _aiState == DODO_STATE_FLYING_OUT;
 		}
 		
-		public function eat() : void
+		public function eat() : Boolean
 		{
 			eatenFruitCount = Math.min( SHIT_THRESHOLD, eatenFruitCount + 1 );
 			if (eatenFruitCount >= SHIT_THRESHOLD ) {
@@ -428,6 +428,7 @@
 			health = Math.min( 1, health + 0.1 );
 			_eatAnimationTimer = PLAYER_EAT_ANIMATION_DURATION;
 			FlxG.play(EatSound);
+			return true;
 		}
 		
 		public function killedByEnemy():void {

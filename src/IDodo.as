@@ -13,7 +13,7 @@ package
 		function isFlying():Boolean
 		function get family():int
 		function overlaps(Core:FlxCore):Boolean
-		function eat():void
+		function eat():Boolean
 		function resetScaredPigTimer():void
 	}
 	

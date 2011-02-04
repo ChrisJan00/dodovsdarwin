@@ -240,13 +240,16 @@
 			if (Y == -1) { Y = y; }
 		}
 		
-		public function eat() : void
+		public function eat() : Boolean
 		{
 			health = Math.min( 1, health + 0.1 );
+			if (eatenFruitCount + 1 > SHIT_THRESHOLD)
+				return false;
 			eatenFruitCount = Math.min( eatenFruitCount + 1, SHIT_THRESHOLD);
 			_eatAnimationTimer = PLAYER_EAT_ANIMATION_DURATION;
 			FlxEatSound.stop();
 			FlxEatSound = FlxG.play(EatSound);
+			return true;
 		}
 		
 		public function unleashShit() : void

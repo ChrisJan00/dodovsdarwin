@@ -233,8 +233,8 @@ package
 						continue;
 					}
 					if ( pig.overlaps(_loc_fruit) ) {
-						pig.eat();
-						removeEntity(_loc_fruit, _fruits);
+						if (pig.eat())
+							removeEntity(_loc_fruit, _fruits);
 					}
 				}
 			}
@@ -257,8 +257,8 @@ package
 				fruit.collideArray(_trees);
 				for each (var dodoDude:IDodo in _dodos ) {
 					if ( dodoDude.overlaps(fruit) ) {
-						dodoDude.eat();
-						removeEntity(fruit, _fruits);
+						if (dodoDude.eat())
+							removeEntity(fruit, _fruits);
 						continue;
 					}
 				}

@@ -345,12 +345,13 @@
 			return false;
 		}
 		
-		public function eat() : void
+		public function eat() : Boolean
 		{
 			_growupFood--;
 			health = Math.min( 1, health + 0.1 );
 			_eatAnimationTimer = PLAYER_EAT_ANIMATION_DURATION;
 			FlxG.play(EatSound, _playstate.distance2Volume(this) );
+			return true;
 		}
 		
 		public function killedByEnemy():void {

@@ -25,23 +25,23 @@ package
 			_playState = a_playState;
 			
 			_iconFarBackground = new ImgEgg();
-			_iconFarBackground.alpha = 0.1;
+			_iconFarBackground.alpha = 0.4;
 			addChild(_iconFarBackground);
 			
-			_iconBackground = new ImgEgg();
-			_iconBackground.alpha = 0.5;
-			addChild(_iconBackground);
+			//_iconBackground = new ImgEgg();
+			//_iconBackground.alpha = 0.5;
+			//addChild(_iconBackground);
 			
 			_iconFilling = new ImgEgg();
 			addChild(_iconFilling);
 			
-			_iconBackgroundMask = new Sprite();
-			_iconBackgroundMask.graphics.beginFill(0x0000FF);
-			_iconBackgroundMask.graphics.drawRect( 0, 0, _iconBackground.width, _iconBackground.height);
-			_iconBackgroundMask.graphics.endFill();
-			addChild( _iconBackgroundMask );
-			_iconBackground.mask = _iconBackgroundMask;
-			_iconBackgroundMask.y = _iconBackground.height;
+			//_iconBackgroundMask = new Sprite();
+			//_iconBackgroundMask.graphics.beginFill(0x0000FF);
+			//_iconBackgroundMask.graphics.drawRect( 0, 0, _iconBackground.width, _iconBackground.height);
+			//_iconBackgroundMask.graphics.endFill();
+			//addChild( _iconBackgroundMask );
+			//_iconBackground.mask = _iconBackgroundMask;
+			//_iconBackgroundMask.y = _iconBackground.height;
 			
 			_iconMask = new Sprite();
 			_iconMask.graphics.beginFill(0x0000FF);
@@ -54,7 +54,7 @@ package
 		
 		public function update():void {
 			if (_playState._player) {
-				_iconBackgroundMask.y = Math.max ( 0, _iconBackground.height - _playState._player.matingProgress * _iconBackground.height );
+				//_iconBackgroundMask.y = Math.max ( 0, _iconBackground.height - _playState._player.matingProgress * _iconBackground.height );
 				
 				_iconMask.y = Math.max ( 0, _iconFilling.height - _playState._player.birthReadyProgress  * _iconFilling.height );
 				

@@ -47,8 +47,8 @@
 		
 		private var _family:int = 1;
 		
-		public var birthReadyCountdown:Number = 0;
-		private const PLAYER_PREGNANCY_DURATION:Number = 30;
+		private var _eatenFruitEggCount:Number = 0;
+		private const EGG_THRESHOLD:Number = 5;
 		
         public function  Player(X:Number,Y:Number, p:PlayState):void
         {
@@ -120,9 +120,10 @@
 				acceleration.y = PLAYER_MOVEMENT_SPEED;
 			}
 			if (FlxG.keys.X || FlxG.keys.CONTROL || FlxG.keys.SPACE) {
-				if (isReadyToGiveBirth) {
+				if ( isReadyToGiveBirth ) {
 					isReadyToGiveBirth = false;
 					isPregnant = false;
+					_eatenFruitEggCount = 0;
 					shitBlocked = true;
 					matingProgress = 0;
 					launchEgg();
@@ -200,14 +201,6 @@
 				}
 			}
 			
-			if ( birthReadyCountdown > 0 ) {
-				birthReadyCountdown -= FlxG.elapsed;
-				if ( birthReadyCountdown <= 0 ) {
-					birthReadyCountdown = 0;
-					isReadyToGiveBirth = true;
-				}
-			}
-			
 			super.update();
 		}
 		
@@ -242,10 +235,23 @@
 		
 		public function eat() : Boolean
 		{
+			if ( isPregnant ) {
+				if ( birthReadyProgress == 1) {
+					return false;
+				} else {
+					_eatenFruitEggCount = Math.min( _eatenFruitEggCount + 1, EGG_THRESHOLD);
+					if ( birthReadyProgress == 1 ) {
+						isReadyToGiveBirth = true;
+					}
+				}
+			} else {
+				if (eatenFruitCount + 1 > SHIT_THRESHOLD) {
+					return false;
+				} else {
+					eatenFruitCount = Math.min( eatenFruitCount + 1, SHIT_THRESHOLD);
+				}
+			}
 			health = Math.min( 1, health + 0.1 );
-			if (eatenFruitCount + 1 > SHIT_THRESHOLD)
-				return false;
-			eatenFruitCount = Math.min( eatenFruitCount + 1, SHIT_THRESHOLD);
 			_eatAnimationTimer = PLAYER_EAT_ANIMATION_DURATION;
 			FlxEatSound.stop();
 			FlxEatSound = FlxG.play(EatSound);
@@ -314,7 +320,7 @@
 				if (matingProgress >= 1) {
 					matingProgress = 1;
 					isPregnant = true;
-					birthReadyCountdown = PLAYER_PREGNANCY_DURATION;
+					_eatenFruitEggCount = 0;
 					lover.flyAway();
 					lover = null;
 				}
@@ -377,7 +383,8 @@
 		
 		public function get birthReadyProgress():Number {
 			if ( !isPregnant ) return 0;
-			return ( 1 - ( birthReadyCountdown / PLAYER_PREGNANCY_DURATION ));
+			if ( EGG_THRESHOLD == 0 ) return 1;
+			return ( Math.min( 1, _eatenFruitEggCount / EGG_THRESHOLD ));
 		}
 		
 		public function get family():int { return _family; }

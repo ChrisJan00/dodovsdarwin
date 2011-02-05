@@ -3,6 +3,7 @@ package
 {
 	import flash.display.Bitmap;
 	import flash.display.Sprite;
+	import flash.geom.Rectangle;
 	import flash.utils.getDefinitionByName;
 	import flash.utils.getQualifiedClassName;
 
@@ -25,6 +26,7 @@ package
         public var _player:Player;
         public var _block_map:FlxTilemap;
 		private var _background:Background;
+		protected var _backgroundRect:Rectangle;
 		
 		protected var _playerStartPos:Point;
 		
@@ -83,8 +85,8 @@ package
 			_humans = new Array();
 			_pigs = new Array();
 
-			_background = new Background(BackgroundImg);
-			mapSize = _background.size;
+			_background = new Background(BackgroundImg, _backgroundRect);
+			mapSize = new Point(_background.width, _background.height);
 			lyrStage.add(_background);
 			
 			if ( _playerStartPos ) {

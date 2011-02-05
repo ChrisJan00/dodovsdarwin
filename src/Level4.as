@@ -2,25 +2,24 @@
 package 
 {
 	import flash.geom.Point;
-	import flash.geom.Rectangle;
     import org.flixel.*;
 
-    public class Level3 extends PlayState
+    public class Level4 extends PlayState
     {
-        [Embed(source = 'maps/level3.txt', mimeType = "application/octet-stream")] protected var _LevelMap:Class;
+        [Embed(source = 'maps/level4.txt', mimeType = "application/octet-stream")] protected var _LevelMap:Class;
 		[Embed(source = 'img/level_01x3.png')] protected var _Background:Class;
         [Embed(source = 'img/Level2_goal.png')] protected var _Level2_GoalPNG:Class;
 		
         
-        override public function Level3():void
+        override public function Level4():void
         {
             super();
 			LevelMap = _LevelMap;	
 			BackgroundImg = _Background;
-			_backgroundRect = new Rectangle(44,150,1680,1280);
-			_transparent_tile = "4";
+			_backgroundRect = new Rectangle(0,0,1920,1440);
+			_transparent_tile = "30";
 			
-			_playerStartPos = new Point( 400, 580 );
+			_playerStartPos = new Point( 300, 580 );
 			super.Init();
 			
 			var _loc_flxSprite:FlxSprite;
@@ -40,7 +39,7 @@ package
 			addSprite( new Tree(561, 282, this), _trees );
 			
 			addSprite( new Tree(985, 361, this), _trees );
-			addSprite( new Tree(1100, 550, this), _trees );
+			addSprite( new Tree(100, 550, this), _trees );
 			addSprite( new Tree(950, 550, this), _trees );
 			
 			addSprite( new Tree(590, 670, this), _trees );
@@ -52,9 +51,9 @@ package
 			
 			addSprite( new Human(671, 412, this), _humans );
 			
-			addSprite( new Egg( 1200, 600, this, false), _eggs);
-			addSprite( new Egg( 1220, 630, this, false), _eggs);
-			addSprite( new Egg( 1190, 620, this, false), _eggs);
+			addSprite( new Egg( 200, 600, this, false), _eggs);
+			addSprite( new Egg( 220, 630, this, false), _eggs);
+			addSprite( new Egg( 190, 620, this, false), _eggs);
 			
 			
 			displayGoal( _Level2_GoalPNG );

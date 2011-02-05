@@ -2,13 +2,14 @@
 package 
 {
 	import flash.geom.Point;
+	import flash.geom.Rectangle;
     import org.flixel.*;
 
     public class Level1 extends PlayState
     {
         
         [Embed(source = 'maps/level1.txt', mimeType = "application/octet-stream")] protected var _LevelMap:Class;
-		[Embed(source = 'img/level_01.png')] protected var _Background:Class;
+		[Embed(source = 'img/level_01x3.png')] protected var _Background:Class;
         [Embed(source = 'img/Level1_goal.png')] protected var _Level1_GoalPNG:Class;
 		
 		
@@ -18,32 +19,34 @@ package
             super();
 			LevelMap = _LevelMap;	
 			BackgroundImg = _Background;
-			_transparent_tile = "17";
+			_backgroundRect = new Rectangle(120, 425, 1280, 960);
+			_transparent_tile = "5";
 			
-			_playerStartPos = new Point( 300, 580 );
+			
+			_playerStartPos = new Point( 300, 500 );
 			super.Init();
 			
 			var _loc_flxSprite:FlxSprite;
-			addSprite( new Pig(520, 290, this), _pigs );
-			addSprite( new Pig(720, 500, this), _pigs );
+			addSprite( new Pig(520, 240, this), _pigs );
+			addSprite( new Pig(720, 450, this), _pigs );
 			//addSprite( new Rat(360, 200, this), _rats );
 			//addSprite( new Rat(400, 600, this), _rats );
 			//addSprite( new Rat(890, 500, this), _rats );
 			//addSprite( new Human(600, 370, this), _humans );
 			//addSprite( new Human(800, 700, this), _humans );
-			addSprite( new Stone(312, 349), _stones );
+			addSprite( new Stone(312, 309), _stones );
 			
-			addSprite( new Stone(350, 300), _stones );
+			addSprite( new Stone(350, 250), _stones );
 			//addSprite( new Stone(598, 260), _stones );
 			
-			addSprite( new Stone(800, 235), _stones );
-			addSprite( new Stone(880, 270), _stones );
+			addSprite( new Stone(800, 185), _stones );
+			addSprite( new Stone(880, 220), _stones );
 			
 			addSprite( new Stone(759, 712), _stones );
 			
-			addSprite( new Tree(590, 245, this), _trees );
-			addSprite( new Tree(900, 550, this), _trees );
-			addSprite( new Tree(590, 670, this), _trees );
+			addSprite( new Tree(590, 215, this), _trees );
+			addSprite( new Tree(900, 520, this), _trees );
+			addSprite( new Tree(590, 620, this), _trees );
 			//addSprite( new Tree(300, 630, this), _trees );
 			//addSprite( new Tree(880, 630, this), _trees );
 			//addSprite( new Dodo(640, 320, this), _dodos );

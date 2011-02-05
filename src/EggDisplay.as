@@ -54,10 +54,12 @@ package
 		
 		public function update():void {
 			if (_playState._player) {
-				_iconMask.y = Math.max ( 0, _iconBackground.height - _playState._player.matingProgress * _iconBackground.height );
+				_iconBackgroundMask.y = Math.max ( 0, _iconBackground.height - _playState._player.matingProgress * _iconBackground.height );
+				
+				_iconMask.y = Math.max ( 0, _iconFilling.height - _playState._player.birthReadyProgress  * _iconFilling.height );
 				
 				// Blinking display
-				if ( _playState._player.isPregnant ) {
+				if ( _playState._player.isReadyToGiveBirth ) {
 					_blinkTimer += FlxG.elapsed;
 					if ( (( Math.floor(_blinkTimer / 0.3) % 2 ) == 1) ) 
 					{

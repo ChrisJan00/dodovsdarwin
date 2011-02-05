@@ -26,6 +26,7 @@
 		public var eatenFruitCount:Number = 0;
 		public const SHIT_THRESHOLD:Number = 4;
 		
+		public var isReadyToGiveBirth:Boolean = false;
 		public var isPregnant:Boolean = false;
 		public var matingProgress:Number = 0;
 		protected var matingSpeed:Number = 0.5; // 2 seconds of sex
@@ -45,6 +46,9 @@
 		private var _gainHealthTimer:Number = _PLAYER_GAIN_HEALTH_TIME;
 		
 		private var _family:int = 1;
+		
+		public var birthReadyCountdown:Number = 0;
+		private const PLAYER_PREGNANCY_DURATION:Number = 30;
 		
         public function  Player(X:Number,Y:Number, p:PlayState):void
         {
@@ -116,7 +120,8 @@
 				acceleration.y = PLAYER_MOVEMENT_SPEED;
 			}
 			if (FlxG.keys.X || FlxG.keys.CONTROL || FlxG.keys.SPACE) {
-				if (isPregnant) {
+				if (isReadyToGiveBirth) {
+					isReadyToGiveBirth = false;
 					isPregnant = false;
 					shitBlocked = true;
 					matingProgress = 0;
@@ -194,7 +199,15 @@
 					_gainHealthTimer = _PLAYER_GAIN_HEALTH_TIME;
 				}
 			}
-						
+			
+			if ( birthReadyCountdown > 0 ) {
+				birthReadyCountdown -= FlxG.elapsed;
+				if ( birthReadyCountdown <= 0 ) {
+					birthReadyCountdown = 0;
+					isReadyToGiveBirth = true;
+				}
+			}
+			
 			super.update();
 		}
 		
@@ -301,6 +314,7 @@
 				if (matingProgress >= 1) {
 					matingProgress = 1;
 					isPregnant = true;
+					birthReadyCountdown = PLAYER_PREGNANCY_DURATION;
 					lover.flyAway();
 					lover = null;
 				}
@@ -359,6 +373,11 @@
 		
 		public function isFlying():Boolean {
 			return (false);
+		}
+		
+		public function get birthReadyProgress():Number {
+			if ( !isPregnant ) return 0;
+			return ( 1 - ( birthReadyCountdown / PLAYER_PREGNANCY_DURATION ));
 		}
 		
 		public function get family():int { return _family; }

@@ -1,5 +1,7 @@
 package  
 {
+	import com.greensock.TimelineMax;
+	import com.greensock.TweenLite;
 	import flash.display.Bitmap;
 	import flash.display.Sprite;
 	import org.flixel.FlxG;
@@ -18,7 +20,9 @@ package
 		private var _iconFilling:Bitmap;
 		private var _iconBackgroundMask:Sprite;
 		private var _iconMask:Sprite;
-		private var _blinkTimer:Number = 0;
+		//private var _blinkTimer:Number = 0;
+		private var blinkTimeLine:TimelineMax;
+		private var _isBlinkTimeLineRunning:Boolean = false;
 		
 		public function EggDisplay( a_playState:PlayState ) 
 		{
@@ -56,22 +60,41 @@ package
 			if (_playState._player) {
 				//_iconBackgroundMask.y = Math.max ( 0, _iconBackground.height - _playState._player.matingProgress * _iconBackground.height );
 				
-				_iconMask.y = Math.max ( 0, _iconFilling.height - _playState._player.birthReadyProgress  * _iconFilling.height );
+				//_iconMask.y = Math.max ( 0, _iconFilling.height - _playState._player.birthReadyProgress  * _iconFilling.height );
+				var _loc_fillHeight:Number = Math.max ( 0, _iconFilling.height - _playState._player.birthReadyProgress  * _iconFilling.height );
+				if ( _loc_fillHeight == 0 ) {
+					TweenLite.to( _iconMask, 0.1, { y:_loc_fillHeight });
+				} else {
+					TweenLite.to( _iconMask, 0.3, { y:_loc_fillHeight });
+				}
+				
+				if ( !_isBlinkTimeLineRunning && _playState._player.isReadyToGiveBirth >= 1 ) {
+					blinkTimeLine = new TimelineMax();
+					blinkTimeLine.repeat = -1;
+					blinkTimeLine.append( new TweenLite( _iconFilling, 0.2, { alpha:0.2 } ) );
+					blinkTimeLine.append( new TweenLite( _iconFilling, 0.2, { alpha:1 } ) );
+					_isBlinkTimeLineRunning = true;
+				} else if ( _isBlinkTimeLineRunning && _playState._player.isReadyToGiveBirth < 1) {
+					blinkTimeLine.complete(true);
+					blinkTimeLine = null;
+					TweenLite.to( _iconFilling, 0.2, { alpha:1 } );
+					_isBlinkTimeLineRunning = false;
+				}
 				
 				// Blinking display
-				if ( _playState._player.isReadyToGiveBirth ) {
-					_blinkTimer += FlxG.elapsed;
-					if ( (( Math.floor(_blinkTimer / 0.3) % 2 ) == 1) ) 
-					{
-						_iconFilling.visible = true;
-					} else 
-					{
-						_iconFilling.visible = false;
-					}
-				} else {
-					_blinkTimer = 0;
-					_iconFilling.visible = true;
-				}
+				//if ( _playState._player.isReadyToGiveBirth ) {
+					//_blinkTimer += FlxG.elapsed;
+					//if ( (( Math.floor(_blinkTimer / 0.3) % 2 ) == 1) ) 
+					//{
+						//_iconFilling.visible = true;
+					//} else 
+					//{
+						//_iconFilling.visible = false;
+					//}
+				//} else {
+					//_blinkTimer = 0;
+					//_iconFilling.visible = true;
+				//}
 			}
 		}
 		

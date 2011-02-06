@@ -22,23 +22,23 @@ package
 			
 			var txt:FlxText;
 			
-			//txt = new FlxText(0, 100, FlxG.width, "The Dodo had no natural enemies.")
+			txt = new FlxText(0, 100, FlxG.width, "2 - Humans")
+			txt.setFormat("NES", 24, 0xFFFFFFFF, "center");
+			this.add(txt);
+			
+			//txt = new FlxText(0, 150, FlxG.width, "The Dodo had no natural enemies")
 			//txt.setFormat("NES", 16, 0xFFFFFFFF, "center");
 			//this.add(txt);
 			
-			txt = new FlxText(0, 150, FlxG.width, "The Dodo had no natural enemies.")
+			txt = new FlxText(0, 200, FlxG.width, "The Dodo had no natural enemies.")
 			txt.setFormat("NES", 16, 0xFFFFFFFF, "center");
 			this.add(txt);
 			
-			//txt = new FlxText(0, 200, FlxG.width, "It lived in peace and harmony with its surroundings.")
-			//txt.setFormat("NES", 16, 0xFFFFFFFF, "center");
-			//this.add(txt);
-			
-			txt = new FlxText(0, 250, FlxG.width, "Until humans discovered the island...")
+			txt = new FlxText(0, 250, FlxG.width, "Had...")
 			txt.setFormat("NES", 16, 0xFFFFFFFF, "center");
 			this.add(txt);
 			
-			txt = new FlxText(0, 432, FlxG.width, "PRESS X TO START")
+			txt = new FlxText(0, 432, FlxG.width, "Press X")
 			txt.setFormat("NES", 16, 0xFFFFFFFF, "center");
 			this.add(txt);
 		}

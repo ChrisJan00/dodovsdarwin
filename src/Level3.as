@@ -57,7 +57,7 @@ package
 			addSprite( new Egg( 1190, 620, this, false), _eggs);
 			
 			
-			displayGoal( _Level2_GoalPNG );
+			//displayGoal( _Level2_GoalPNG );
 		}
 	    
 		override public function isVictoryAchieved() : Boolean
@@ -68,7 +68,7 @@ package
 		override public function nextLevel() : Class
 		{
 			// should return class of the next level, E.G. "Level2" or "MainMenu"
-			return MainMenu;
+			return StoryLevel4;
 		}
 		
 		override public function resetLevel() : void 

@@ -124,7 +124,7 @@ package
 			//_player.matingProgress = 1;
 			//_player.eatenFruitCount = _player.SHIT_THRESHOLD - 1;
 			
-			displayGoal( _Level2_GoalPNG );
+			//displayGoal( _Level2_GoalPNG );
 		}
 	    
 		override public function isVictoryAchieved() : Boolean

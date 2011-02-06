@@ -2,6 +2,7 @@
 package 
 {
 	import flash.geom.Point;
+	import flash.geom.Rectangle;
     import org.flixel.*;
 
     public class Level4 extends PlayState
@@ -56,7 +57,7 @@ package
 			addSprite( new Egg( 190, 620, this, false), _eggs);
 			
 			
-			displayGoal( _Level2_GoalPNG );
+			//displayGoal( _Level2_GoalPNG );
 		}
 	    
 		override public function isVictoryAchieved() : Boolean
@@ -72,7 +73,7 @@ package
 		
 		override public function resetLevel() : void 
 		{
-			FlxG.switchState( StoryLevel3 );
+			FlxG.switchState( StoryLevel4 );
 		}
     }    
 } 

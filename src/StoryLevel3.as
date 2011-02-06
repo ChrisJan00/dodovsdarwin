@@ -22,23 +22,23 @@ package
 			
 			var txt:FlxText;
 			
-			txt = new FlxText(0, 100, FlxG.width, "More and more humans arrived")
-			txt.setFormat("NES", 16, 0xFFFFFFFF, "center");
+			txt = new FlxText(0, 100, FlxG.width, "3 - Survival");
+			txt.setFormat("NES", 24, 0xFFFFFFFF, "center");
 			this.add(txt);
 			
-			txt = new FlxText(0, 150, FlxG.width, "bringing with them rats and death.")
-			txt.setFormat("NES", 16, 0xFFFFFFFF, "center");
-			this.add(txt);
-			
-			//txt = new FlxText(0, 200, FlxG.width, "there lived on an island in the Indian Ocean")
+			//txt = new FlxText(0, 150, FlxG.width, "More and more humans arrived");
 			//txt.setFormat("NES", 16, 0xFFFFFFFF, "center");
 			//this.add(txt);
 			
-			txt = new FlxText(0, 250, FlxG.width, "There was no hope for the peaceful Dodo...")
+			txt = new FlxText(0, 200, FlxG.width, "More and more humans arrived");
 			txt.setFormat("NES", 16, 0xFFFFFFFF, "center");
 			this.add(txt);
 			
-			txt = new FlxText(0, 432, FlxG.width, "PRESS X TO START")
+			txt = new FlxText(0, 250, FlxG.width, "Insert awesome tagline here");
+			txt.setFormat("NES", 16, 0xFFFFFFFF, "center");
+			this.add(txt);
+			
+			txt = new FlxText(0, 432, FlxG.width, "Press X")
 			txt.setFormat("NES", 16, 0xFFFFFFFF, "center");
 			this.add(txt);
 		}

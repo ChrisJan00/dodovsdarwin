@@ -17,23 +17,23 @@ package
 		{
 			var txt:FlxText;
 			
-			//txt = new FlxText(0, 100, FlxG.width, "Not too long ago")
+			txt = new FlxText(0, 100, FlxG.width, "1 - Fruit")
+			txt.setFormat("NES", 24, 0xFFFFFFFF, "center");
+			this.add(txt);
+			
+			//txt = new FlxText(0, 150, FlxG.width, "Not that long ago")
 			//txt.setFormat("NES", 16, 0xFFFFFFFF, "center");
 			//this.add(txt);
 			
-			txt = new FlxText(0, 150, FlxG.width, "Not too long ago")
+			txt = new FlxText(0, 200, FlxG.width, "Not that long ago")
 			txt.setFormat("NES", 16, 0xFFFFFFFF, "center");
 			this.add(txt);
 			
-			txt = new FlxText(0, 200, FlxG.width, "on an island in the Indian Ocean")
+			txt = new FlxText(0, 250, FlxG.width, "on an island off the coast of Africa...")
 			txt.setFormat("NES", 16, 0xFFFFFFFF, "center");
 			this.add(txt);
 			
-			txt = new FlxText(0, 250, FlxG.width, "lived the peaceful Dodo bird...")
-			txt.setFormat("NES", 16, 0xFFFFFFFF, "center");
-			this.add(txt);
-			
-			txt = new FlxText(0, 432, FlxG.width, "PRESS X TO START")
+			txt = new FlxText(0, 432, FlxG.width, "Press X")
 			txt.setFormat("NES", 16, 0xFFFFFFFF, "center");
 			this.add(txt);
 		}

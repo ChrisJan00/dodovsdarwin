@@ -51,7 +51,7 @@ package
 			//addSprite( new Tree(880, 630, this), _trees );
 			//addSprite( new Dodo(640, 320, this), _dodos );
 			
-			displayGoal( _Level1_GoalPNG );
+			//displayGoal( _Level1_GoalPNG );
 			// TODO Add this when each level has a win image
 			//setWinDisplay( _Level1_GoalPNG );
 		}

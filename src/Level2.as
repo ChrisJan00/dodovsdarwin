@@ -51,7 +51,7 @@ package
 			addSprite( new Human(871, 692, this), _humans );
 			
 			
-			displayGoal( _Level2_GoalPNG );
+			//displayGoal( _Level2_GoalPNG );
 		}
 	    
 		override public function isVictoryAchieved() : Boolean

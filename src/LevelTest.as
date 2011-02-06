@@ -45,30 +45,37 @@ package
 			//addSprite( new Stone(1880, 270), _stones );
 			//addSprite( new Stone(1759, 712), _stones );
 			
-			addSprite( new Tree(900, 200, this), _trees );
+			//addSprite( new Tree(900, 200, this), _trees );
 			addSprite( new Tree(900, 300, this), _trees );
-			addSprite( new Tree(900, 400, this), _trees );
+			//addSprite( new Tree(900, 400, this), _trees );
 			addSprite( new Tree(900, 500, this), _trees );
-			addSprite( new Tree(900, 600, this), _trees );
+			//addSprite( new Tree(900, 600, this), _trees );
 			addSprite( new Tree(900, 700, this), _trees );
-			addSprite( new Tree(900, 800, this), _trees );
+			//addSprite( new Tree(900, 800, this), _trees );
 			addSprite( new Tree(900, 900, this), _trees );
-			addSprite( new Tree(900, 1000, this), _trees );
+			//addSprite( new Tree(900, 1000, this), _trees );
 			addSprite( new Tree(900, 1100, this), _trees );
-			addSprite( new Tree(900, 1200, this), _trees );
+			//addSprite( new Tree(900, 1200, this), _trees );
 			addSprite( new Tree(900, 1300, this), _trees );
-			addSprite( new Tree(1300, 200, this), _trees );
+			//addSprite( new Tree(1300, 200, this), _trees );
 			addSprite( new Tree(1300, 300, this), _trees );
-			addSprite( new Tree(1300, 400, this), _trees );
+			//addSprite( new Tree(1300, 400, this), _trees );
 			addSprite( new Tree(1300, 500, this), _trees );
-			addSprite( new Tree(1300, 600, this), _trees );
+			//addSprite( new Tree(1300, 600, this), _trees );
 			addSprite( new Tree(1300, 700, this), _trees );
-			addSprite( new Tree(1300, 800, this), _trees );
+			//addSprite( new Tree(1300, 800, this), _trees );
 			addSprite( new Tree(1300, 900, this), _trees );
-			addSprite( new Tree(1300, 1000, this), _trees );
+			//addSprite( new Tree(1300, 1000, this), _trees );
 			addSprite( new Tree(1300, 1100, this), _trees );
-			addSprite( new Tree(1300, 1200, this), _trees );
+			//addSprite( new Tree(1300, 1200, this), _trees );
 			addSprite( new Tree(1300, 1300, this), _trees );
+			
+			addSprite( new Fruit( 620, 350, this), _fruits );
+			addSprite( new Fruit( 620, 400, this), _fruits );
+			addSprite( new Fruit( 620, 450, this), _fruits );
+			addSprite( new Fruit( 620, 500, this), _fruits );
+			
+			spawnDodo(620, 800);
 			
 			//addSprite( new Tree(1590, 245, this), _trees );
 			//addSprite( new Tree(1561, 282, this), _trees );

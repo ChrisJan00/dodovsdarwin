@@ -48,8 +48,7 @@ package
 		public var _pigs:Array;
 		public var _eggs:Array;
 		
-		private var _poopDisplay:PoopDisplay;
-		private var _eggDisplay:EggDisplay;
+		public var hudDisplay:HudDisplay;
 		
 		public var isOkToChopTree:Boolean = false;
 		
@@ -84,7 +83,7 @@ package
 			_dodoChildren = new Array();
 			_humans = new Array();
 			_pigs = new Array();
-
+			
 			_background = new Background(BackgroundImg, _backgroundRect);
 			mapSize = new Point(_background.width, _background.height);
 			lyrStage.add(_background);
@@ -104,7 +103,7 @@ package
 			_fruits = new Array();
 			_seeds = new Array();
 			_eggs = new Array();
-	
+			
             FlxG.follow(_player,2.5);
             FlxG.followAdjust(0.5, 0.5);
             FlxG.followBounds(1,1,mapSize.x-1,mapSize.y-1);
@@ -123,23 +122,15 @@ package
             this.add(lyrSprites);
             this.add(lyrHUD);
 			
-			_poopDisplay = new PoopDisplay( this );
-			_poopDisplay.x = FlxG.width - 60;
-			_poopDisplay.y = FlxG.height - 70;
-			addChild( _poopDisplay );
-			
-			_eggDisplay = new EggDisplay( this );
-			_eggDisplay.x = 20;
-			_eggDisplay.y = FlxG.height - 70;
-			addChild( _eggDisplay );
-			
-			
 			//FlxG.play(EndLevelSound);
-			//if ( !FlxState.isInDebugMode ) {
+			if ( !FlxState.isInDebugMode ) {
 				FlxG.play(BackgroundMusic, 1.0, true);
-			//}
+			}
 			
 			_dodoGenerationWaitAtStart = DODO_GENERATION_PAUSE_MIN + Math.random() * DODO_GENERATION_PAUSE_RANGE;
+			
+			hudDisplay = new HudDisplay( this );
+			addChild(hudDisplay);
         }
 		
 		public function parseMap(map:String):void
@@ -305,8 +296,7 @@ package
 			}
 			
 			lyrSprites.sortByY();
-			_poopDisplay.update();
-			_eggDisplay.update();
+			//hudDisplay.update();
 			
 			if (FlxG.keys.justPressed("R")) {
 				resetLevel();

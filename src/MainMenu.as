@@ -115,7 +115,7 @@ package
 			if (FlxG.keys.pressed("F12") && DEBUG_VERSION)
 			{
 				FlxState.isInDebugMode = true;
-				onFade();
+				FlxG.switchState(StoryLevel1);
 			} 
 			super.update();
 		}

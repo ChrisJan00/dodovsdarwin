@@ -48,7 +48,7 @@
 		private var _family:int = 1;
 		
 		private var _eatenFruitEggCount:Number = 0;
-		private const EGG_THRESHOLD:Number = 5;
+		private const EGG_THRESHOLD:Number = 8;
 		
         public function  Player(X:Number,Y:Number, p:PlayState):void
         {
@@ -255,6 +255,7 @@
 			_eatAnimationTimer = PLAYER_EAT_ANIMATION_DURATION;
 			FlxEatSound.stop();
 			FlxEatSound = FlxG.play(EatSound);
+			_playstate.hudDisplay.onEat();
 			return true;
 		}
 		
@@ -263,6 +264,7 @@
 			if (eatenFruitCount < SHIT_THRESHOLD)
 				return;
 			eatenFruitCount -= SHIT_THRESHOLD;
+			_playstate.hudDisplay.onPoop();
 		
 			// direction
 			var dirX : Number = Math.cos( _looking_angle + Math.PI );
@@ -309,6 +311,7 @@
 			_playstate.addSprite(egg, _playstate._eggs);
 			
 			_sinceLastPooped = 0;
+			_playstate.hudDisplay.onLayEgg();
 			FlxG.play(PoopSound);
 		}
 		
@@ -323,6 +326,7 @@
 					_eatenFruitEggCount = 0;
 					lover.flyAway();
 					lover = null;
+					_playstate.hudDisplay.onGetPregnant();
 				}
 			}
 			else if (lover == null) {
@@ -385,6 +389,11 @@
 			if ( !isPregnant ) return 0;
 			if ( EGG_THRESHOLD == 0 ) return 1;
 			return ( Math.min( 1, _eatenFruitEggCount / EGG_THRESHOLD ));
+		}
+		
+		public function get poopReadyProgress():Number {
+			if ( SHIT_THRESHOLD == 0 ) return 1;
+			return ( Math.min( 1, eatenFruitCount / SHIT_THRESHOLD ));
 		}
 		
 		public function get family():int { return _family; }

@@ -106,20 +106,26 @@
 				_aiState = HUMAN_STATE_CHASE;
 				return( _loc_toVector );
 			} else {
-				_loc_toVector = _playstate.getClosestDodoAdultVector( this );
+				_loc_toVector = _playstate.getClosestPlayerVector( this );
 				if ( _loc_toVector && _loc_toVector.length < HUMAN_CHASE_DODO_DISTANCE ) {
 					_aiState = HUMAN_STATE_CHASE;
 					return ( _loc_toVector );
 				} else {
-					_loc_toVector = _playstate.getClosestDodoChildVector( this );
+					_loc_toVector = _playstate.getClosestDodoAdultVector( this );
 					if ( _loc_toVector && _loc_toVector.length < HUMAN_CHASE_DODO_DISTANCE ) {
 						_aiState = HUMAN_STATE_CHASE;
 						return ( _loc_toVector );
 					} else {
-						_loc_toVector = _playstate.getClosestTreeVector( this );
-						if ( _loc_toVector && _playstate.isOkToChopTree && _loc_toVector.length < HUMAN_APPROACH_TREE_DISTANCE ) {
+						_loc_toVector = _playstate.getClosestDodoChildVector( this );
+						if ( _loc_toVector && _loc_toVector.length < HUMAN_CHASE_DODO_DISTANCE ) {
 							_aiState = HUMAN_STATE_CHASE;
-							return( _loc_toVector );
+							return ( _loc_toVector );
+						} else {
+							_loc_toVector = _playstate.getClosestTreeVector( this );
+							if ( _loc_toVector && _playstate.isOkToChopTree && _loc_toVector.length < HUMAN_APPROACH_TREE_DISTANCE ) {
+								_aiState = HUMAN_STATE_CHASE;
+								return( _loc_toVector );
+							}
 						}
 					}
 				}

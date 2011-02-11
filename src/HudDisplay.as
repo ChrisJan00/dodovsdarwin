@@ -23,12 +23,37 @@ package  {
 			
 			_player = a_playState._player;
 			
-			_poopDisplay = new HudIcon( ImgPoopSeed, a_playState );
+			_poopDisplay = new HudIcon( ImgPoopSeed );
 			addChild( _poopDisplay );
 			
-			_eggDisplay = new HudIcon( ImgEgg, a_playState );
+			_eggDisplay = new HudIcon( ImgEgg );
 			addChild( _eggDisplay );
 			
+		}
+		
+		private var _goalArray:Array;
+		private var _goalValue:int;
+		private var _goalValueIsAbsolute:Boolean;
+		private var _goalDisplay:HudIcon;
+		
+		public function update():void {
+			// Check if goal array is set
+			
+			// check if length of goal array has changed
+			
+			// modify goalvalue if relative
+			
+			// hide whatever diplay is showing
+			
+			// call on goalDisplay to update itself and show
+		}
+		public function setGoalDisplay( a_array:Array, a_value:int, a_imageClass:Class, a_valueIsAbsolute:Boolean = true ):void {
+			_goalArray = a_array;
+			_goalValue = a_value;
+			_goalValueIsAbsolute = a_valueIsAbsolute;
+			
+			_goalDisplay = new HudIcon( a_imageClass );
+			addChild( _goalDisplay );
 		}
 		
 		public function onEat():void {

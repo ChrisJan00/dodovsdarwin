@@ -17,7 +17,7 @@ package
 	{
 		[Embed(source = "img/nokiafc22.ttf", fontFamily = "NES", embedAsCFF = "false")] private var junk:String;
 		
-		private var _playState:PlayState;
+		//private var _playState:PlayState;
 		private var _iconBackground:Bitmap;
 		private var _iconFilling:Bitmap;
 		private var _iconMask:Sprite;
@@ -30,10 +30,11 @@ package
 		
 		private var _showing:Boolean;
 		
-		public function HudIcon( a_ImageClass:Class, a_playState:PlayState ) 
+		//public function HudIcon( a_ImageClass:Class, a_playState:PlayState ) 
+		public function HudIcon( a_ImageClass:Class ) 
 		{
 			// Might be needed later for calling pState to display text, keep for now
-			_playState = a_playState;
+			//_playState = a_playState;
 			
 			_imageHolder = new Sprite();
 			addChild( _imageHolder );

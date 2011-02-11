@@ -200,21 +200,26 @@ package
 						(_loc_dodo as IDodo).takeHumanDamage();
 					}
 				}
-				// Bounding box hacks ftw
-				human.x -= 1;
-				human.y -= 1;
-				human.height += 2;
-				human.width += 2;
-				for each(var _loc_tree:Tree in _trees) {
-					if ( human.overlaps(_loc_tree) && isOkToChopTree ) {
-						human.attack();
-						_loc_tree.takeHumanDamage();
+				// Only about every second frame so human can still
+				// engage dodo if he is close enough, otherwise he will 
+				// always keep chopping until tree is dead
+				if ( Math.random() < .5 ) {
+					// Bounding box hacks ftw
+					human.x -= 1;
+					human.y -= 1;
+					human.height += 2;
+					human.width += 2;
+					for each(var _loc_tree:Tree in _trees) {
+						if ( human.overlaps(_loc_tree) && isOkToChopTree ) {
+							human.attack();
+							_loc_tree.takeHumanDamage();
+						}
 					}
+					human.x += 1;
+					human.y += 1;
+					human.height -= 2;
+					human.width -= 2;
 				}
-				human.x += 1;
-				human.y += 1;
-				human.height -= 2;
-				human.width -= 2;
 			}
 			for each(var pig:Pig in _pigs) {
 				_block_map.collide(pig);
@@ -296,7 +301,7 @@ package
 			}
 			
 			lyrSprites.sortByY();
-			//hudDisplay.update();
+			hudDisplay.update();
 			
 			if (FlxG.keys.justPressed("R")) {
 				resetLevel();

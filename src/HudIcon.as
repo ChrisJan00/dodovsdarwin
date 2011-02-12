@@ -99,11 +99,13 @@ package
 		}
 		
 		public function fadeIn():void {
+			if ( _showing ) { return; }
 			TweenLite.to( this, 0.2, { alpha:1 } );
 			_showing = true;
 		}
 		
 		public function fadeOut():void {
+			if ( !_showing ) { return; }
 			TweenLite.to( this, 0.2, { alpha:0 } );
 			_showing = false;
 		}

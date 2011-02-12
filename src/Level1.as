@@ -11,7 +11,7 @@ package
         [Embed(source = 'maps/level1.txt', mimeType = "application/octet-stream")] protected var _LevelMap:Class;
 		[Embed(source = 'img/level_01x3.png')] protected var _Background:Class;
         [Embed(source = 'img/Level1_goal.png')] protected var _Level1_GoalPNG:Class;
-		
+		[Embed(source = "img/tree_01_small.png")] private var ImgTree01:Class;
 		
         
         override public function Level1():void
@@ -54,11 +54,13 @@ package
 			//displayGoal( _Level1_GoalPNG );
 			// TODO Add this when each level has a win image
 			//setWinDisplay( _Level1_GoalPNG );
+			
+			hudDisplay.setGoalDisplay( _trees, 5, ImgTree01 );
 		}
 	    
 		override public function isVictoryAchieved() : Boolean
 		{
-			return ( _trees.length > 3 );
+			return ( _trees.length >= 5 );
 		}
 		
 		override public function nextLevel() : Class

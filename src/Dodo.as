@@ -23,7 +23,7 @@
 		private const DODO_MOVEMENT_SPEED:Number = 80;
 		private const DODO_FLEE_HUMAN_DISTANCE:Number = 100;
 		private const DODO_FLEE_RAT_DISTANCE:Number = 80;
-		private const DODO_KEEP_FLEEING_ENEMY_DISTANCE:Number = 120;
+		private const DODO_KEEP_FLEEING_ENEMY_DISTANCE:Number = 210;
 		private const DODO_APPROACH_DODO_DISTANCE:Number = 120;
 		private const DODO_APPROACH_DODO_DISTANCE_STOP:Number = 30;
 		private const DODO_APPROACH_PIG_DISTANCE:Number = 200;

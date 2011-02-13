@@ -47,6 +47,7 @@ package
 		public var _seeds:Array;
 		public var _pigs:Array;
 		public var _eggs:Array;
+		public var _nests:Array;
 		
 		public var hudDisplay:HudDisplay;
 		
@@ -103,6 +104,7 @@ package
 			_fruits = new Array();
 			_seeds = new Array();
 			_eggs = new Array();
+			_nests = new Array();
 			
             FlxG.follow(_player,2.5);
             FlxG.followAdjust(0.5, 0.5);
@@ -177,6 +179,7 @@ package
 				_block_map.collide(rat);
 				rat.collideArray(_stones);
 				rat.collideArray(_trees);
+				rat.collideArray(_nests);
 				for each(var _loc_dodo2:FlxSprite in _dodos) {
 					if ( rat.overlaps(_loc_dodo2) && !(_loc_dodo2 as IDodo).isFlying()) {
 						rat.attack();
@@ -188,6 +191,7 @@ package
 				_block_map.collide(human);
 				human.collideArray(_stones);
 				human.collideArray(_trees);
+				//human.collideArray(_nests);
 				for each(var _loc_rat:Rat in _rats) {
 					if ( human.overlaps(_loc_rat) ) {
 						human.attack();
@@ -226,6 +230,7 @@ package
 				_block_map.collide(pig);
 				pig.collideArray(_stones);
 				pig.collideArray(_trees);
+				pig.collideArray(_nests);
 				
 				for each(var _loc_fruit:Fruit in _fruits) {
 					if ( _loc_fruit.launchState ) {

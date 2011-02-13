@@ -46,6 +46,7 @@ package  {
 			
 			_buttonDisplay = new HudIcon( ImgButton );
 			addChild( _buttonDisplay );
+			_buttonDisplay.scaleStrength = 0.4;
 			_buttonDisplay.x -= 20;
 			_buttonDisplay.y -= 80;
 			
@@ -103,7 +104,7 @@ package  {
 			} else {
 				_hasBeenBlinkingTimer = 0;
 			}
-			if ( _hasBeenBlinkingTimer > 5 ) {
+			if ( _hasBeenBlinkingTimer > 5 && _goalDisplayTimer <= 0 ) {
 				if ( !_buttonDisplay.isBlinkTimeLineRunning ) {
 					_buttonDisplay.fadeIn();
 					_buttonDisplay.keepBlinkingAndScaling();

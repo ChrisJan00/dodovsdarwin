@@ -29,6 +29,9 @@ package
 		private var _imageHolder:Sprite;
 		
 		private var _showing:Boolean;
+		private var _scaleStrength:Number;
+		private var _scaleDownTo:Number;
+		private var _scaleUpTo:Number;
 		
 		//public function HudIcon( a_ImageClass:Class, a_playState:PlayState ) 
 		public function HudIcon( a_ImageClass:Class ) 
@@ -43,7 +46,7 @@ package
 			alpha = 0;
 			
 			_iconBackground = new a_ImageClass();
-			_iconBackground.alpha = 0.6;
+			_iconBackground.alpha = 0.2;
 			_imageHolder.addChild(_iconBackground);
 			
 			_iconFilling = new a_ImageClass();
@@ -69,14 +72,17 @@ package
 			blinkTimeLine = new TimelineMax();
 			_showing = false;
 			_isBlinkTimeLineRunning = false;
+			_scaleStrength = 1;
+			_scaleDownTo = 0.8;
+			_scaleUpTo = 1.1;
 		}
 		
 		public function keepBlinkingAndScaling():void {
 			_isBlinkTimeLineRunning = true;
 			blinkTimeLine = new TimelineMax();
 			blinkTimeLine.repeat = -1;
-			blinkTimeLine.append( new TweenLite( _imageHolder, 0.3, { alpha:0.75, scaleX:0.8, scaleY:0.8 } ) );
-			blinkTimeLine.append( new TweenLite( _imageHolder, 0.2, { alpha:1, scaleX:1.1, scaleY:1.1 } ) );
+			blinkTimeLine.append( new TweenLite( _imageHolder, 0.3, { alpha:0.75, scaleX:_scaleDownTo, scaleY:_scaleDownTo } ) );
+			blinkTimeLine.append( new TweenLite( _imageHolder, 0.2, { alpha:1, scaleX:_scaleUpTo, scaleY:_scaleUpTo } ) );
 		}
 		
 		public function stopBlinkingAndScaling():void {
@@ -116,6 +122,13 @@ package
 		public function get showing():Boolean { return _showing; }
 		
 		public function get isBlinkTimeLineRunning():Boolean { return _isBlinkTimeLineRunning; }
+		
+		public function set scaleStrength(value:Number):void 
+		{
+			_scaleStrength = value;
+			_scaleDownTo = 1 - (0.2 * _scaleStrength);
+			_scaleUpTo = 1 + (0.1 * _scaleStrength);
+		}
 	}
 
 }

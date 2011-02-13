@@ -9,9 +9,13 @@ package
         [Embed(source = "img/stone_02.png")] private var ImgStone02:Class;
         [Embed(source = "img/stone_03.png")] private var ImgStone03:Class;
 		
-        public function  Stone(X:Number,Y:Number):void
+		private var _ratHome:Boolean;
+		
+        public function  Stone(X:Number,Y:Number, ratHome:Boolean=true):void
         {
 			super(X, Y);
+			
+			_ratHome = ratHome;
 			
 			var index:Number = Math.floor(Math.random() * 3);
 			var ImgData:Bitmap;
@@ -44,6 +48,11 @@ package
 			height *= 2 / 3;
      
         }
+		
+		public function makesRats():Boolean
+		{
+			return _ratHome;
+		}
         //override public function update():void
         //{			
             //super.update();   

@@ -128,6 +128,7 @@ package
 			}
 			
 			_dodoGenerationWaitAtStart = DODO_GENERATION_PAUSE_MIN + Math.random() * DODO_GENERATION_PAUSE_RANGE;
+			_ratGenerationCounter = 4 + Math.random() * 2;
 			
 			hudDisplay = new HudDisplay( this );
 			addChild(hudDisplay);
@@ -339,8 +340,23 @@ package
 				var _loc_probRat:Number = 0.1 + Math.min( 0.9, Math.max( 0, ( _humans.length * 3 ) - _rats.length ) * 0.1 );
 				
 				if ( Math.random() < _loc_probRat ) {
-					var _whichStone:Number = Math.floor( Math.random() * _stones.length );
-					addSprite( new Rat( _stones[_whichStone].cX, _stones[_whichStone].cY, this), _rats);
+					var _stoneNumber:Number = Math.floor( Math.random() * _stones.length ) + 1;
+					var _stoneIndex:Number = -1;
+					var _sterileStoneCount:Number = 0;
+					do {
+						_stoneIndex = (_stoneIndex+1) % _stones.length;
+						if ((_stones[_stoneIndex] as Stone).makesRats()) {
+							_stoneNumber--;
+							_sterileStoneCount--;
+						} else {
+							_sterileStoneCount++;
+						}
+						if (_sterileStoneCount == _stones.length)
+							break;
+					} while (_stoneNumber>0)
+					
+					if ((_stones[_stoneIndex] as Stone).makesRats())
+						addSprite( new Rat( _stones[_stoneIndex].cX, _stones[_stoneIndex].cY, this), _rats);
 				}
 				_ratGenerationCounter = 4 + Math.random() * 2;
 			}

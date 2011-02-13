@@ -14,12 +14,16 @@ package  {
 		
 		[Embed(source = "img/fruit_03.png")] private var ImgPoopSeed:Class;
 		[Embed(source = "img/egg_02.png")] private var ImgEgg:Class;
+		[Embed(source = "img/buttonPressIcon_smaller.png")] private var ImgButton:Class;
+		//[Embed(source = "img/buttonPressIcon.jpg")] private var ImgOK:Class;
 		
 		private const GOAL_DISPLAY_TIME:Number = 3;
 		
 		private var _player:Player;
 		private var _poopDisplay:HudIcon;
 		private var _eggDisplay:HudIcon;
+		private var _buttonDisplay:HudIcon;
+		private var _okDisplay:HudIcon;
 		private var _goalArray:Array;
 		private var _goalValue:int;
 		private var _goalValueIsAbsolute:Boolean;
@@ -28,6 +32,7 @@ package  {
 		private var _goalDisplayTimer:Number;
 		private var _isPlayerPregnant:Boolean;
 		private var _hasEatenFirstTime:Boolean;
+		private var _hasBeenBlinkingTimer:Number;
 		
 		public function HudDisplay( a_playState:PlayState ) {
 			
@@ -39,9 +44,18 @@ package  {
 			_eggDisplay = new HudIcon( ImgEgg );
 			addChild( _eggDisplay );
 			
+			_buttonDisplay = new HudIcon( ImgButton );
+			addChild( _buttonDisplay );
+			_buttonDisplay.x -= 20;
+			_buttonDisplay.y -= 80;
+			
+			//_okDisplay = new HudIcon( ImgOK );
+			//addChild( _okDisplay );
+			
 			_isPlayerPregnant = false;
 			_hasEatenFirstTime = false;
 			_goalDisplayTimer = 0;
+			_hasBeenBlinkingTimer = 0;
 			
 			updateIcon( _poopDisplay, 0 );
 			updateIcon( _eggDisplay, 0 );
@@ -84,6 +98,20 @@ package  {
 					_eggDisplay.fadeOut();
 				}
 			}
+			if ( _poopDisplay.isBlinkTimeLineRunning || _eggDisplay.isBlinkTimeLineRunning ) {
+				_hasBeenBlinkingTimer += FlxG.elapsed;
+			} else {
+				_hasBeenBlinkingTimer = 0;
+			}
+			if ( _hasBeenBlinkingTimer > 5 ) {
+				if ( !_buttonDisplay.isBlinkTimeLineRunning ) {
+					_buttonDisplay.fadeIn();
+					_buttonDisplay.keepBlinkingAndScaling();
+				}
+			} else {
+				_buttonDisplay.fadeOut();
+				_buttonDisplay.stopBlinkingAndScaling();
+			}
 		}
 		public function setGoalDisplay( a_array:Array, a_value:int, a_imageClass:Class, a_valueIsAbsolute:Boolean = true ):void {
 			if ( !a_valueIsAbsolute ) {
@@ -97,8 +125,11 @@ package  {
 			_goalDisplay = new HudIcon( a_imageClass );
 			addChild( _goalDisplay );
 			
-			_goalDisplay.y -= 25;
-			updateIcon( _goalDisplay, 0 );
+			// Setting lastLength so that it doesn't display at the start of the level
+			_goalArrayLastLength = _goalArray.length;
+			_goalDisplay.x -= 5;
+			_goalDisplay.y -= 30;
+			updateIcon( _goalDisplay, (_goalArrayLastLength / _goalValue) );
 		}
 		
 		private function updateIcon( a_hudIcon:HudIcon, a_percentage:Number ):void {

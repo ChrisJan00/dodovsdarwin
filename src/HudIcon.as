@@ -22,7 +22,7 @@ package
 		private var _iconFilling:Bitmap;
 		private var _iconMask:Sprite;
 		
-		private var _isBlinkTimeLineRunning:Boolean = false;
+		private var _isBlinkTimeLineRunning:Boolean;
 		private var blinkTimeLine:TimelineMax;
 		
 		// Needed to scale from center
@@ -68,9 +68,11 @@ package
 			
 			blinkTimeLine = new TimelineMax();
 			_showing = false;
+			_isBlinkTimeLineRunning = false;
 		}
 		
 		public function keepBlinkingAndScaling():void {
+			_isBlinkTimeLineRunning = true;
 			blinkTimeLine = new TimelineMax();
 			blinkTimeLine.repeat = -1;
 			blinkTimeLine.append( new TweenLite( _imageHolder, 0.3, { alpha:0.75, scaleX:0.8, scaleY:0.8 } ) );
@@ -78,6 +80,7 @@ package
 		}
 		
 		public function stopBlinkingAndScaling():void {
+			_isBlinkTimeLineRunning = false;
 			blinkTimeLine.complete(true);
 			TweenLite.to( _imageHolder, 0.05, { alpha:1, scaleX:1, scaleY:1 } );
 		}
@@ -111,6 +114,8 @@ package
 		}
 		
 		public function get showing():Boolean { return _showing; }
+		
+		public function get isBlinkTimeLineRunning():Boolean { return _isBlinkTimeLineRunning; }
 	}
 
 }

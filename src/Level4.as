@@ -7,8 +7,8 @@ package
 
     public class Level4 extends PlayState
     {
-        [Embed(source = 'maps/level4.txt', mimeType = "application/octet-stream")] protected var _LevelMap:Class;
-		[Embed(source = 'img/level_01x3.png')] protected var _Background:Class;
+        [Embed(source = 'maps/level1x2.txt', mimeType = "application/octet-stream")] protected var _LevelMap:Class;
+		[Embed(source = 'img/level_01x2.png')] protected var _Background:Class;
         [Embed(source = 'img/Level2_goal.png')] protected var _Level2_GoalPNG:Class;
 		
         
@@ -18,9 +18,11 @@ package
 			LevelMap = _LevelMap;	
 			BackgroundImg = _Background;
 			_backgroundRect = new Rectangle(0,0,1920,1440);
-			_transparent_tile = "30";
+			_transparent_tile = "17";
 			
-			_playerStartPos = new Point( 300, 580 );
+			
+			_playerStartPos = new Point( 400, 580 );
+			//_playerStartPos = new Point( 300, 580 );
 			super.Init();
 			
 			var _loc_flxSprite:FlxSprite;

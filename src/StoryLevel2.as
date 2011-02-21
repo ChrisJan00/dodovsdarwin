@@ -22,7 +22,7 @@ package
 			
 			var txt:FlxText;
 			
-			txt = new FlxText(0, 100, FlxG.width, "2 - Humans")
+			txt = new FlxText(0, 100, FlxG.width, "2 - Rats")
 			txt.setFormat("NES", 24, 0xFFFFFFFF, "center");
 			this.add(txt);
 			
@@ -34,7 +34,7 @@ package
 			txt.setFormat("NES", 16, 0xFFFFFFFF, "center");
 			this.add(txt);
 			
-			txt = new FlxText(0, 250, FlxG.width, "Had...")
+			txt = new FlxText(0, 250, FlxG.width, "But soon the first neighbours arrived.")
 			txt.setFormat("NES", 16, 0xFFFFFFFF, "center");
 			this.add(txt);
 			

@@ -58,9 +58,9 @@ package
 		private var endOfLevelTimer:Number = -1;
 		public var mapSize:Point;
 		
-		private const TREE_MIN_CHOPPING:Number = 5;
+		private const TREE_MIN_CHOPPING:Number = 6;
 		private const TREE_MIN_DECAY:Number = 1;
-		private const TREES_PER_DODO:Number = 5;
+		private const TREES_PER_DODO:Number = 6;
 		private const DODO_GENERATION_PAUSE_MIN:Number = 4;
 		private const DODO_GENERATION_PAUSE_RANGE:Number = 2;
 		
@@ -124,7 +124,6 @@ package
             this.add(lyrSprites);
             this.add(lyrHUD);
 			
-			//FlxG.play(EndLevelSound);
 			if ( !FlxState.isInDebugMode ) {
 				FlxG.play(BackgroundMusic, 1.0, true);
 			}
@@ -252,11 +251,6 @@ package
 				if ( fruit.launchState ) {
 					continue;
 				}
-				//if ( _player.overlaps(fruit) ) {
-					//_player.eat();
-					//removeEntity(fruit, _fruits);
-					//continue;
-				//}
 				fruit.collideArray(_stones);
 				fruit.collideArray(_trees);
 				for each (var dodoDude:IDodo in _dodos ) {
@@ -292,7 +286,7 @@ package
 			
 			var newTreeKillerTimer:Number = treeKillerTimer;
 			if (_trees.length > TREE_MIN_DECAY)
-				newTreeKillerTimer = 180 / _trees.length;
+				newTreeKillerTimer = 240 / _trees.length;
 			if (newTreeKillerTimer < treeKillerTimer || (newTreeKillerTimer>0 && treeKillerTimer<=0))
 				treeKillerTimer = newTreeKillerTimer;
 			

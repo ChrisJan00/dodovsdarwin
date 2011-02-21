@@ -20,39 +20,28 @@ package
 			BackgroundImg = _Background;
 			_backgroundRect = new Rectangle(0,0,1600,1200);
 			_transparent_tile = "17";
-			//_backgroundRect = new Rectangle(94, 294, 1440, 1120);
-			//_transparent_tile = "3";
 			
-			_playerStartPos = new Point( 400, 580 );
-			//_playerStartPos = new Point( 300, 580 );
+			_playerStartPos = new Point( 1180, 800 );
 			super.Init();
 			
 			var _loc_flxSprite:FlxSprite;
-			addSprite( new Pig(720, 500, this), _pigs );
+			addSprite( new Pig(650, 730, this), _pigs );
+			addSprite( new Pig(1050, 460, this), _pigs );
 			
-			addSprite( new Stone(312, 349), _stones );
+			addSprite( new Stone(1155, 680, false), _stones );
+			addSprite( new Stone(1025, 740, false), _stones );
+			addSprite( new Stone(850, 580, false), _stones );
+			addSprite( new Stone(580, 450, false), _stones );
+			addSprite( new Stone(730, 400, false), _stones );
+			addSprite( new Stone(820, 300, false), _stones );
 			
-			addSprite( new Stone(350, 300), _stones );
+			addSprite( new Tree(520, 720, this), _trees );
+			addSprite( new Tree(1140, 430, this), _trees );
 			
-			addSprite( new Stone(800, 235), _stones );
-			addSprite( new Stone(880, 270), _stones );
-			
-			addSprite( new Stone(759, 712), _stones );
-			
-			addSprite( new Tree(683, 222, this), _trees );
-			//addSprite( new Tree(590, 245, this), _trees );
-			addSprite( new Tree(561, 282, this), _trees );
-			
-			addSprite( new Tree(965, 361, this), _trees );
-			//addSprite( new Tree(900, 550, this), _trees );
-			addSprite( new Tree(950, 550, this), _trees );
-			
-			//addSprite( new Tree(590, 670, this), _trees );
-			
-			addSprite( new Rat(520, 320, this), _rats );
-			addSprite( new Rat(420, 255, this), _rats );
-			addSprite( new Rat(720, 301, this), _rats );
-			addSprite( new Human(871, 692, this), _humans );
+			addSprite( new Rat(1040, 290, this), _rats );
+			addSprite( new Rat(600, 270, this), _rats );
+			addSprite( new Rat(370, 740, this), _rats );
+			addSprite( new Rat(700, 940, this), _rats );
 			
 			
 			//displayGoal( _Level2_GoalPNG );

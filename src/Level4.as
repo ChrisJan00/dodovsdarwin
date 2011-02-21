@@ -21,42 +21,39 @@ package
 			_transparent_tile = "17";
 			
 			
-			_playerStartPos = new Point( 400, 580 );
+			_playerStartPos = new Point( 790, 550 );
 			//_playerStartPos = new Point( 300, 580 );
 			super.Init();
 			
 			var _loc_flxSprite:FlxSprite;
-			addSprite( new Pig(720, 500, this), _pigs );
+			addSprite( new Pig(920, 970, this), _pigs );
+			addSprite( new Pig(1030, 280, this), _pigs );
 			
-			//addSprite( new Stone(312, 349), _stones );
+			addSprite( new Stone(474, 624, true), _stones );
+			addSprite( new Stone(564, 742, false), _stones );
+			addSprite( new Stone(922, 860, false), _stones );
+			addSprite( new Stone(1184, 512, true), _stones );
+			addSprite( new Stone(1112, 400, false), _stones );
+			addSprite( new Stone(700, 292, false), _stones );
 			
-			addSprite( new Pig(450, 300, this), _pigs );
+			addSprite( new Tree(660, 540, this), _trees );
+			addSprite( new Tree(870, 440, this), _trees );
+			addSprite( new Tree(920, 620, this), _trees );
+			addSprite( new Tree(988, 774, this), _trees );
 			
-			addSprite( new Stone(800, 235), _stones );
-			addSprite( new Stone(880, 270), _stones );
+			addSprite( new Human(380, 460, this), _humans );
+			addSprite( new Human(610, 996, this), _humans );
+			addSprite( new Human(1246, 880, this), _humans );
+			addSprite( new Human(1308, 356, this), _humans );
 			
-			addSprite( new Stone(759, 712), _stones );
+			addSprite( new Rat(726, 170, this), _rats );
+			addSprite( new Rat(318, 764, this), _rats );
 			
-			addSprite( new Tree(683, 222, this), _trees );
-			//addSprite( new Tree(590, 245, this), _trees );
-			addSprite( new Tree(561, 282, this), _trees );
+			addSprite( new Nest( 800, 644 ), _nests);
 			
-			addSprite( new Tree(985, 361, this), _trees );
-			addSprite( new Tree(100, 550, this), _trees );
-			addSprite( new Tree(950, 550, this), _trees );
-			
-			addSprite( new Tree(590, 670, this), _trees );
-			
-			addSprite( new Rat(520, 620, this), _rats );
-			addSprite( new Human(871, 712, this), _humans );
-			
-			addSprite( new Human(871, 512, this), _humans );
-			
-			addSprite( new Human(671, 412, this), _humans );
-			
-			addSprite( new Egg( 200, 600, this, false), _eggs);
-			addSprite( new Egg( 220, 630, this, false), _eggs);
-			addSprite( new Egg( 190, 620, this, false), _eggs);
+			//addSprite( new Egg( 200, 600, this, false), _eggs);
+			//addSprite( new Egg( 220, 630, this, false), _eggs);
+			//addSprite( new Egg( 190, 620, this, false), _eggs);
 			
 			
 			//displayGoal( _Level2_GoalPNG );
@@ -64,6 +61,11 @@ package
 	    
 		override public function isVictoryAchieved() : Boolean
 		{
+			// at least one adult child
+			if (_dodoAdults.length > 1)
+				for each (var adultDodo:FlxSprite in _dodoAdults) {
+					if (adultDodo != _player && (adultDodo as Dodo).family == _player.family) return true;
+				}
 			return false;
 		}
 		

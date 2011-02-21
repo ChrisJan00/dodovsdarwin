@@ -23,41 +23,37 @@ package
 			//_backgroundRect = new Rectangle(44,150,1680,1280);
 			//_transparent_tile = "4";
 			
-			_playerStartPos = new Point( 400, 580 );
+			_playerStartPos = new Point( 780, 200 );
 			super.Init();
 			
 			var _loc_flxSprite:FlxSprite;
-			addSprite( new Pig(720, 500, this), _pigs );
+			addSprite(new Pig(525, 750, this), _pigs );
+			addSprite(new Pig(950, 925, this), _pigs );
 			
-			//addSprite( new Stone(312, 349), _stones );
+			addSprite(new Nest(330, 720), _nests);
+			addSprite(new Nest(1260, 340), _nests);
 			
-			addSprite( new Pig(450, 300, this), _pigs );
+			addSprite( new Stone(590, 310, true), _stones );
+			addSprite( new Stone(690, 390, false), _stones );
+			addSprite( new Stone(1060, 340, false), _stones );
+			addSprite( new Stone(1000, 460, true), _stones );
+			addSprite( new Stone(920, 570, false), _stones );
+			addSprite( new Stone(960, 680, true), _stones );
 			
-			addSprite( new Stone(800, 235), _stones );
-			addSprite( new Stone(880, 270), _stones );
+			addSprite( new Tree(450, 670, this), _trees );
+			addSprite( new Tree(630, 960, this), _trees );
+			addSprite( new Tree(1080, 820, this), _trees );
 			
-			addSprite( new Stone(759, 712), _stones );
+			addSprite( new Rat(780, 510, this), _rats );
+			addSprite( new Rat(1230, 765, this), _rats );
 			
-			addSprite( new Tree(683, 222, this), _trees );
-			//addSprite( new Tree(590, 245, this), _trees );
-			addSprite( new Tree(561, 282, this), _trees );
+			addSprite( new Human(480, 430, this), _humans );
+			addSprite( new Human(830, 815, this), _humans );
+			addSprite( new Human(1200, 580, this), _humans );
 			
-			addSprite( new Tree(985, 361, this), _trees );
-			addSprite( new Tree(1100, 550, this), _trees );
-			addSprite( new Tree(950, 550, this), _trees );
-			
-			addSprite( new Tree(590, 670, this), _trees );
-			
-			addSprite( new Rat(520, 620, this), _rats );
-			addSprite( new Human(871, 712, this), _humans );
-			
-			addSprite( new Human(871, 512, this), _humans );
-			
-			addSprite( new Human(671, 412, this), _humans );
-			
-			addSprite( new Egg( 1200, 600, this, false), _eggs);
-			addSprite( new Egg( 1220, 630, this, false), _eggs);
-			addSprite( new Egg( 1190, 620, this, false), _eggs);
+			//addSprite( new Egg( 1200, 600, this, false), _eggs);
+			//addSprite( new Egg( 1220, 630, this, false), _eggs);
+			//addSprite( new Egg( 1190, 620, this, false), _eggs);
 			
 			
 			//displayGoal( _Level2_GoalPNG );
@@ -65,7 +61,8 @@ package
 	    
 		override public function isVictoryAchieved() : Boolean
 		{
-			return false;
+			// second child is born
+			return _dodoChildren.length>1;
 		}
 		
 		override public function nextLevel() : Class

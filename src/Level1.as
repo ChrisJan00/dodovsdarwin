@@ -40,12 +40,8 @@ package
 			addSprite( new Tree(1100, 520, this), _trees );
 			addSprite( new Tree(690, 720, this), _trees );
 			
-			hudDisplay.setGoalDisplay( _trees, 3, ImgTree01, true );
-		}
-	    
-		override public function isVictoryAchieved() : Boolean
-		{
-			return ( _trees.length >= 6 );
+			// Player must plant 3 trees
+			hudDisplay.setGoal( _trees, 3, ImgTree01, false );
 		}
 		
 		override public function nextLevel() : Class

@@ -553,7 +553,7 @@ package
 		private const PAUSE_WIN_LEVEL_CHANGE:Number = 7;
 		public function checkLevelAndChange() : void
 		{
-			if (endOfLevelTimer == -1 && isVictoryAchieved()) {
+			if ( endOfLevelTimer == -1 && ( isVictoryAchieved() || hudDisplay.isVictoryAchieved() )) {
 				endOfLevelTimer = PAUSE_WIN_LEVEL_CHANGE;
 				if ( _displayWinImage )
 					addChild( _displayWinImage );

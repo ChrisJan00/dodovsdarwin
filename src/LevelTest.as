@@ -127,7 +127,7 @@ package
 			
 			//displayGoal( _Level2_GoalPNG );
 			
-			hudDisplay.setGoalDisplay( _trees, 3, ImgTree01, false );
+			hudDisplay.setGoal( _trees, 3, ImgTree01, false );
 		}
 	    
 		override public function isVictoryAchieved() : Boolean

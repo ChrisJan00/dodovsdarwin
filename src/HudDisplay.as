@@ -128,7 +128,7 @@ package  {
 		 * @param	a_imageClass		The image to display
 		 * @param	a_valueIsAbsolute	Wether the display should be absolute or relative
 		 */
-		public function setGoalDisplay( a_array:Array, a_value:int, a_imageClass:Class, a_valueIsAbsolute:Boolean = true ):void {
+		public function setGoal( a_array:Array, a_value:int, a_imageClass:Class, a_valueIsAbsolute:Boolean = true ):void {
 			_goalArray = a_array;
 			_goalValue = a_value;
 			_goalValueIsAbsolute = a_valueIsAbsolute;
@@ -146,6 +146,16 @@ package  {
 			} else {
 				updateIcon( _goalDisplay, 0 );
 				_goalGained = 0;
+			}
+		}
+		
+		public function isVictoryAchieved():Boolean {
+			if ( !_goalArray ) return false;
+			
+			if ( _goalValueIsAbsolute ) {
+				return ( ( _goalArray.length / _goalValue ) >= 1 );
+			} else {
+				return ( ( _goalGained / _goalValue ) >= 1 );
 			}
 		}
 		

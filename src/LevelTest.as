@@ -10,6 +10,7 @@ package
         [Embed(source = 'maps/level4.txt', mimeType = "application/octet-stream")] protected var _LevelMap:Class;
 		[Embed(source = 'img/level_01x3.jpg')] protected var _Background:Class;
         [Embed(source = 'img/Level2_goal.png')] protected var _Level2_GoalPNG:Class;
+		[Embed(source = "img/tree_01_small.png")] private var ImgTree01:Class;
 		
         
         override public function LevelTest():void

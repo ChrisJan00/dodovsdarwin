@@ -49,7 +49,7 @@ package
 	    
 		override public function isVictoryAchieved() : Boolean
 		{
-			return ( _dodos.length > 1 );
+			return ( _player.matingProgress > 0 );
 		}
 		
 		override public function nextLevel() : Class

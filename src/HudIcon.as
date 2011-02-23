@@ -98,9 +98,9 @@ package
 			blinkTimeLine.append( new TweenLite( _imageHolder, 0.05, { scaleX:1, scaleY:1 } ) );
 		}
 		
-		public function setFillTo( a_num:Number ):void {
+		public function setFillTo( a_num:Number, a_speed:Number = 0.2 ):void {
 			var _loc_fillHeight:Number = Math.max ( 0, _iconFilling.height - ( a_num * _iconFilling.height));
-			TweenLite.to( _iconMask, 0.2, { y:_loc_fillHeight-(_iconBackground.height / 2) });
+			TweenLite.to( _iconMask, a_speed, { y:_loc_fillHeight-(_iconBackground.height / 2) });
 		}
 		
 		public function setFillEmpty():void {

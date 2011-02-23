@@ -125,6 +125,8 @@ package
 			//_player.eatenFruitCount = _player.SHIT_THRESHOLD - 1;
 			
 			//displayGoal( _Level2_GoalPNG );
+			
+			hudDisplay.setGoalDisplay( _trees, 3, ImgTree01, false );
 		}
 	    
 		override public function isVictoryAchieved() : Boolean

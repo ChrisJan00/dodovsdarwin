@@ -17,7 +17,8 @@ package  {
 		[Embed(source = "img/buttonPressIcon_smaller.png")] private var ImgButton:Class;
 		//[Embed(source = "img/buttonPressIcon.jpg")] private var ImgOK:Class;
 		
-		private const GOAL_DISPLAY_TIME:Number = 3;
+		private const GOAL_CHANGE_FILL_TIME:Number = 3;
+		private const GOAL_DISPLAY_TIME:Number = 4;
 		
 		private var _player:Player;
 		private var _poopDisplay:HudIcon;
@@ -65,13 +66,15 @@ package  {
 		public function update():void {
 			if ( _goalArray ) {
 				if ( _goalArray.length != _goalArrayLastLength ) {
-					_goalArrayLastLength = _goalArray.length;
 					if ( _goalValueIsAbsolute ) {
-						onGoalProgress( _goalArrayLastLength / _goalValue );
+						onGoalProgress( _goalArray.length / _goalValue );
 					} else {
-						// Do stuff for relative goal display
-						// must work for positive and negative goal values
+						if ( _goalArray.length > _goalArrayLastLength ) {
+							_goalGained++;
+							onGoalProgress( _goalGained / _goalValue );
+						}
 					}
+					_goalArrayLastLength = _goalArray.length;
 				}
 				if ( _goalDisplayTimer > 0 ) {
 					_goalDisplayTimer -= FlxG.elapsed;
@@ -114,11 +117,18 @@ package  {
 				_buttonDisplay.stopBlinkingAndScaling();
 			}
 		}
+		
+		private var _goalGained:int;
+		/**
+		 * Method that sets the goal display for the current level and updates it depending on the passed arguments.
+		 * An absolute display updates to a fill % between 0 and the amount passed as a_value, a relative display increases its
+		 * fill each time the array grows, but not when it shrinks. Its fill % is the proportion of gained to a_value.
+		 * @param	a_array				The array to check for changes
+		 * @param	a_value				The 100% mark for an absolute display, or the amount needed to be gained for relative
+		 * @param	a_imageClass		The image to display
+		 * @param	a_valueIsAbsolute	Wether the display should be absolute or relative
+		 */
 		public function setGoalDisplay( a_array:Array, a_value:int, a_imageClass:Class, a_valueIsAbsolute:Boolean = true ):void {
-			if ( !a_valueIsAbsolute ) {
-				trace( "only absolute goal values work for now, goal display deactivated" );
-				return;
-			}
 			_goalArray = a_array;
 			_goalValue = a_value;
 			_goalValueIsAbsolute = a_valueIsAbsolute;
@@ -130,20 +140,30 @@ package  {
 			_goalArrayLastLength = _goalArray.length;
 			_goalDisplay.x -= 5;
 			_goalDisplay.y -= 30;
-			updateIcon( _goalDisplay, (_goalArrayLastLength / _goalValue) );
+			
+			if ( a_valueIsAbsolute ) {
+				updateIcon( _goalDisplay, (_goalArrayLastLength / _goalValue) );
+			} else {
+				updateIcon( _goalDisplay, 0 );
+				_goalGained = 0;
+			}
 		}
 		
-		private function updateIcon( a_hudIcon:HudIcon, a_percentage:Number ):void {
+		private function updateIcon( a_hudIcon:HudIcon, a_percentage:Number, a_speed:Number = 0.2 ):void {
 			a_hudIcon.doJump();
-			a_hudIcon.setFillTo( a_percentage );
+			a_hudIcon.setFillTo( a_percentage, a_speed );
 			if ( a_percentage >= 1 ) {
 				a_hudIcon.keepBlinkingAndScaling();
 			}
 		}
 		
 		private function onGoalProgress( a_goalProgress:Number ):void {
-			updateIcon( _goalDisplay, a_goalProgress );
-			_goalDisplayTimer = GOAL_DISPLAY_TIME;
+			updateIcon( _goalDisplay, a_goalProgress, GOAL_CHANGE_FILL_TIME );
+			if ( a_goalProgress >= 1 ) { 
+				_goalDisplayTimer = 10;
+			} else {
+				_goalDisplayTimer = GOAL_DISPLAY_TIME;
+			}
 		}
 		
 		public function onEat():void {

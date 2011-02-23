@@ -61,18 +61,23 @@ package
 	    
 		override public function isVictoryAchieved() : Boolean
 		{
-			// at least one adult child
-			if (_dodoAdults.length > 1)
+			// at least two adult children
+			if (_dodoAdults.length > 2) {
+				var adultChildrenCount:Number = 0;
 				for each (var adultDodo:FlxSprite in _dodoAdults) {
-					if (adultDodo != _player && (adultDodo as Dodo).family == _player.family) return true;
+					if (adultDodo != _player && (adultDodo as Dodo).family == _player.family) 
+						adultChildrenCount++;
 				}
+				if (adultChildrenCount > 2)
+					return true;
+			}
 			return false;
 		}
 		
 		override public function nextLevel() : Class
 		{
 			// should return class of the next level, E.G. "Level2" or "MainMenu"
-			return MainMenu;
+			return StoryLevelEnd;
 		}
 		
 		override public function resetLevel() : void 

@@ -107,7 +107,7 @@ package
 			_nests = new Array();
 			
             FlxG.follow(_player,2.5);
-            FlxG.followAdjust(0.5, 0.5);
+            FlxG.followAdjust(0.25, 0.25);
             FlxG.followBounds(1,1,mapSize.x-1,mapSize.y-1);
             
 			parseMap(new LevelMap);

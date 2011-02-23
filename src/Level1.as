@@ -40,6 +40,7 @@ package
 			addSprite( new Tree(1100, 520, this), _trees );
 			addSprite( new Tree(690, 720, this), _trees );
 			
+			hudDisplay.setGoalDisplay( _trees, 6, ImgTree01 );
 		}
 	    
 		override public function isVictoryAchieved() : Boolean

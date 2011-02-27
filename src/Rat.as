@@ -31,8 +31,8 @@
 		private const RAT_STATE_ATTACK:String = "RatStateAttack";
 		private const RAT_STATE_EAT:String = "RatStateEat";
 		
-		private const RAT_WANDER_AIUPDATE_DELAY_MIN:Number = 0.5;
-		private const RAT_WANDER_AIUPDATE_DELAY_RANGE:Number = 2.5;
+		private const RAT_WANDER_AIUPDATE_DELAY_MIN:Number = 1;
+		private const RAT_WANDER_AIUPDATE_DELAY_RANGE:Number = 1;
 		
 		private var _lastWanderVector:Vector3D;
 		

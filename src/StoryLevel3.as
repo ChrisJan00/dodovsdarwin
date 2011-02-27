@@ -5,6 +5,7 @@ package
 	import org.flixel.FlxState;
 	import org.flixel.FlxText;
 	
+	
 	/**
 	 * ...
 	 * @author Max Dohme
@@ -12,6 +13,7 @@ package
 	public class StoryLevel3 extends FlxState
 	{
 		
+		[Embed(source = "snd/hist.mp3")] private var BetweenMusic: Class
 		private var _pause:Number = 10;
 		
 		public function StoryLevel3() 
@@ -41,6 +43,8 @@ package
 			txt = new FlxText(0, 432, FlxG.width, "Press X")
 			txt.setFormat("NES", 16, 0xFFFFFFFF, "center");
 			this.add(txt);
+			
+			FlxG.play(BetweenMusic, 1.0, true);
 		}
 		
 		override public function update():void {

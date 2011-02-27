@@ -43,6 +43,11 @@ package
 			// Player must plant 3 trees
 			hudDisplay.setGoal( _trees, 3, ImgTree01, false );
 		}
+	    
+		override public function isVictoryAchieved() : Boolean
+		{
+			return ( hudDisplay.isVictoryAchieved() );
+		}
 		
 		override public function nextLevel() : Class
 		{

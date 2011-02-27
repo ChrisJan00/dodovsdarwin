@@ -11,8 +11,9 @@ package
         //[Embed(source = 'maps/level2.txt', mimeType = "application/octet-stream")] protected var _LevelMap:Class;
 		[Embed(source = 'img/level_01x2.png')] protected var _Background:Class;
         [Embed(source = 'img/Level2_goal.png')] protected var _Level2_GoalPNG:Class;
+		[Embed(source = "img/dodo_small.png")] private var ImgDodo:Class;
 		
-        
+		
         override public function Level2():void
         {
             super();
@@ -44,7 +45,7 @@ package
 			addSprite( new Rat(700, 940, this), _rats );
 			
 			
-			//displayGoal( _Level2_GoalPNG );
+			hudDisplay.setGoalMatingProgress( _dodoAdults, ImgDodo );
 		}
 	    
 		override public function isVictoryAchieved() : Boolean

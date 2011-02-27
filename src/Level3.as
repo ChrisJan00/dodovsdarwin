@@ -11,7 +11,7 @@ package
         //[Embed(source = 'maps/level3.txt', mimeType = "application/octet-stream")] protected var _LevelMap:Class;
 		[Embed(source = 'img/level_01x2.png')] protected var _Background:Class;
         [Embed(source = 'img/Level2_goal.png')] protected var _Level2_GoalPNG:Class;
-		[Embed(source = "img/dodoChildMale.png")] private var ImgChild:Class;
+		[Embed(source = "img/dodo_child_small.png")] private var ImgChild:Class;
 		
         
         override public function Level3():void
@@ -58,6 +58,11 @@ package
 			
 			// second child is born
 			hudDisplay.setGoal( _dodoChildren, 2, ImgChild, false);
+		}
+	    
+		override public function isVictoryAchieved() : Boolean
+		{
+			return ( hudDisplay.isVictoryAchieved() );
 		}
 		
 		override public function nextLevel() : Class

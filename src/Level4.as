@@ -10,6 +10,7 @@ package
         [Embed(source = 'maps/level1x2.txt', mimeType = "application/octet-stream")] protected var _LevelMap:Class;
 		[Embed(source = 'img/level_01x2.png')] protected var _Background:Class;
         [Embed(source = 'img/Level2_goal.png')] protected var _Level2_GoalPNG:Class;
+		[Embed(source = "img/dodo_small.png")] private var ImgDodo:Class;
 		
         
         override public function Level4():void
@@ -56,11 +57,14 @@ package
 			//addSprite( new Egg( 190, 620, this, false), _eggs);
 			
 			
-			//displayGoal( _Level2_GoalPNG );
+			hudDisplay.setGoal( _dodoAdults, 2, ImgDodo, false, true );
 		}
 	    
 		override public function isVictoryAchieved() : Boolean
 		{
+			return ( hudDisplay.isVictoryAchieved() );
+			
+			/*
 			// at least two adult children
 			if (_dodoAdults.length > 2) {
 				var adultChildrenCount:Number = 0;
@@ -72,7 +76,9 @@ package
 					return true;
 			}
 			return false;
+			/**/
 		}
+		
 		
 		override public function nextLevel() : Class
 		{

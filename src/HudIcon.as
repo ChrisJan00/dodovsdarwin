@@ -41,8 +41,6 @@ package
 			
 			_imageHolder = new Sprite();
 			addChild( _imageHolder );
-			x = FlxG.width - 60;
-			y = FlxG.height - 70;
 			alpha = 0;
 			
 			_iconBackground = new a_ImageClass();
@@ -75,6 +73,9 @@ package
 			_scaleStrength = 1;
 			_scaleDownTo = 0.8;
 			_scaleUpTo = 1.1;
+			
+			x = FlxG.width - 50 - (_iconBackground.width / 2);
+			y = FlxG.height - 70;
 		}
 		
 		public function keepBlinkingAndScaling():void {

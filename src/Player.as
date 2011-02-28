@@ -72,7 +72,7 @@
             addAnimation("normal", [0, 1, 2, 3], 5);
             addAnimation("eating", [4,5,6,7], 6);
             addAnimation("stopped", [1]);
-            addAnimation("dead", [5]);
+            addAnimation("dead", [12]);
             addAnimation("pooping", [8, 9], 4);
             addAnimation("mating", [10, 11], 5);
             facing = RIGHT;

@@ -7,7 +7,6 @@
 
     public class DodoChild extends FlxSprite implements IDodo
     {
-        [Embed(source = "img/dodoChildFemale.png")] private var ImgChildFemale:Class;
         [Embed(source = "img/dodoChildMale.png")] private var ImgChild:Class;
 		[Embed(source = "snd/playerhurt.mp3")] private var HurtSound:Class;
 		[Embed(source = "snd/playerdie.mp3")] private var DeathSound:Class;
@@ -86,12 +85,11 @@
             offset.y = 35;
 			
             addAnimation("normal", [0, 1, 2, 3], 5);
-            addAnimation("eating", [4,5,6,7], 7);
+            addAnimation("eating", [8, 9], 7);
 			addAnimation("fleeing", [0, 1, 2, 3], 8);
 			addAnimation("stayingClose", [0, 1, 2, 3], 5);
 			addAnimation("stopped", [1]);
-			// TODO Need dead state image
-            addAnimation("dead", [5]);
+            addAnimation("dead", [12]);
             facing = RIGHT;
 			
 			_lastVelocity = new Point();

@@ -84,13 +84,12 @@
             offset.y = 49;
 			
             addAnimation("normal", [0, 1, 2, 3], 5);
-			addAnimation("flying", [2, 5], 10);
+			addAnimation("flying", [6, 7], 10);
 			addAnimation("mating", [4, 5], 10);
 			addAnimation("fleeing", [0, 1, 2, 3], 8);
-			addAnimation("eating", [0, 5], 7);
+			addAnimation("eating", [8, 9], 7);
             addAnimation("stopped", [1]);
-			// TODO Need dead state image
-            addAnimation("dead", [5]);
+            addAnimation("dead", [12]);
             facing = RIGHT;
 			
 			// Initialize with silent sound

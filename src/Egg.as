@@ -8,8 +8,8 @@ package
     {
         [Embed(source = "img/egg_01_hatch_anim.png")] private var ImgEgg01:Class;
         [Embed(source = "img/egg_02_hatch_anim.png")] private var ImgEgg02:Class;
-        //[Embed(source = "img/egg_03.png")] private var ImgEgg03:Class;
-        //[Embed(source = "img/egg_04.png")] private var ImgEgg04:Class;
+        [Embed(source = "img/egg_03_hatch_anim.png")] private var ImgEgg03:Class;
+        [Embed(source = "img/egg_04_hatch_anim.png")] private var ImgEgg04:Class;
 		
 		[Embed(source = "snd/pigeat.mp3")] private var EatSound : Class;
 		[Embed(source = "snd/egghatch.mp3")] private var HatchSound : Class;
@@ -39,7 +39,7 @@ package
 			_playstate = p;
 			_family = a_family;
 			
-			var index:Number = Math.floor(Math.random() * 2);
+			var index:Number = Math.floor(Math.random() * 4);
 			var ImgData:Bitmap;
 			var Img:Class
 			
@@ -50,10 +50,14 @@ package
 				case 1:
 					Img = ImgEgg02;
 				break;
+				case 2:
+					Img = ImgEgg03;
+				break;
+				case 3:
+					Img = ImgEgg04;
+				break;
 			}
 			
-			//width = (ImgData as Bitmap).width;
-			//height = (ImgData as Bitmap).height;
 			width = 20
 			height = 40
 			offset.x = 10
@@ -64,8 +68,7 @@ package
 			addAnimation("normal", [0], 5);
 			addAnimation("hatch", [0, 1, 2, 3, 4, 5], 10);
 			addAnimation("birth", [6, 7, 8, 9, 10, 11], 5);
-			// TODO cracked image
-			addAnimation("dead", [6]);
+			addAnimation("cracked", [12]);
 			
 			if (hatch)
 				launchState = 3;
@@ -84,8 +87,7 @@ package
 					color = 0x00ffffff;
 					_keepFlashingRedTimer = 0;
 				}
-				// TODO needs to be "cracked"
-				play("dead");
+				play("cracked");
 				_remainDeadTimer -= FlxG.elapsed;
 				if ( _remainDeadTimer <= 0 ) {
 					kill();

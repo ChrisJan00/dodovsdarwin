@@ -62,7 +62,7 @@ package
 				break;
 			}
 			
-			imgWidth = (ImgData as Bitmap).width/4;
+			imgWidth = (ImgData as Bitmap).width/5;
 			imgHeight = (ImgData as Bitmap).height;
 			imgX = x;
 			imgY = y;
@@ -84,7 +84,8 @@ package
 			loadGraphic(Img, true, false, imgWidth, imgHeight);
 			addAnimation("normal", [0], 10);
 			addAnimation("decay", [1, 2, 3], 0.2);
-			addAnimation("dead", [3], 10);
+			addAnimation("dead", [3]);
+			addAnimation("chopped", [4]);
 			
 			switch(index) {
 				case 0: 
@@ -120,8 +121,7 @@ package
 					color = 0x00ffffff;
 					_keepFlashingRedTimer = 0;
 				}
-				// TODO needs to be "chopped"
-				play("dead");
+				play("chopped");
 				_remainDeadTimer -= FlxG.elapsed;
 				if ( _remainDeadTimer <= 0 ) {
 					kill();

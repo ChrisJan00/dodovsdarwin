@@ -9,7 +9,7 @@ package
     {
 		[Embed(source = 'maps/level1x2.txt', mimeType = "application/octet-stream")] protected var _LevelMap:Class;
         //[Embed(source = 'maps/level2.txt', mimeType = "application/octet-stream")] protected var _LevelMap:Class;
-		[Embed(source = 'img/level_01x2.png')] protected var _Background:Class;
+		[Embed(source = 'img/level_01x2.jpg')] protected var _Background:Class;
         [Embed(source = 'img/Level2_goal.png')] protected var _Level2_GoalPNG:Class;
 		[Embed(source = "img/dodo_small.png")] private var ImgDodo:Class;
 		
@@ -41,8 +41,8 @@ package
 			
 			addSprite( new Rat(1040, 290, this), _rats );
 			addSprite( new Rat(600, 270, this), _rats );
-			addSprite( new Rat(370, 740, this), _rats );
-			addSprite( new Rat(700, 940, this), _rats );
+			addSprite( new Rat(420, 740, this), _rats );
+			addSprite( new Rat(700, 890, this), _rats );
 			
 			
 			hudDisplay.setGoalMatingProgress( _dodoAdults, ImgDodo );

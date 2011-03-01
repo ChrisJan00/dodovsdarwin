@@ -17,7 +17,7 @@ package
 		
 		//This const allows you to switch between allowing debug mode or not
 		//Don't forget to set to false before creating a release build!
-		private static const DEBUG_VERSION:Boolean = true;
+		private static const DEBUG_VERSION:Boolean = false;
 		
 		override public function MainMenu() 
 		{
@@ -37,7 +37,7 @@ package
 			
 			var txt:FlxText
 			
-			txt = new FlxText(0, 0, FlxG.width, "v0.28")
+			txt = new FlxText(0, 0, FlxG.width, "v0.3")
 			txt.setFormat("NES", 16, 0xFFFFFFFF, "right");
 			this.add(txt);
 			

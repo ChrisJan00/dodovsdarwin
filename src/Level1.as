@@ -8,7 +8,7 @@ package
     public class Level1 extends PlayState
     {
 		[Embed(source = 'maps/level1x2.txt', mimeType = "application/octet-stream")] protected var _LevelMap:Class;
-		[Embed(source = 'img/level_01x2.png')] protected var _Background:Class;
+		[Embed(source = 'img/level_01x2.jpg')] protected var _Background:Class;
         [Embed(source = 'img/Level1_goal.png')] protected var _Level1_GoalPNG:Class;
 		[Embed(source = "img/tree_01_small.png")] private var ImgTree01:Class;
 		

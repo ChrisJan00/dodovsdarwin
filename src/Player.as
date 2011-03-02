@@ -13,7 +13,6 @@
 		
 		private var FlxEatSound:FlxSound;
 		
-		private var _MaxVelocity_walking:int = 200;
 		private var _playstate:PlayState;
 		private var _looking_angle: Number = 0;
 		
@@ -57,7 +56,6 @@
 			_playstate = p;
             loadGraphic(ImgPlayer, true, true, 80, 70);
 			
-			_MaxVelocity_walking = 200;
             maxVelocity.x = 100;
             maxVelocity.y = 100;
             health = 1;
@@ -70,8 +68,12 @@
             offset.y = 48;
 						
             addAnimation("normal", [0, 1, 2, 3], 5);
+            addAnimation("normal_wounded", [0, 1, 4, 3], 5);
+            addAnimation("normal_wounded_badly", [4, 1, 4, 3], 5);
             addAnimation("eating", [4,5,6,7], 6);
             addAnimation("stopped", [1]);
+            addAnimation("stopped_wounded", [8, 1, 1], 2);
+            addAnimation("stopped_wounded_badly", [8, 1], 1.5);
             addAnimation("dead", [12]);
             addAnimation("pooping", [8, 9], 4);
             addAnimation("mating", [10, 11], 5);
@@ -152,10 +154,24 @@
 				_eatAnimationTimer -= FlxG.elapsed;
 				play("eating");
 			} else {
-				if (velocity.x == 0 && velocity.y == 0) {
-					play("stopped");
+				if ( health < 0.3 ) {
+					if (velocity.x == 0 && velocity.y == 0) {
+						play("stopped_wounded_badly");
+					} else {
+						play("normal_wounded_badly");
+					}
+				} else if ( health < 0.6 ) {
+					if (velocity.x == 0 && velocity.y == 0) {
+						play("stopped_wounded");
+					} else {
+						play("normal_wounded");
+					}
 				} else {
-					play("normal");
+					if (velocity.x == 0 && velocity.y == 0) {
+						play("stopped");
+					} else {
+						play("normal");
+					}
 				}
 			}
 			

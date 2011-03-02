@@ -49,6 +49,9 @@
 		private var _eatenFruitEggCount:Number = 0;
 		private const EGG_THRESHOLD:Number = 8;
 		
+		private const PLAYER_MAX_SPEED:Number = 110;
+		private const PLAYER_MAX_SPEED_DIAGONAL:Number = PLAYER_MAX_SPEED * Math.PI * 0.25;
+		
         public function  Player(X:Number,Y:Number, p:PlayState):void
         {
             super(X, Y);
@@ -56,11 +59,11 @@
 			_playstate = p;
             loadGraphic(ImgPlayer, true, true, 80, 70);
 			
-            maxVelocity.x = 100;
-            maxVelocity.y = 100;
+            maxVelocity.x = PLAYER_MAX_SPEED;
+            maxVelocity.y = PLAYER_MAX_SPEED;
             health = 1;
-            drag.x = 400;
-            drag.y = 400;
+            drag.x = 500;
+            drag.y = 500;
 			
             width = 40;
             height = 17;
@@ -141,6 +144,11 @@
 			if (acceleration.x != 0 && acceleration.y != 0) {
 				acceleration.x /= Math.pow(2, 0.5);
 				acceleration.y /= Math.pow(2, 0.5);
+				maxVelocity.x = PLAYER_MAX_SPEED_DIAGONAL;
+				maxVelocity.y = PLAYER_MAX_SPEED_DIAGONAL;
+			} else {
+				maxVelocity.x = PLAYER_MAX_SPEED;
+				maxVelocity.y = PLAYER_MAX_SPEED;
 			}
 			
 			if (acceleration.x != 0 || acceleration.y != 0) {

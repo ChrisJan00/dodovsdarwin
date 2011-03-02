@@ -329,6 +329,10 @@
 			var feetX : Number = x + width / 2;
 			var feetY : Number = y + height;
 			
+			if ( facing == RIGHT ) {
+				feetX -= 20;
+			}
+			
 			var egg:Egg = new Egg(oX, oY, _playstate, true, _family);
 			egg.launch( oX, oY, feetX, feetY, dirX, dirY );
 			

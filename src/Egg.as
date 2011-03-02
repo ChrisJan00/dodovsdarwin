@@ -160,7 +160,7 @@ package
 		
 		public function launch(originalX:Number, originalY:Number, feetX: Number, feetY: Number, dirX : Number, dirY : Number) : void
 		{
-			launchDistance = Math.random() * 60 + 60;
+			launchDistance = Math.random() * 20 + 20;
 			//var launchAngle : Number = Math.random() * Math.PI * 2;
 			projectionVector = new Point( launchDistance * dirX, launchDistance * dirY );
 			launchFeet = new Point( feetX, feetY );

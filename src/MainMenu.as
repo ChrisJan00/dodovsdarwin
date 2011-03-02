@@ -23,7 +23,7 @@ package
 		{
 			super();
 			
-			/*
+			//*
 			var so:SharedObject = SharedObject.getLocal("userData");
 			if ( so.data.lastLevel == undefined ) {
 				_lastLevel = so.data.lastLevel = 1;
@@ -37,7 +37,7 @@ package
 			
 			var txt:FlxText
 			
-			txt = new FlxText(0, 0, FlxG.width, "v0.3")
+			txt = new FlxText(0, 0, FlxG.width, "v0.32")
 			txt.setFormat("NES", 16, 0xFFFFFFFF, "right");
 			this.add(txt);
 			
@@ -68,11 +68,11 @@ package
 				txt.setFormat("NES", 16, 0xFFFFFFFF, "center");
 				this.add(txt);
 			} else {
-				txt = new FlxText(0, 425, FlxG.width, "PRESS X TO CONTINUE")
+				txt = new FlxText(0, 425, FlxG.width, "PRESS X - CONTINUE")
 				txt.setFormat("NES", 16, 0xFFFFFFFF, "center");
 				this.add(txt);
 				
-				txt = new FlxText(0, 450, FlxG.width, "R TO RESET")
+				txt = new FlxText(0, 450, FlxG.width, "PRESS R - NEW GAME")
 				txt.setFormat("NES", 16, 0xFFFFFFFF, "center");
 				this.add(txt);
 			}
@@ -100,7 +100,7 @@ package
 				var so:SharedObject = SharedObject.getLocal("userData");
 				so.data.lastLevel = 1;
 				so.flush();
-				_lastLevel = 0;
+				_lastLevel = 1;
 				FlxG.fade(0xff000000, 0.75, onFade);
 			} 
 			if (FlxG.keys.pressed("T") && DEBUG_VERSION)

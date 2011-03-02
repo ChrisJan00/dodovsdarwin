@@ -38,9 +38,11 @@ package
 			
 			addSprite( new Tree(520, 720, this), _trees );
 			addSprite( new Tree(1140, 430, this), _trees );
+			addSprite( new Tree(690, 250, this), _trees );
+			addSprite( new Tree(540, 390, this), _trees );
 			
-			addSprite( new Rat(1040, 290, this), _rats );
-			addSprite( new Rat(600, 270, this), _rats );
+			addSprite( new Rat(1040, 340, this), _rats );
+			addSprite( new Rat(600, 320, this), _rats );
 			addSprite( new Rat(420, 740, this), _rats );
 			addSprite( new Rat(700, 890, this), _rats );
 			

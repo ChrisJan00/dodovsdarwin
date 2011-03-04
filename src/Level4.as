@@ -18,7 +18,7 @@ package
             super();
 			LevelMap = _LevelMap;	
 			BackgroundImg = _Background;
-			_backgroundRect = new Rectangle(0,0,1920,1440);
+			_backgroundRect = new Rectangle(0,0,1600,1200);
 			_transparent_tile = "17";
 			
 			
@@ -27,15 +27,17 @@ package
 			super.Init();
 			
 			var _loc_flxSprite:FlxSprite;
-			addSprite( new Pig(920, 970, this), _pigs );
+			addSprite( new Pig(520, 240, this), _pigs );
+			addSprite( new Pig(700, 770, this), _pigs );
+			addSprite( new Pig(1120, 720, this), _pigs );
 			addSprite( new Pig(1030, 280, this), _pigs );
 			
 			addSprite( new Stone(474, 624, true), _stones );
 			addSprite( new Stone(564, 742, false), _stones );
-			addSprite( new Stone(922, 860, false), _stones );
+			addSprite( new Stone(922, 860, true), _stones );
 			addSprite( new Stone(1184, 512, true), _stones );
 			addSprite( new Stone(1112, 400, false), _stones );
-			addSprite( new Stone(700, 292, false), _stones );
+			addSprite( new Stone(700, 292, true), _stones );
 			
 			addSprite( new Tree(660, 540, this), _trees );
 			addSprite( new Tree(870, 440, this), _trees );

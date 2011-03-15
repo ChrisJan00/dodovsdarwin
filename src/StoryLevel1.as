@@ -18,19 +18,23 @@ package
 		{
 			var txt:FlxText;
 			
-			txt = new FlxText(0, 100, FlxG.width, "1 - Fruit")
+			txt = new FlxText(0, 100, FlxG.width, "1 - Trees")
 			txt.setFormat("NES", 24, 0xFFFFFFFF, "center");
 			this.add(txt);
 			
-			//txt = new FlxText(0, 150, FlxG.width, "Not that long ago")
+			//txt = new FlxText(0, 200, FlxG.width, "On an island in the Indian Ocean");
 			//txt.setFormat("NES", 16, 0xFFFFFFFF, "center");
 			//this.add(txt);
 			
-			txt = new FlxText(0, 200, FlxG.width, "Not that long ago")
+			txt = new FlxText(0, 200, FlxG.width, "On an island in the Indian Ocean");
 			txt.setFormat("NES", 16, 0xFFFFFFFF, "center");
 			this.add(txt);
 			
-			txt = new FlxText(0, 250, FlxG.width, "on an island off the coast of Africa...")
+			txt = new FlxText(0, 250, FlxG.width, "a Dodo enjoys her peaceful life");
+			txt.setFormat("NES", 16, 0xFFFFFFFF, "center");
+			this.add(txt);
+			
+			txt = new FlxText(0, 380, FlxG.width, "- Grow one tree -");
 			txt.setFormat("NES", 16, 0xFFFFFFFF, "center");
 			this.add(txt);
 			

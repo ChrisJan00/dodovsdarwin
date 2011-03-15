@@ -57,7 +57,7 @@ package
 			//addSprite( new Egg( 1190, 620, this, false), _eggs);
 			
 			// second child is born
-			hudDisplay.setGoal( _dodoChildren, 2, ImgChild, false);
+			hudDisplay.setGoal( _dodoChildren, 1, ImgChild, false);
 		}
 	    
 		override public function isVictoryAchieved() : Boolean

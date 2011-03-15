@@ -32,11 +32,15 @@ package
 			//txt.setFormat("NES", 16, 0xFFFFFFFF, "center");
 			//this.add(txt);
 			
-			txt = new FlxText(0, 200, FlxG.width, "As the island got populated, there was less space for the dodo.");
+			txt = new FlxText(0, 200, FlxG.width, "As the island got populated, there was less space for the Dodos");
 			txt.setFormat("NES", 16, 0xFFFFFFFF, "center");
 			this.add(txt);
 			
-			txt = new FlxText(0, 250, FlxG.width, "The new generations were the last hope for the future.");
+			txt = new FlxText(0, 250, FlxG.width, "New generations were the Dodos' only hope");
+			txt.setFormat("NES", 16, 0xFFFFFFFF, "center");
+			this.add(txt);
+			
+			txt = new FlxText(0, 380, FlxG.width, "- Raise three children -");
 			txt.setFormat("NES", 16, 0xFFFFFFFF, "center");
 			this.add(txt);
 			

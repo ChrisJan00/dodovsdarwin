@@ -27,15 +27,19 @@ package
 			txt.setFormat("NES", 24, 0xFFFFFFFF, "center");
 			this.add(txt);
 			
-			//txt = new FlxText(0, 150, FlxG.width, "The Dodo had no natural enemies")
-			//txt.setFormat("NES", 16, 0xFFFFFFFF, "center");
-			//this.add(txt);
-			
-			txt = new FlxText(0, 200, FlxG.width, "The Dodo had no natural enemies.")
+			txt = new FlxText(0, 200, FlxG.width, "She has no natural enemies")
 			txt.setFormat("NES", 16, 0xFFFFFFFF, "center");
 			this.add(txt);
 			
-			txt = new FlxText(0, 250, FlxG.width, "But soon the first neighbours arrived.")
+			txt = new FlxText(0, 250, FlxG.width, "But soon the first neighbors arrive...")
+			txt.setFormat("NES", 16, 0xFFFFFFFF, "center");
+			this.add(txt);
+			
+			//txt = new FlxText(0, 300, FlxG.width, "and not all are friendly...")
+			//txt.setFormat("NES", 16, 0xFFFFFFFF, "center");
+			//this.add(txt);
+			
+			txt = new FlxText(0, 380, FlxG.width, "- Attract a male Dodo -");
 			txt.setFormat("NES", 16, 0xFFFFFFFF, "center");
 			this.add(txt);
 			

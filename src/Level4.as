@@ -59,7 +59,7 @@ package
 			//addSprite( new Egg( 190, 620, this, false), _eggs);
 			
 			
-			hudDisplay.setGoal( _dodoAdults, 2, ImgDodo, false, true );
+			hudDisplay.setGoal( _dodoAdults, 3, ImgDodo, false, true );
 		}
 	    
 		override public function isVictoryAchieved() : Boolean

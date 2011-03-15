@@ -40,8 +40,8 @@ package
 			addSprite( new Tree(1100, 520, this), _trees );
 			addSprite( new Tree(690, 720, this), _trees );
 			
-			// Player must plant 2 trees
-			hudDisplay.setGoal( _trees, 2, ImgTree01, false );
+			// Player must plant 1 trees
+			hudDisplay.setGoal( _trees, 1, ImgTree01, false );
 		}
 	    
 		override public function isVictoryAchieved() : Boolean

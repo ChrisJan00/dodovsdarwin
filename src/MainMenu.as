@@ -37,7 +37,7 @@ package
 			
 			var txt:FlxText
 			
-			txt = new FlxText(0, 0, FlxG.width, "v0.32")
+			txt = new FlxText(0, 0, FlxG.width, "v0.34")
 			txt.setFormat("NES", 16, 0xFFFFFFFF, "right");
 			this.add(txt);
 			
@@ -47,7 +47,7 @@ package
 				this.add(txt);
 			}
 			
-			txt = new FlxText(0, 48, FlxG.width, "DarwinVsDodo")
+			txt = new FlxText(0, 48, FlxG.width, "DodoVsDarwin")
 			txt.setFormat("NES", 32, 0xFFFFFFFF, "center");
 			this.add(txt);
 			

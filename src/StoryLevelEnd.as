@@ -23,7 +23,7 @@ package
 			
 			var txt:FlxText;
 			
-			txt = new FlxText(0, 100, FlxG.width, "5 - The end?");
+			txt = new FlxText(0, 100, FlxG.width, "The End");
 			txt.setFormat("NES", 24, 0xFFFFFFFF, "center");
 			this.add(txt);
 			
@@ -31,15 +31,15 @@ package
 			//txt.setFormat("NES", 16, 0xFFFFFFFF, "center");
 			//this.add(txt);
 			
-			txt = new FlxText(0, 200, FlxG.width, "One more generation, one more bit of hope.");
+			txt = new FlxText(0, 200, FlxG.width, "One more generation, one more bit of hope");
 			txt.setFormat("NES", 16, 0xFFFFFFFF, "center");
 			this.add(txt);
 			
-			txt = new FlxText(0, 250, FlxG.width, "Would the dodos defeat extintion?");
+			txt = new FlxText(0, 250, FlxG.width, "She had ensured her race's survival");
 			txt.setFormat("NES", 16, 0xFFFFFFFF, "center");
 			this.add(txt);
 			
-			txt = new FlxText(0, 432, FlxG.width, "Press X")
+			txt = new FlxText(0, 380, FlxG.width, "Press X")
 			txt.setFormat("NES", 16, 0xFFFFFFFF, "center");
 			this.add(txt);
 			

@@ -18,7 +18,7 @@ package
 		private var launchState: Number = 0;
 		private var gravity: Number;
 		
-		private var germinationTimer:Number = 5;
+		private var germinationTimer:Number = 0.5;
 		
 		private var _playstate:PlayState;
 		

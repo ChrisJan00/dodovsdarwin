@@ -566,9 +566,14 @@ package
 						removeChild( _displayWinImage );
 						_displayWinImage = null;
 					}
-					FlxG.switchState( nextLevel() );
+					//FlxG.switchState( nextLevel() );
+					FlxG.fade(0xff000000, 0.75, onFade);
 				}
 			}
+		}
+		
+		private function onFade():void {
+			FlxG.switchState( nextLevel() );
 		}
 		
 		private var _displayGoalImage:Bitmap;

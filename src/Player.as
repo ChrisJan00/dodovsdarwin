@@ -162,13 +162,13 @@
 				_eatAnimationTimer -= FlxG.elapsed;
 				play("eating");
 			} else {
-				if ( health < 0.3 ) {
+				if ( health < 0.4 ) {
 					if (velocity.x == 0 && velocity.y == 0) {
 						play("stopped_wounded_badly");
 					} else {
 						play("normal_wounded_badly");
 					}
-				} else if ( health < 0.6 ) {
+				} else if ( health < 0.8 ) {
 					if (velocity.x == 0 && velocity.y == 0) {
 						play("stopped_wounded");
 					} else {

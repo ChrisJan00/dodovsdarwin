@@ -47,7 +47,7 @@ package
 			txt.setFormat("NES", 16, 0xFFFFFFFF, "center");
 			this.add(txt);
 			
-			FlxG.play(BetweenMusic, 1.0, true);
+			FlxG.play(BetweenMusic, 0.8, true);
 		}
 		
 		override public function update():void {

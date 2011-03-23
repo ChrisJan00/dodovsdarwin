@@ -125,7 +125,7 @@ package
             this.add(lyrHUD);
 			
 			if ( !FlxState.isInDebugMode ) {
-				FlxG.play(BackgroundMusic, 1.0, true);
+				FlxG.play(BackgroundMusic, 0.5, true);
 			}
 			
 			_dodoGenerationWaitAtStart = DODO_GENERATION_PAUSE_MIN + Math.random() * DODO_GENERATION_PAUSE_RANGE;

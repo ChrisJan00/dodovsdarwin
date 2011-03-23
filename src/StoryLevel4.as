@@ -40,7 +40,7 @@ package
 			txt.setFormat("NES", 16, 0xFFFFFFFF, "center");
 			this.add(txt);
 			
-			txt = new FlxText(0, 380, FlxG.width, "- Raise three children -");
+			txt = new FlxText(0, 380, FlxG.width, "- Hatch and raise three children -");
 			txt.setFormat("NES", 16, 0xFFFFFFFF, "center");
 			this.add(txt);
 			
@@ -48,7 +48,7 @@ package
 			txt.setFormat("NES", 16, 0xFFFFFFFF, "center");
 			this.add(txt);
 			
-			FlxG.play(BetweenMusic, 1.0, true);
+			FlxG.play(BetweenMusic, 0.8, true);
 		}
 		
 		override public function update():void {

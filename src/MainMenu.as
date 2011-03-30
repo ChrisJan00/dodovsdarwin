@@ -17,7 +17,7 @@ package
 		
 		//This const allows you to switch between allowing debug mode or not
 		//Don't forget to set to false before creating a release build!
-		private static const DEBUG_VERSION:Boolean = true;
+		private static const DEBUG_VERSION:Boolean = false;
 		
 		override public function MainMenu() 
 		{

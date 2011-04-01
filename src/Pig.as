@@ -17,6 +17,7 @@
 		
 		private const PIG_MOVEMENT_SPEED:Number = 50;
 		private const PIG_FLEE_DODO_DISTANCE:Number = 120;
+		private const PIG_FLEE_TURN_DODO_DISTANCE:Number = 20;
 		private const PIG_KEEP_FLEEING_DODO_DISTANCE:Number = 180;
 		private const PIG_APPROACH_FRUIT_DISTANCE:Number = 300;
 		
@@ -26,6 +27,7 @@
 		private const PIG_STATE_WANDER:String = "PigStateWander";
 		private const PIG_STATE_APPROACH:String = "PigStateApproach";
 		private const PIG_STATE_FLEE:String = "PigStateFlee";
+		private const PIG_STATE_FLEE_TURN:String = "PigStateFleeTurn";
 		private const PIG_STATE_EAT:String = "PigStateEat";
 		
 		private const PIG_WANDER_AIUPDATE_DELAY_MIN:Number = 0.5;
@@ -33,6 +35,8 @@
 		
 		private const PIG_EAT_ANIMATION_DURATION:Number = 2;
 		private var _eatAnimationTimer:Number = 0;
+		private var _fleeTurnTimer:Number = 0;
+		private const PIG_FLEE_TURN_PAUSE:Number = 1;
 		
         public function  Pig(X:Number,Y:Number, p:PlayState):void
         {
@@ -58,30 +62,38 @@
             addAnimation("eating", [8, 9], 5);
             addAnimation("stopped", [1]);
             facing = RIGHT;
+			_fleeTurnTimer = 0;
         }
         override public function update():void
         {
 			var oldState:String = _aiState;
 			
 			_aiUpdateTimer -= FlxG.elapsed;
+			_fleeTurnTimer -= FlxG.elapsed;
 			
-			var _loc_toVector:Vector3D = getSteering();
-			if ( _loc_toVector ) {
-				_loc_toVector.normalize();
-				if ( _aiState == PIG_STATE_APPROACH ) {
-					_loc_toVector.scaleBy(0.5);
+			if ( _fleeTurnTimer <= 0 ) {
+				var _loc_toVector:Vector3D = getSteering();
+				if ( _loc_toVector ) {
+					_loc_toVector.normalize();
+					if ( _aiState == PIG_STATE_APPROACH ) {
+						_loc_toVector.scaleBy(0.5);
+					}
+					if ( _aiState == PIG_STATE_FLEE ) {
+						trace( velocity );
+						_loc_toVector.scaleBy(2.7);
+					}
+					if ( _aiState == PIG_STATE_FLEE_TURN ) {
+						_loc_toVector.scaleBy(3);
+					}
+					velocity.x = _loc_toVector.x * PIG_MOVEMENT_SPEED;
+					velocity.y = _loc_toVector.y * PIG_MOVEMENT_SPEED;
+				} else if ( _aiUpdateTimer <= 0 ) {
+					_loc_toVector = getWander();
+					_loc_toVector.normalize();
+					_loc_toVector.scaleBy(0.7);
+					velocity.x = _loc_toVector.x * PIG_MOVEMENT_SPEED;
+					velocity.y = _loc_toVector.y * PIG_MOVEMENT_SPEED;
 				}
-				if ( _aiState == PIG_STATE_FLEE ) {
-					_loc_toVector.scaleBy(2.7);
-				}
-				velocity.x = _loc_toVector.x * PIG_MOVEMENT_SPEED;
-				velocity.y = _loc_toVector.y * PIG_MOVEMENT_SPEED;
-			} else if ( _aiUpdateTimer <= 0 ) {
-				_loc_toVector = getWander();
-				_loc_toVector.normalize();
-				_loc_toVector.scaleBy(0.7);
-				velocity.x = _loc_toVector.x * PIG_MOVEMENT_SPEED;
-				velocity.y = _loc_toVector.y * PIG_MOVEMENT_SPEED;
 			}
 			
 			
@@ -126,20 +138,27 @@
 		
 		private function getSteering():Vector3D {
 			var _loc_toVector:Vector3D = _playstate.getClosestDodoVector( this );
-			if ( _loc_toVector && _aiState == PIG_STATE_FLEE && _loc_toVector.length < PIG_KEEP_FLEEING_DODO_DISTANCE ) {
-				_loc_toVector.scaleBy( -1 );
+			if ( _loc_toVector && _loc_toVector.length < PIG_FLEE_TURN_DODO_DISTANCE ) {
+				(_playstate.getClosestFrom( this, _playstate._dodos ) as IDodo).resetScaredPigTimer();
+				_aiState = PIG_STATE_FLEE_TURN;
+				_fleeTurnTimer = PIG_FLEE_TURN_PAUSE;
 				return( _loc_toVector );
 			} else {
-				if ( _loc_toVector && _loc_toVector.length < PIG_FLEE_DODO_DISTANCE ) {
-					(_playstate.getClosestFrom( this, _playstate._dodos ) as IDodo).resetScaredPigTimer();
-					_aiState = PIG_STATE_FLEE;
+				if ( _loc_toVector && _aiState == PIG_STATE_FLEE && _loc_toVector.length < PIG_KEEP_FLEEING_DODO_DISTANCE ) {
 					_loc_toVector.scaleBy( -1 );
 					return( _loc_toVector );
 				} else {
-					_loc_toVector = _playstate.getClosestFruitVector( this );
-					if ( _loc_toVector && _loc_toVector.length < PIG_APPROACH_FRUIT_DISTANCE ) {
-						_aiState = PIG_STATE_APPROACH;
-						return ( _loc_toVector );
+					if ( _loc_toVector && _loc_toVector.length < PIG_FLEE_DODO_DISTANCE ) {
+						(_playstate.getClosestFrom( this, _playstate._dodos ) as IDodo).resetScaredPigTimer();
+						_aiState = PIG_STATE_FLEE;
+						_loc_toVector.scaleBy( -1 );
+						return( _loc_toVector );
+					} else {
+						_loc_toVector = _playstate.getClosestFruitVector( this );
+						if ( _loc_toVector && _loc_toVector.length < PIG_APPROACH_FRUIT_DISTANCE ) {
+							_aiState = PIG_STATE_APPROACH;
+							return ( _loc_toVector );
+						}
 					}
 				}
 			}

@@ -82,6 +82,8 @@
 						_loc_toVector.scaleBy(2.7);
 					}
 					if ( _aiState == PIG_STATE_FLEE_TURN ) {
+						addWander( _loc_toVector, 1 );
+						_loc_toVector.normalize();
 						_loc_toVector.scaleBy(3);
 					}
 					velocity.x = _loc_toVector.x * PIG_MOVEMENT_SPEED;
@@ -177,6 +179,12 @@
 			_aiState = PIG_STATE_WANDER;
 			_loc_toVector = new Vector3D( 1 - (Math.random() * 2), 1 - (Math.random() * 2) );
 			return _loc_toVector;
+		}
+		
+		private function addWander( a_vector:Vector3D, a_amount:Number = 1 ):void {
+			var _loc_vector:Vector3D = new Vector3D( a_amount - (Math.random() * 2 * a_amount), a_amount - (Math.random() * 2 * a_amount) );
+			a_vector.x += _loc_vector.x;
+			a_vector.y += _loc_vector.y;
 		}
         
         override public function hitFloor(Contact:FlxCore=null):Boolean

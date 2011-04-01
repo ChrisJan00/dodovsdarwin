@@ -79,7 +79,6 @@
 						_loc_toVector.scaleBy(0.5);
 					}
 					if ( _aiState == PIG_STATE_FLEE ) {
-						trace( velocity );
 						_loc_toVector.scaleBy(2.7);
 					}
 					if ( _aiState == PIG_STATE_FLEE_TURN ) {

@@ -1,19 +1,23 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-<html xml:lang="en" xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><!-- saved from url=(0013)about:internet -->
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+
+
+<link rel="icon" type="image/png" href="dodo_web_icon.png">
 
 <style type="text/css">
 body {
 background-color:#787ab4;
-text:#FFFFFF;
-font-family:arial,sans-serif;
+color:#111111;
+font-family:"Verdena",arial,sans-serif;
 font-size:11px;
-text-align: center
-height: 100%
+text-align: center;
+margin:0;
+padding:0;
 }
-a:link {color: #000000; text-decoration: none; }
-a:active {color: #000000; text-decoration: none; }
-a:visited {color: #000000; text-decoration: none; }
-a:hover {color: #0000ff; text-decoration: underline; }
+a:link {color: #444444; text-decoration: none; }
+a:active {color: #444444; text-decoration: none; }
+a:visited {color: #444444; text-decoration: none; }
+a:hover {color: #000000; text-decoration: underline; }
 
 div {
 width:640px;
@@ -26,7 +30,7 @@ position: absolute;
 margin-left: -370px;
 left: 50%;
 top: 0px;
-height: 100%;
+min-height: 100%;
 width: 740px;
 overflow: hidden;
 background-color: #E2D49A;
@@ -35,8 +39,12 @@ div#space {
 height:30px;
 }
 
+.hidden { display:none; }
+.unhidden { display:""; }
+
 img#bg_lt {
 position: absolute;
+margin-top: -15px;
 margin-left: -600px;
 left: 50%
 
@@ -44,6 +52,7 @@ left: 50%
 
 img#bg_rt {
 position: absolute;
+margin-top: -15px;
 margin-left: 370px;
 left: 50%
 }
@@ -51,32 +60,79 @@ left: 50%
 </style>
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
 <title>DodoVsDarwin</title>
-</head>
-<body>
+</head><body>
 
-<img id="bg_lt" src="bg_lt.png"></img>
-<img id="bg_rt" src="bg_rt.png"></img>
+<img id="bg_lt" src="bg_lt.png">
+<img id="bg_rt" src="bg_rt.png">
 
 <div id="vertical">
 <div id="space"> </div>
 <div id="clip">
-<object classid="clsid:d27cdb6e-ae6d-11cf-96b8-444553540000" codebase="http://fpdownload.macromedia.com/pub/shockwave/cabs/flash/swflash.cab#version=10,0,0,0" id="DodoVsDarwin" align="middle" height="480" width="640">
+<object classid="clsid:d27cdb6e-ae6d-11cf-96b8-444553540000" codebase="http://fpdownload.macromedia.com/pub/shockwave/cabs/flash/swflash.cab#version=10,0,0,0" id="DodoVsDarwin" height="480" width="640" align="middle">
 <param name="allowScriptAccess" value="sameDomain">
-<param name="movie" value="DodoVsDarwin.swf"><param name="quality" value="high"><param name="bgcolor" value="#000000"><embed src="DodoVsDarwin.swf" quality="high" bgcolor="#000000" name="DodoVsDarwin" allowscriptaccess="sameDomain" type="application/x-shockwave-flash" pluginspage="http://www.macromedia.com/go/getflashplayer" align="middle" height="480" width="640">
+<param name="movie" value="DodoVsDarwin.swf"><param name="quality" value="high"><param name="bgcolor" value="#000000"><embed src="DodoVsDarwin.swf" quality="high" bgcolor="#000000" name="DodoVsDarwin" allowscriptaccess="sameDomain" type="application/x-shockwave-flash" pluginspage="http://www.macromedia.com/go/getflashplayer" height="480" width="640" align="middle">
 </object>
 </div>
 
+<div id="description">
+<b>
+<br>
+You play the <a href="http://en.wikipedia.org/wiki/Dodo" target="_blank">Dodo</a> bird. Chase the pigs away from your fruit! Bait the rats into a trap! Poop a tree! Attract your Dodo mate and try to survive!
+<br><br>
+The game was originally created during the <a href="http://globalgamejam.org/2011/dodo-vs-darwin" target="_blank">Global Game Jam 2011</a>,
+ the theme of which was "extinction". Gameplay centers around the 
+creatues and plants that live on the island and how they interact with 
+the player and each other. The player needs to experiment to discover 
+how it all works.
+<br>
+</b></div>
+
+
+<div id="controlsToggle">
+<b><br>
+<a href="javascript:unhide('controls');">Controls</a>
+</b></div>
+
+<div id="controls" style="display: none;">
+<b>Move - WSAD or Arrow Keys<br>
+Action - X, Ctrl or Space<br>
+</b></div>
+
+<div id="hintsToggle">
+<b><br>
+<a href="javascript:unhide('hints');">Hints</a><br>
+</b></div>
+
+<div id="hints" style="display: none;">
+<b>Keep eating as many fruits as you can<br>
+Try to lure the rats close to the humans<br>
+Plant trees to attract more Dodos to the island<br>
+Take good care of your children! Always try to keep them close to you<br>
+</b></div>
+
+<b></b>
+<br>
+
 <div id="developers">
 <b>
-<table width=640>
-<tr>
+<table width="680">
+<tbody><tr>
 <td><a href="http://www.maxdohme.de/" target="_blank">Max Dohme</a></td>
-<td><a href="http://chrisjangames.wordpress.com" target="_blank">Christiaan Janssen</a></td>
+<td><a href="http://chrisjangames.wordpress.com/" target="_blank">Christiaan Janssen</a></td>
 <td><a href="http://www.jscholz.com/" target="_blank">Johann Scholz</a></td>
 <td><a href="http://www.redefineteclas.com/" target="_blank">Volando</a></td>
 </tr>
-</table>
+</tbody></table>
+<br><br><br>
 </b>
 </div>
 </div>
+
+<script type="text/javascript">
+ function unhide(divID) {
+ var item = document.getElementById(divID);
+ document.getElementById(divID).style.display=(item.style.display=="none")?"":"none";
+ }
+ </script>
+
 </body></html>

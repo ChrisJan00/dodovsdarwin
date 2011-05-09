@@ -124,7 +124,6 @@ package
 				y = launchVector.x * projectionVector.y / launchDistance + launchVector.y + launchFeet.y;
 			}
 			
-			// Test
 			// germination
 			if (launchState == 3) {
 				if (hatchTimer > 0)

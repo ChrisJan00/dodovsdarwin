@@ -49,7 +49,7 @@
 		private var _eatenFruitEggCount:Number = 0;
 		private const EGG_THRESHOLD:Number = 8;
 		
-		private const PLAYER_MAX_SPEED:Number = 120;
+		private const PLAYER_MAX_SPEED:Number = 130;
 		private const PLAYER_MAX_SPEED_DIAGONAL:Number = PLAYER_MAX_SPEED * Math.cos( Math.PI * 0.25 );
 		
         public function  Player(X:Number,Y:Number, p:PlayState):void

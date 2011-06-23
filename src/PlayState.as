@@ -568,6 +568,7 @@ package
 					}
 					//FlxG.switchState( nextLevel() );
 					FlxG.fade(0xff000000, 0.75, onFade);
+					hudDisplay.fadeOut();
 				}
 			}
 		}

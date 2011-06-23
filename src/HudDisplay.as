@@ -255,5 +255,9 @@ package  {
 			_isPlayerPregnant = true;
 			_eggDisplay.setFillEmpty();
 		}
+		
+		public function fadeOut():void {
+			TweenLite.to( this, 0.75, { alpha:0 } );
+		}
 	}
 }

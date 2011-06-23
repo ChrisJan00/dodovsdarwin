@@ -37,7 +37,7 @@ package
 			
 			var txt:FlxText
 			
-			txt = new FlxText(0, 0, FlxG.width, "v0.36")
+			txt = new FlxText(0, 0, FlxG.width, "v0.37")
 			txt.setFormat("NES", 16, 0xFFFFFFFF, "right");
 			this.add(txt);
 			

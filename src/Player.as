@@ -16,7 +16,7 @@
 		private var _playstate:PlayState;
 		private var _looking_angle: Number = 0;
 		
-		private const PLAYER_MOVEMENT_SPEED:Number = 500;
+		private const PLAYER_MOVEMENT_SPEED:Number = 600;
 		
 		private const PLAYER_EAT_ANIMATION_DURATION:Number = 1.8;
 		private var _eatAnimationTimer:Number = 0;
@@ -50,7 +50,7 @@
 		private const EGG_THRESHOLD:Number = 8;
 		
 		private const PLAYER_MAX_SPEED:Number = 120;
-		private const PLAYER_MAX_SPEED_DIAGONAL:Number = PLAYER_MAX_SPEED * Math.PI * 0.25;
+		private const PLAYER_MAX_SPEED_DIAGONAL:Number = PLAYER_MAX_SPEED * Math.cos( Math.PI * 0.25 );
 		
         public function  Player(X:Number,Y:Number, p:PlayState):void
         {
